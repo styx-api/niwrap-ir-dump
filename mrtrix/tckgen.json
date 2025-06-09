@@ -1,0 +1,3023 @@
+{
+  "uid": "14b8283e2f566ed63503a0f4d3dae99649fc54d2.boutiques",
+  "package": {
+    "name": "mrtrix",
+    "version": "3.0.4",
+    "docker": "mrtrix3/mrtrix3:3.0.4",
+    "docs": {
+      "title": "MRTrix3",
+      "description": "MRtrix3 provides a set of tools to perform various types of diffusion MRI analyses, from various forms of tractography through to next-generation group-level analyses. It is designed with consistency, performance, and stability in mind, and is freely available under an open-source license. It is developed and maintained by a team of experts in the field, fostering an active community of users from diverse backgrounds.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://www.mrtrix.org/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 88,
+      "name": "tckgen",
+      "outputs": [
+        {
+          "id": 86,
+          "name": "tracks",
+          "tokens": [
+            {
+              "refId": 85,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "tracks",
+            "description": "the output file containing the tracks generated.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 87,
+          "name": "output_seeds",
+          "tokens": [
+            {
+              "refId": 38,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "output_seeds",
+            "description": "output the seed location of all successful streamlines to a file ",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Perform streamlines tractography.\n\nBy default, tckgen produces a fixed number of streamlines, by attempting to seed from new random locations until the target number of streamlines have been selected (in other words, after all inclusion & exclusion criteria have been applied), or the maximum number of seeds has been exceeded (by default, this is 1000 x the desired number of selected streamlines). Use the -select and/or -seeds options to modify as required. See also the Seeding options section for alternative seeding strategies.\n\nBelow is a list of available tracking algorithms, the input image data that they require, and a brief description of their behaviour:\n\n- FACT: Fiber Assigned by Continuous Tracking. A deterministic algorithm that takes as input a 4D image, with 3xN volumes, where N is the maximum number of fiber orientations in a voxel. Each triplet of volumes represents a 3D vector corresponding to a fiber orientation; the length of the vector additionally indicates some measure of density or anisotropy. As streamlines move from one voxel to another, the fiber orientation most collinear with the streamline orientation is selected (i.e. there is no intra-voxel interpolation).\n\n- iFOD1: First-order Integration over Fiber Orientation Distributions. A probabilistic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. At each streamline step, random samples from the local (trilinear interpolated) FOD are taken. A streamline is more probable to follow orientations where the FOD amplitude is large; but it may also rarely traverse orientations with small FOD amplitude.\n\n- iFOD2 (default): Second-order Integration over Fiber Orientation Distributions. A probabilistic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. Candidate streamline paths (based on short curved \"arcs\") are drawn, and the underlying (trilinear-interpolated) FOD amplitudes along those arcs are sampled. A streamline is more probable to follow a path where the FOD amplitudes along that path are large; but it may also rarely traverse orientations where the FOD amplitudes are small, as long as the amplitude remains above the FOD amplitude threshold along the entire path.\n\n- NullDist1 / NullDist2: Null Distribution tracking algorithms. These probabilistic algorithms expect as input the same image that was used when invoking the corresponding algorithm for which the null distribution is sought. These algorithms generate streamlines based on random orientation samples; that is, no image information relating to fiber orientations is used, and streamlines trajectories are determined entirely from random sampling. The NullDist2 algorithm is designed to be used in conjunction with iFOD2; NullDist1 should be used in conjunction with any first-order algorithm.\n\n- SD_STREAM: Streamlines tractography based on Spherical Deconvolution (SD). A deterministic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. At each streamline step, the local (trilinear-interpolated) FOD is sampled, and from the current streamline tangent orientation, a Newton optimisation on the sphere is performed in order to locate the orientation of the nearest FOD amplitude peak.\n\n- SeedTest: A dummy streamlines algorithm used for testing streamline seeding mechanisms. Any image can be used as input; the image will not be used in any way. For each seed point generated by the seeding mechanism(s), a streamline containing a single point corresponding to that seed location will be written to the output track file.\n\n- Tensor_Det: A deterministic algorithm that takes as input a 4D diffusion-weighted image (DWI) series. At each streamline step, the diffusion tensor is fitted to the local (trilinear-interpolated) diffusion data, and the streamline trajectory is determined as the principal eigenvector of that tensor.\n\n- Tensor_Prob: A probabilistic algorithm that takes as input a 4D diffusion-weighted image (DWI) series. Within each image voxel, a residual bootstrap is performed to obtain a unique realisation of the DWI data in that voxel for each streamline. These data are then sampled via trilinear interpolation at each streamline step, the diffusion tensor model is fitted, and the streamline follows the orientation of the principal eigenvector of that tensor.\n\nNote that the behaviour of the -angle option varies slightly depending on the order of integration: for any first-order method, this angle corresponds to the deviation in streamline trajectory per step; for higher-order methods, this corresponds to the change in underlying fibre orientation between the start and end points of each step.\n\nReferences:\n\nReferences based on streamlines algorithm used:\n\n* FACT:\nMori, S.; Crain, B. J.; Chacko, V. P. & van Zijl, P. C. M. Three-dimensional tracking of axonal projections in the brain by magnetic resonance imaging. Annals of Neurology, 1999, 45, 265-269\n\n* iFOD1 or SD_STREAM:\nTournier, J.-D.; Calamante, F. & Connelly, A. MRtrix: Diffusion tractography in crossing fiber regions. Int. J. Imaging Syst. Technol., 2012, 22, 53-66\n\n* iFOD2:\nTournier, J.-D.; Calamante, F. & Connelly, A. Improved probabilistic streamlines tractography by 2nd order integration over fibre orientation distributions. Proceedings of the International Society for Magnetic Resonance in Medicine, 2010, 1670\n\n* Nulldist1 / Nulldist2:\nMorris, D. M.; Embleton, K. V. & Parker, G. J. Probabilistic fibre tracking: Differentiation of connections from chance events. NeuroImage, 2008, 42, 1329-1339\n\n* Tensor_Det:\nBasser, P. J.; Pajevic, S.; Pierpaoli, C.; Duda, J. & Aldroubi, A. In vivo fiber tractography using DT-MRI data. Magnetic Resonance in Medicine, 2000, 44, 625-632\n\n* Tensor_Prob:\nJones, D. Tractography Gone Wild: Probabilistic Fibre Tracking Using the Wild Bootstrap With Diffusion Tensor MRI. IEEE Transactions on Medical Imaging, 2008, 27, 1268-1274\n\nReferences based on command-line options:\n\n* -rk4:\nBasser, P. J.; Pajevic, S.; Pierpaoli, C.; Duda, J. & Aldroubi, A. In vivo fiber tractography using DT-MRI data. Magnetic Resonance in Medicine, 2000, 44, 625-632\n\n* -act, -backtrack, -seed_gmwmi:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. Anatomically-constrained tractography: Improved diffusion MRI streamlines tractography through effective use of anatomical information. NeuroImage, 2012, 62, 1924-1938\n\n* -seed_dynamic:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. SIFT2: Enabling dense quantitative assessment of brain white matter connectivity using streamlines tractography. NeuroImage, 2015, 119, 338-351",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "tckgen",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "tckgen"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-algorithm"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "algorithm",
+                    "outputs": [],
+                    "docs": {
+                      "title": "algorithm",
+                      "description": "specify the tractography algorithm to use. Valid choices are: FACT, iFOD1, iFOD2, Nulldist1, Nulldist2, SD_Stream, Seedtest, Tensor_Det, Tensor_Prob (default: iFOD2).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-select"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "select",
+                    "outputs": [],
+                    "docs": {
+                      "title": "select",
+                      "description": "set the desired number of streamlines to be selected by tckgen, after all selection criteria have been applied (i.e. inclusion/exclusion ROIs, min/max length, etc). tckgen will keep seeding streamlines until this number of streamlines have been selected, or the maximum allowed number of seeds has been exceeded (see -seeds option). By default, 5000 streamlines are to be selected. Set to zero to disable, which will result in streamlines being seeded until the number specified by -seeds has been reached.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-step"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "step",
+                    "outputs": [],
+                    "docs": {
+                      "title": "step",
+                      "description": "set the step size of the algorithm in mm (defaults: for first-order algorithms, 0.1 x voxelsize; if using RK4, 0.25 x voxelsize; for iFOD2: 0.5 x voxelsize).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-angle"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "angle",
+                    "outputs": [],
+                    "docs": {
+                      "title": "angle",
+                      "description": "set the maximum angle in degrees between successive steps (defaults: 60 for deterministic algorithms; 15 for iFOD1 / nulldist1; 45 for iFOD2 / nulldist2)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-minlength"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "minlength",
+                    "outputs": [],
+                    "docs": {
+                      "title": "minlength",
+                      "description": "set the minimum length of any track in mm (defaults: without ACT, 5 x voxelsize; with ACT, 2 x voxelsize).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-maxlength"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "maxlength",
+                    "outputs": [],
+                    "docs": {
+                      "title": "maxlength",
+                      "description": "set the maximum length of any track in mm (default: 100 x voxelsize).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-cutoff"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "cutoff",
+                    "outputs": [],
+                    "docs": {
+                      "title": "cutoff",
+                      "description": "set the FOD amplitude / fixel size / tensor FA cutoff for terminating tracks (defaults: 0.1 for FOD-based algorithms; 0.1 for fixel-based algorithms; 0.1 for tensor-based algorithms; threshold multiplied by 0.5 when using ACT).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-trials"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "trials",
+                    "outputs": [],
+                    "docs": {
+                      "title": "trials",
+                      "description": "set the maximum number of sampling trials at each point (only used for iFOD1 / iFOD2) (default: 1000).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "noprecomputed",
+                    "outputs": [],
+                    "docs": {
+                      "title": "noprecomputed",
+                      "description": "do NOT pre-compute legendre polynomial values. Warning: this will slow down the algorithm by a factor of approximately 4.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-noprecomputed"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "rk4",
+                    "outputs": [],
+                    "docs": {
+                      "title": "rk4",
+                      "description": "use 4th-order Runge-Kutta integration (slower, but eliminates curvature overshoot in 1st-order deterministic methods)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-rk4"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "stop",
+                    "outputs": [],
+                    "docs": {
+                      "title": "stop",
+                      "description": "stop propagating a streamline once it has traversed all include regions",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-stop"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-downsample"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "downsample",
+                    "outputs": [],
+                    "docs": {
+                      "title": "downsample",
+                      "description": "downsample the generated streamlines to reduce output file size (default is (samples-1) for iFOD2, no downsampling for all other algorithms)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "seed_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "seed streamlines entirely at random within a mask image ",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_image",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_image"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 13,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "seed streamlines entirely at random within a mask image ",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "seed streamlines entirely at random within a mask image ",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "seed_sphere",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "spherical seed as four comma-separated values (XYZ position and radius)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_sphere",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_sphere"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 16,
+                                  "name": "spec",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "spec",
+                                    "description": "spherical seed as four comma-separated values (XYZ position and radius)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": {
+                                  "countMin": null,
+                                  "countMax": null,
+                                  "join": ","
+                                },
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "spherical seed as four comma-separated values (XYZ position and radius)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "seed_random_per_voxel",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "seed a fixed number of streamlines per voxel in a mask image; random placement of seeds in each voxel",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_random_per_voxel",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_random_per_voxel"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 19,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "seed a fixed number of streamlines per voxel in a mask image; random placement of seeds in each voxel",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 20,
+                                  "name": "num_per_voxel",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "num_per_voxel",
+                                    "description": "seed a fixed number of streamlines per voxel in a mask image; random placement of seeds in each voxel",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "seed a fixed number of streamlines per voxel in a mask image; random placement of seeds in each voxel",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 25,
+                    "name": "seed_grid_per_voxel",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "seed a fixed number of streamlines per voxel in a mask image; place seeds on a 3D mesh grid (grid_size argument is per axis; so a grid_size of 3 results in 27 seeds per voxel)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_grid_per_voxel",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_grid_per_voxel"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 23,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "seed a fixed number of streamlines per voxel in a mask image; place seeds on a 3D mesh grid (grid_size argument is per axis; so a grid_size of 3 results in 27 seeds per voxel)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 24,
+                                  "name": "grid_size",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "grid_size",
+                                    "description": "seed a fixed number of streamlines per voxel in a mask image; place seeds on a 3D mesh grid (grid_size argument is per axis; so a grid_size of 3 results in 27 seeds per voxel)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "seed a fixed number of streamlines per voxel in a mask image; place seeds on a 3D mesh grid (grid_size argument is per axis; so a grid_size of 3 results in 27 seeds per voxel)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 28,
+                    "name": "seed_rejection",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "seed from an image using rejection sampling (higher values = more probable to seed from)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_rejection",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_rejection"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 27,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "seed from an image using rejection sampling (higher values = more probable to seed from)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "seed from an image using rejection sampling (higher values = more probable to seed from)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "seed_gmwmi",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "seed from the grey matter - white matter interface (only valid if using ACT framework). Input image should be a 3D seeding volume; seeds drawn within this image will be optimised to the interface using the 5TT image provided using the -act option.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "seed_gmwmi",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-seed_gmwmi"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 30,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "seed from the grey matter - white matter interface (only valid if using ACT framework). Input image should be a 3D seeding volume; seeds drawn within this image will be optimised to the interface using the 5TT image provided using the -act option.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "seed from the grey matter - white matter interface (only valid if using ACT framework). Input image should be a 3D seeding volume; seeds drawn within this image will be optimised to the interface using the 5TT image provided using the -act option.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-seed_dynamic"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "seed_dynamic",
+                    "outputs": [],
+                    "docs": {
+                      "title": "seed_dynamic",
+                      "description": "determine seed points dynamically using the SIFT model (must not provide any other seeding mechanism). Note that while this seeding mechanism improves the distribution of reconstructed streamlines density, it should NOT be used as a substitute for the SIFT method itself.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-seeds"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "seeds",
+                    "outputs": [],
+                    "docs": {
+                      "title": "seeds",
+                      "description": "set the number of seeds that tckgen will attempt to track from. If this option is NOT provided, the default number of seeds is set to 1000\u00c3\u2014 the number of selected streamlines. If -select is NOT also specified, tckgen will continue tracking until this number of seeds has been attempted. However, if -select is also specified, tckgen will stop when the number of seeds attempted reaches the number specified here, OR when the number of streamlines selected reaches the number requested with the -select option. This can be used to prevent the program from running indefinitely when no or very few streamlines can be found that match the selection criteria. Setting this to zero will cause tckgen to keep attempting seeds until the number specified by -select has been reached.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-max_attempts_per_seed"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 34,
+                    "name": "max_attempts_per_seed",
+                    "outputs": [],
+                    "docs": {
+                      "title": "max_attempts_per_seed",
+                      "description": "set the maximum number of times that the tracking algorithm should attempt to find an appropriate tracking direction from a given seed point. This should be set high enough to ensure that an actual plausible seed point is not discarded prematurely as being unable to initiate tracking from. Higher settings may affect performance if many seeds are genuinely impossible to track from, as many attempts will still be made in vain for such seeds. (default: 1000)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-seed_cutoff"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 35,
+                    "name": "seed_cutoff",
+                    "outputs": [],
+                    "docs": {
+                      "title": "seed_cutoff",
+                      "description": "set the minimum FA or FOD amplitude for seeding tracks (default is the same as the normal -cutoff).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 36,
+                    "name": "seed_unidirectional",
+                    "outputs": [],
+                    "docs": {
+                      "title": "seed_unidirectional",
+                      "description": "track from the seed point in one direction only (default is to track in both directions).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-seed_unidirectional"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-seed_direction"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 37,
+                    "name": "seed_direction",
+                    "outputs": [],
+                    "docs": {
+                      "title": "seed_direction",
+                      "description": "specify a seeding direction for the tracking (this should be supplied as a vector of 3 comma-separated values.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": ","
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-output_seeds"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 38,
+                    "name": "output_seeds",
+                    "outputs": [],
+                    "docs": {
+                      "title": "output_seeds",
+                      "description": "output the seed location of all successful streamlines to a file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 45,
+                    "name": "include",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion regions to be accepted.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "include",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-include"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 40,
+                                  "name": "spec",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "spec",
+                                    "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion regions to be accepted.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct_union",
+                                  "alts": [
+                                    {
+                                      "base": {
+                                        "id": 42,
+                                        "name": "VariousString",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousString",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 41,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "String object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "string"
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    },
+                                    {
+                                      "base": {
+                                        "id": 44,
+                                        "name": "VariousFile",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousFile",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 43,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "File object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "file",
+                                                      "resolveParent": false,
+                                                      "mutable": false
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion regions to be accepted.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 48,
+                    "name": "include_ordered",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion_ordered regions in the order they are specified in order to be accepted.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "include_ordered",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-include_ordered"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 47,
+                                  "name": "image",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "image",
+                                    "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion_ordered regions in the order they are specified in order to be accepted.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify an inclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines must traverse ALL inclusion_ordered regions in the order they are specified in order to be accepted.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 55,
+                    "name": "exclude",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify an exclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines that enter ANY exclude region will be discarded.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "exclude",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-exclude"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 50,
+                                  "name": "spec",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "spec",
+                                    "description": "specify an exclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines that enter ANY exclude region will be discarded.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct_union",
+                                  "alts": [
+                                    {
+                                      "base": {
+                                        "id": 52,
+                                        "name": "VariousString",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousString_1",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 51,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "String object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "string"
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    },
+                                    {
+                                      "base": {
+                                        "id": 54,
+                                        "name": "VariousFile",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousFile_1",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 53,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "File object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "file",
+                                                      "resolveParent": false,
+                                                      "mutable": false
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify an exclusion region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). Streamlines that enter ANY exclude region will be discarded.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 62,
+                    "name": "mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify a masking region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). If defined, streamlines exiting the mask will be truncated.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "mask",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-mask"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 57,
+                                  "name": "spec",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "spec",
+                                    "description": "specify a masking region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). If defined, streamlines exiting the mask will be truncated.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct_union",
+                                  "alts": [
+                                    {
+                                      "base": {
+                                        "id": 59,
+                                        "name": "VariousString",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousString_2",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 58,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "String object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "string"
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    },
+                                    {
+                                      "base": {
+                                        "id": 61,
+                                        "name": "VariousFile",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "struct",
+                                        "name": "VariousFile_2",
+                                        "groups": [
+                                          {
+                                            "cargs": [
+                                              {
+                                                "tokens": [
+                                                  {
+                                                    "base": {
+                                                      "id": 60,
+                                                      "name": "obj",
+                                                      "outputs": [],
+                                                      "docs": {
+                                                        "title": "Object",
+                                                        "description": "File object.",
+                                                        "authors": [],
+                                                        "literature": [],
+                                                        "urls": []
+                                                      }
+                                                    },
+                                                    "body": {
+                                                      "type": "file",
+                                                      "resolveParent": false,
+                                                      "mutable": false
+                                                    },
+                                                    "list": null,
+                                                    "nullable": false,
+                                                    "choices": null,
+                                                    "defaultValue": null
+                                                  }
+                                                ],
+                                                "join": null
+                                              }
+                                            ],
+                                            "join": null
+                                          }
+                                        ],
+                                        "join": null,
+                                        "docs": {
+                                          "title": null,
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify a masking region of interest, as either a binary mask image, or as a sphere using 4 comma-separared values (x,y,z,radius). If defined, streamlines exiting the mask will be truncated.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-act"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 63,
+                    "name": "act",
+                    "outputs": [],
+                    "docs": {
+                      "title": "act",
+                      "description": "use the Anatomically-Constrained Tractography framework during tracking; provided image must be in the 5TT (five-tissue-type) format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 64,
+                    "name": "backtrack",
+                    "outputs": [],
+                    "docs": {
+                      "title": "backtrack",
+                      "description": "allow tracks to be truncated and re-tracked if a poor structural termination is encountered",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-backtrack"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 65,
+                    "name": "crop_at_gmwmi",
+                    "outputs": [],
+                    "docs": {
+                      "title": "crop_at_gmwmi",
+                      "description": "crop streamline endpoints more precisely as they cross the GM-WM interface",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-crop_at_gmwmi"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-power"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 66,
+                    "name": "power",
+                    "outputs": [],
+                    "docs": {
+                      "title": "power",
+                      "description": "raise the FOD to the power specified (defaults are: 1.0 for iFOD1; 1.0/nsamples for iFOD2).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-samples"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 67,
+                    "name": "samples",
+                    "outputs": [],
+                    "docs": {
+                      "title": "samples",
+                      "description": "set the number of FOD samples to take per step (Default: 4).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-grad"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 68,
+                    "name": "grad",
+                    "outputs": [],
+                    "docs": {
+                      "title": "grad",
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in a text file. This should be supplied as a 4xN text file with each line is in the format [ X Y Z b ], where [ X Y Z ] describe the direction of the applied gradient, and b gives the b-value in units of s/mm^2. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 72,
+                    "name": "fslgrad",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "fslgrad",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-fslgrad"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 70,
+                                  "name": "bvecs",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvecs",
+                                    "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 71,
+                                  "name": "bvals",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvals",
+                                    "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 73,
+                    "name": "info",
+                    "outputs": [],
+                    "docs": {
+                      "title": "info",
+                      "description": "display information messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-info"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 74,
+                    "name": "quiet",
+                    "outputs": [],
+                    "docs": {
+                      "title": "quiet",
+                      "description": "do not display information messages or progress status; alternatively, this can be achieved by setting the MRTRIX_QUIET environment variable to a non-empty string.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 75,
+                    "name": "debug",
+                    "outputs": [],
+                    "docs": {
+                      "title": "debug",
+                      "description": "display debugging messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-debug"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 76,
+                    "name": "force",
+                    "outputs": [],
+                    "docs": {
+                      "title": "force",
+                      "description": "force overwrite of output files (caution: using the same file as input and output might cause unexpected behaviour).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-force"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-nthreads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 77,
+                    "name": "nthreads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "nthreads",
+                      "description": "use this number of threads in multi-threaded applications (set to 0 to disable multi-threading).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 81,
+                    "name": "config",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "config",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-config"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 79,
+                                  "name": "key",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "key",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 80,
+                                  "name": "value",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "value",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 82,
+                    "name": "help",
+                    "outputs": [],
+                    "docs": {
+                      "title": "help",
+                      "description": "display this information page and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 83,
+                    "name": "version",
+                    "outputs": [],
+                    "docs": {
+                      "title": "version",
+                      "description": "display version information and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-version"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 84,
+                    "name": "source",
+                    "outputs": [],
+                    "docs": {
+                      "title": "source",
+                      "description": "The image containing the source data. The type of image data required depends on the algorithm used (see Description section).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 85,
+                    "name": "tracks",
+                    "outputs": [],
+                    "docs": {
+                      "title": "tracks",
+                      "description": "the output file containing the tracks generated.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Perform streamlines tractography.\n\nBy default, tckgen produces a fixed number of streamlines, by attempting to seed from new random locations until the target number of streamlines have been selected (in other words, after all inclusion & exclusion criteria have been applied), or the maximum number of seeds has been exceeded (by default, this is 1000 x the desired number of selected streamlines). Use the -select and/or -seeds options to modify as required. See also the Seeding options section for alternative seeding strategies.\n\nBelow is a list of available tracking algorithms, the input image data that they require, and a brief description of their behaviour:\n\n- FACT: Fiber Assigned by Continuous Tracking. A deterministic algorithm that takes as input a 4D image, with 3xN volumes, where N is the maximum number of fiber orientations in a voxel. Each triplet of volumes represents a 3D vector corresponding to a fiber orientation; the length of the vector additionally indicates some measure of density or anisotropy. As streamlines move from one voxel to another, the fiber orientation most collinear with the streamline orientation is selected (i.e. there is no intra-voxel interpolation).\n\n- iFOD1: First-order Integration over Fiber Orientation Distributions. A probabilistic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. At each streamline step, random samples from the local (trilinear interpolated) FOD are taken. A streamline is more probable to follow orientations where the FOD amplitude is large; but it may also rarely traverse orientations with small FOD amplitude.\n\n- iFOD2 (default): Second-order Integration over Fiber Orientation Distributions. A probabilistic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. Candidate streamline paths (based on short curved \"arcs\") are drawn, and the underlying (trilinear-interpolated) FOD amplitudes along those arcs are sampled. A streamline is more probable to follow a path where the FOD amplitudes along that path are large; but it may also rarely traverse orientations where the FOD amplitudes are small, as long as the amplitude remains above the FOD amplitude threshold along the entire path.\n\n- NullDist1 / NullDist2: Null Distribution tracking algorithms. These probabilistic algorithms expect as input the same image that was used when invoking the corresponding algorithm for which the null distribution is sought. These algorithms generate streamlines based on random orientation samples; that is, no image information relating to fiber orientations is used, and streamlines trajectories are determined entirely from random sampling. The NullDist2 algorithm is designed to be used in conjunction with iFOD2; NullDist1 should be used in conjunction with any first-order algorithm.\n\n- SD_STREAM: Streamlines tractography based on Spherical Deconvolution (SD). A deterministic algorithm that takes as input a Fiber Orientation Distribution (FOD) image represented in the Spherical Harmonic (SH) basis. At each streamline step, the local (trilinear-interpolated) FOD is sampled, and from the current streamline tangent orientation, a Newton optimisation on the sphere is performed in order to locate the orientation of the nearest FOD amplitude peak.\n\n- SeedTest: A dummy streamlines algorithm used for testing streamline seeding mechanisms. Any image can be used as input; the image will not be used in any way. For each seed point generated by the seeding mechanism(s), a streamline containing a single point corresponding to that seed location will be written to the output track file.\n\n- Tensor_Det: A deterministic algorithm that takes as input a 4D diffusion-weighted image (DWI) series. At each streamline step, the diffusion tensor is fitted to the local (trilinear-interpolated) diffusion data, and the streamline trajectory is determined as the principal eigenvector of that tensor.\n\n- Tensor_Prob: A probabilistic algorithm that takes as input a 4D diffusion-weighted image (DWI) series. Within each image voxel, a residual bootstrap is performed to obtain a unique realisation of the DWI data in that voxel for each streamline. These data are then sampled via trilinear interpolation at each streamline step, the diffusion tensor model is fitted, and the streamline follows the orientation of the principal eigenvector of that tensor.\n\nNote that the behaviour of the -angle option varies slightly depending on the order of integration: for any first-order method, this angle corresponds to the deviation in streamline trajectory per step; for higher-order methods, this corresponds to the change in underlying fibre orientation between the start and end points of each step.\n\nReferences:\n\nReferences based on streamlines algorithm used:\n\n* FACT:\nMori, S.; Crain, B. J.; Chacko, V. P. & van Zijl, P. C. M. Three-dimensional tracking of axonal projections in the brain by magnetic resonance imaging. Annals of Neurology, 1999, 45, 265-269\n\n* iFOD1 or SD_STREAM:\nTournier, J.-D.; Calamante, F. & Connelly, A. MRtrix: Diffusion tractography in crossing fiber regions. Int. J. Imaging Syst. Technol., 2012, 22, 53-66\n\n* iFOD2:\nTournier, J.-D.; Calamante, F. & Connelly, A. Improved probabilistic streamlines tractography by 2nd order integration over fibre orientation distributions. Proceedings of the International Society for Magnetic Resonance in Medicine, 2010, 1670\n\n* Nulldist1 / Nulldist2:\nMorris, D. M.; Embleton, K. V. & Parker, G. J. Probabilistic fibre tracking: Differentiation of connections from chance events. NeuroImage, 2008, 42, 1329-1339\n\n* Tensor_Det:\nBasser, P. J.; Pajevic, S.; Pierpaoli, C.; Duda, J. & Aldroubi, A. In vivo fiber tractography using DT-MRI data. Magnetic Resonance in Medicine, 2000, 44, 625-632\n\n* Tensor_Prob:\nJones, D. Tractography Gone Wild: Probabilistic Fibre Tracking Using the Wild Bootstrap With Diffusion Tensor MRI. IEEE Transactions on Medical Imaging, 2008, 27, 1268-1274\n\nReferences based on command-line options:\n\n* -rk4:\nBasser, P. J.; Pajevic, S.; Pierpaoli, C.; Duda, J. & Aldroubi, A. In vivo fiber tractography using DT-MRI data. Magnetic Resonance in Medicine, 2000, 44, 625-632\n\n* -act, -backtrack, -seed_gmwmi:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. Anatomically-constrained tractography: Improved diffusion MRI streamlines tractography through effective use of anatomical information. NeuroImage, 2012, 62, 1924-1938\n\n* -seed_dynamic:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. SIFT2: Enabling dense quantitative assessment of brain white matter connectivity using streamlines tractography. NeuroImage, 2015, 119, 338-351",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

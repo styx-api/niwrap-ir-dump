@@ -1,0 +1,1499 @@
+{
+  "uid": "845f8bc185db67450e312efd07f9c542cacb4cc8.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 42,
+      "name": "mri_ms_fitparms",
+      "outputs": [
+        {
+          "id": 36,
+          "name": "t1_map",
+          "tokens": [
+            "T1.mgz"
+          ],
+          "docs": {
+            "title": "T1 Map",
+            "description": "Compressed T1 map",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 37,
+          "name": "pd_map",
+          "tokens": [
+            "PD.mgz"
+          ],
+          "docs": {
+            "title": "PD Map",
+            "description": "Compressed Proton Density map",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 38,
+          "name": "vol0_synthetic",
+          "tokens": [
+            "vol0.mgz"
+          ],
+          "docs": {
+            "title": "Synthetic Volume for vol_1",
+            "description": "Compressed Synthetic volume for input vol_1, in motion corrected space",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 39,
+          "name": "vol0_affine",
+          "tokens": [
+            "vol0.lta"
+          ],
+          "docs": {
+            "title": "Affine Information for vol_1",
+            "description": "Motion correction affine information for vol_1",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 40,
+          "name": "vol1_synthetic",
+          "tokens": [
+            "vol1.mgz"
+          ],
+          "docs": {
+            "title": "Synthetic Volume for vol_2",
+            "description": "Compressed Synthetic volume for input vol_2, in motion corrected space",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 41,
+          "name": "vol1_affine",
+          "tokens": [
+            "vol1.lta"
+          ],
+          "docs": {
+            "title": "Affine Information for vol_2",
+            "description": "Motion correction affine information for vol_2",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Tool for estimating T1 and PD values from FLASH images and applying transformations.",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "mri_ms_fitparms",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "mri_ms_fitparms"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "volumes",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Volumes",
+                      "description": "List of 3D FLASH images with different flip angles.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "output_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Directory",
+                      "description": "Output directory",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "afi_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "AFI Flag",
+                      "description": "Designate flip angle map to use with nominal value 60 degrees",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-afi"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "ait_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Inverse Transform Flag",
+                      "description": "Apply inverse of transform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ait"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-at"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "at",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Acquisition Time",
+                      "description": "Set acquisition time",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "conform_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Conform to Isotropic 1mm^3",
+                      "description": "Interpolate volume to be isotropic 1mm^3",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-conform"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "correct_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Correct PD by T2*",
+                      "description": "Correct proton density map (PD) by T2* estimates",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-correct"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "cubic_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Cubic Interpolation Flag",
+                      "description": "Use cubic interpolation (NOT WORKING!)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-cubic"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "debug_slice_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Debug Slice Flag",
+                      "description": "Debug slice processing ???",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-debug_slice"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "debug_voxel_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Debug Voxel Flag",
+                      "description": "Debug voxel processing ???",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-debug_voxel"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-dt"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "dt",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Time Step",
+                      "description": "Set time step dt ???",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-fa"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "fa",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Flip Angle",
+                      "description": "Set flip angle",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-fa_scale"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "fa_scale",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Flip Angle Scale",
+                      "description": "Set value to scale all flip angles by",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-faf"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "faf",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Flip Angle Map",
+                      "description": "Designate flip angle map to use with specified control points",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-fsmooth"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "fsmooth",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Flip Angle Smoothing",
+                      "description": "Smooth flip angle map for X iterations of soap bubble smoothing",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "invert_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Invert Flag",
+                      "description": "Invert volumes",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-i"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-m"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "momentum",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Momentum",
+                      "description": "Set momentum",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-max"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "max_t2",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Max T2*",
+                      "description": "Set max T2*",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-n"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "n_iter",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Iterations",
+                      "description": "Perform estimation/motion correction X times",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "nearest_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Nearest Neighbor Interpolation",
+                      "description": "Use nearest-neighbor interpolation",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nearest"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "nocompress_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Compress Flag",
+                      "description": "Do not compress output volumes (save as .mgh)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nocompress"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "nosynth_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Synthesis Flag",
+                      "description": "Disable volume synthesis",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nosynth"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-r"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "residuals",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Residuals",
+                      "description": "Write out residuals to designated location",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-s"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "smooth_sigma",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Faf Smoothing Sigma",
+                      "description": "Smooth faf field with sigma=X",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-scale"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 24,
+                    "name": "scale_factor",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Scale Factor",
+                      "description": "Scale volumes by X after reading",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 25,
+                    "name": "sinc_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Sinc Interpolation Flag",
+                      "description": "Use sinc interpolation (default window width is 6)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-sinc"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "transform_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Transform Flag",
+                      "description": "Apply transform to output volumes",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-t"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-te"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 27,
+                    "name": "echo_time",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Echo Time",
+                      "description": "Set echo time (TE) in ms",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-tr"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 28,
+                    "name": "repetition_time",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Repetition Time",
+                      "description": "Set repetition time (TR) in ms",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 29,
+                    "name": "trilinear_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Trilinear Interpolation Flag",
+                      "description": "Use trilinear interpolation",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-trilinear"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 30,
+                    "name": "tukey_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Tukey Bi-weight Flag",
+                      "description": "Use Tukey bi-weight of residuals",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-tukey"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "help_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help Flag",
+                      "description": "Display help text",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-u"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "use_brain_mask_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Use Brain Mask Flag",
+                      "description": "Compute a brain mask from the PD map and use it for registration",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-use_brain_mask"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-w"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "write_intermediate",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Write Intermediate Frequency",
+                      "description": "Write out intermediate results every X iterations",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-extract"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 34,
+                    "name": "extract_subimage",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Subimage Extraction Coordinates",
+                      "description": "Extract a subimage for each input image, specified by x0 y0 z0 dx dy dz",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 35,
+                    "name": "window_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Window Flag",
+                      "description": "Not implemented",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-window"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Tool for estimating T1 and PD values from FLASH images and applying transformations.",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

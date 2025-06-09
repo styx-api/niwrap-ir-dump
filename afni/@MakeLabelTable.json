@@ -1,0 +1,1498 @@
+{
+  "uid": "bdce4ed3d1cd67a4fbdd4b4b532313914142c2a4.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 39,
+      "name": "@MakeLabelTable",
+      "outputs": [
+        {
+          "id": 35,
+          "name": "output_labeltable",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            ".niml.lt"
+          ],
+          "docs": {
+            "title": "Output Label Table File",
+            "description": "Output label table file",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 36,
+          "name": "output_atlas_pointlist",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".niml.atlas"
+          ],
+          "docs": {
+            "title": "Output Atlas Point List File",
+            "description": "Output atlas point list file",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 37,
+          "name": "output_csv",
+          "tokens": [
+            {
+              "refId": 24,
+              "fileRemoveSuffixes": []
+            },
+            ".csv"
+          ],
+          "docs": {
+            "title": "Output CSV File",
+            "description": "Output CSV file from label table",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 38,
+          "name": "output_niml_atlas",
+          "tokens": [
+            {
+              "refId": 25,
+              "fileRemoveSuffixes": []
+            },
+            ".niml"
+          ],
+          "docs": {
+            "title": "Output NIML Atlas File",
+            "description": "Output NIML file after atlasizing labeled dataset",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Script used to create, modify, and transform label tables",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "@MakeLabelTable",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "@MakeLabelTable"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-labeltable"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "labeltable",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Table",
+                      "description": "Name of output label table",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-atlas_pointlist"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "atlas_pointlist",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas Point List",
+                      "description": "Instead of a label table, produce an atlas point list",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lab_r"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "lab_r",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Range Definition",
+                      "description": "Define a label with its minimum and maximum key values",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lab_v"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "lab_v",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Value Definition",
+                      "description": "Define a label and its value",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lab_file_delim"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "lab_file_delim",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label File Delimiter",
+                      "description": "Set column delimiter for -lab_file option",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lab_file"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "lab_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label File",
+                      "description": "Specify labels and keys from a text file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": 1,
+                    "countMax": 2,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-dset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "dset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Dataset",
+                      "description": "Attach the label table (or atlas point list) to dataset",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-longnames"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "longnames",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Long Names Column Index",
+                      "description": "Allow for another column of long names for regions",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-last_longname_col"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "last_longname_col",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Last Long Name Column Index",
+                      "description": "Limit long names to nth column",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "centers",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Centers Flag",
+                      "description": "Compute center of mass location for each ROI",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-centers"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-centertype"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "centertype",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Center Type",
+                      "description": "Different ways to compute centers (Icent, Dcent, cm)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-centermask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "centermask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Center Mask",
+                      "description": "Calculate center of mass locations using a subset of voxels",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "skip_novoxels",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Skip No Voxels Flag",
+                      "description": "Skip regions without voxels",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-skip_novoxels"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "all_labels",
+                    "outputs": [],
+                    "docs": {
+                      "title": "All Labels Flag",
+                      "description": "Return a listing of all labels",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-all_labels"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "all_keys",
+                    "outputs": [],
+                    "docs": {
+                      "title": "All Keys Flag",
+                      "description": "Return a listing of all keys",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-all_keys"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lkeys"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "lkeys",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Keys",
+                      "description": "Return the keys whose labels match a given label",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-rkeys"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "rkeys",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Range Keys",
+                      "description": "Return the range (min max) of keys whose labels match a given label",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-klabel"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "klabel",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Key Label",
+                      "description": "Return the label associated with a given key",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-match_label"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "match_label",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Match Label",
+                      "description": "Return labels matching a given label",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-labeltable_of_dset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "labeltable_of_dset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Table of Dataset",
+                      "description": "Dump the labeltable from a dataset",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "word_label_match",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Word Label Match Flag",
+                      "description": "Use word matching for labels",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-word_label_match"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "quiet_death",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Quiet Death Flag",
+                      "description": "Do not give error messages when failing",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet_death"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-LT_to_atlas_PL"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "lt_to_atlas_pl",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Table to Atlas Point List",
+                      "description": "Transform Label Table to Atlas Point List",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-dset_LT_to_atlas_PL"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "dset_lt_to_atlas_pl",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Dataset Label Table to Atlas Point List",
+                      "description": "Get Label Table in dataset and write as an Atlas Point List",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": 2,
+                    "countMax": 2,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-LT_to_CSV"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 24,
+                    "name": "lt_to_csv",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Label Table to CSV",
+                      "description": "Transform Label Table to CSV format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-atlasize_labeled_dset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 25,
+                    "name": "atlasize_labeled_dset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlasize Labeled Dataset",
+                      "description": "Transform a labeled ROI dataset into an atlas",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-atlas_file"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "atlas_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas File",
+                      "description": "Specify the name of the NIML file where atlas attributes are stored",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-atlas_name"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 27,
+                    "name": "atlas_name",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas Name",
+                      "description": "Name of the Atlas",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-atlas_description"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 28,
+                    "name": "atlas_description",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas Description",
+                      "description": "Description of the Atlas, which appears in AFNI's whereami window",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 29,
+                    "name": "replace",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Replace Flag",
+                      "description": "Replace existing Atlas if the name already exists in the NIML file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-replace"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-add_atlas_dset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 30,
+                    "name": "add_atlas_dset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Add Atlas Dataset",
+                      "description": "Add an existing atlas to an atlas file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "h_web",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help Web",
+                      "description": "Open webpage with help for this program",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-h_web"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "h_view",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help View",
+                      "description": "Open -help output in a GUI editor",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-h_view"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "all_opts",
+                    "outputs": [],
+                    "docs": {
+                      "title": "All Options",
+                      "description": "List all of the options for this script",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-all_opts"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-h_find"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 34,
+                    "name": "h_find",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help Find",
+                      "description": "Search for lines containing a specific word in the help output",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Script used to create, modify, and transform label tables",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

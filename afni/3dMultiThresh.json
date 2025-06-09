@@ -1,0 +1,536 @@
+{
+  "uid": "0cd522f82df292e38bac580f53ce63e58f4d0ba1.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 14,
+      "name": "3dMultiThresh",
+      "outputs": [
+        {
+          "id": 11,
+          "name": "output_file",
+          "tokens": [
+            {
+              "refId": 6,
+              "fileRemoveSuffixes": []
+            },
+            ".nii.gz"
+          ],
+          "docs": {
+            "title": "Output File",
+            "description": "Thresholded version of the input dataset.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 12,
+          "name": "mask_output",
+          "tokens": [
+            {
+              "refId": 6,
+              "fileRemoveSuffixes": []
+            },
+            "_mask.nii.gz"
+          ],
+          "docs": {
+            "title": "Mask Output File",
+            "description": "0/1 mask dataset of voxels that survive the process.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 13,
+          "name": "all_mask_output",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            },
+            ".nii.gz"
+          ],
+          "docs": {
+            "title": "All Mask Output File",
+            "description": "Multi-volume dataset where each volume is the binary mask of voxels that pass ONE of the tests.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Program to apply a multi-threshold (mthresh) dataset to an input dataset.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "3dMultiThresh",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "3dMultiThresh"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-mthresh"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "mthresh_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Multi-threshold File",
+                      "description": "Multi-threshold dataset from 3dXClustSim, usually via running '3dttest++ -ETAC'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-input"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input File",
+                      "description": "Dataset to threshold.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-1tindex"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "index",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Sub-brick Index",
+                      "description": "Index (sub-brick) on which to threshold.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-signed"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "signed_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Signed Flag",
+                      "description": "Indicates if the .mthresh.nii file from 3dXClustSim was created using 1-sided thresholding. Choose sign + or -.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "positive_sign_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Positive Sign Flag",
+                      "description": "Same as '-signed +'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-pos"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "negative_sign_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Negative Sign Flag",
+                      "description": "Same as '-signed -'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-neg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Prefix",
+                      "description": "Prefix for output dataset. Can be 'NULL' to get no output dataset.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "mask_only_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask Only Flag",
+                      "description": "Instead of outputting a thresholded version of the input dataset, just output a 0/1 mask dataset of voxels that survive the process.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-maskonly"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-allmask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "all_mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "All Mask Prefix",
+                      "description": "Write out a multi-volume dataset with prefix 'qqq' where each volume is the binary mask of voxels that pass ONE of the tests.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "no_zero_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Zero Flag",
+                      "description": "Prevents the output of a dataset if it would be all zero.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nozero"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "quiet_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Quiet Flag",
+                      "description": "Turn off progress report messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Program to apply a multi-threshold (mthresh) dataset to an input dataset.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

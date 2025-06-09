@@ -1,0 +1,615 @@
+{
+  "uid": "aa6dd3c1515c93b42935ecf05bfb0b6f2739b26b.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 15,
+      "name": "3dTsmooth",
+      "outputs": [
+        {
+          "id": 14,
+          "name": "output_dataset",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".nii.gz"
+          ],
+          "docs": {
+            "title": "Output Dataset",
+            "description": "Smoothed 3D+time dataset",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Smooths each voxel time series in a 3D+time dataset and produces as output a new 3D+time dataset (e.g., lowpass filter in time).",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "3dTsmooth",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "3dTsmooth"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "input_dataset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Dataset",
+                      "description": "The input 3D+time dataset.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Prefix",
+                      "description": "Sets the prefix of the output dataset.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-datum"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "datum_type",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Datum Type",
+                      "description": "Coerce output dataset to be stored as the given type.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "lin_filter",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Linear Filter",
+                      "description": "3 point linear filter: 0.15*a + 0.70*b + 0.15*c",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-lin"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "med_filter",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Median Filter",
+                      "description": "3 point median filter: median(a,b,c)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-med"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "osf_filter",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Order Statistics Filter",
+                      "description": "3 point order statistics filter: 0.15*min(a,b,c) + 0.70*median(a,b,c) + 0.15*max(a,b,c)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-osf"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-3lin"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "lin_filter_custom",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Custom Linear Filter",
+                      "description": "3 point linear filter with custom weight: 0.5*(1-m)*a + m*b + 0.5*(1-m)*c",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": 0,
+                    "maxValue": 1
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-hamming"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "hamming",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Hamming Window Filter",
+                      "description": "Use N point Hamming window filter.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-blackman"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "blackman",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Blackman Window Filter",
+                      "description": "Use N point Blackman window filter.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-custom"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "custom_filter",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Custom Filter File",
+                      "description": "Use custom filter with coefficients from a specified file.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "extend",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Extend Values",
+                      "description": "BEFORE: use the first value; AFTER: use the last value.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-EXTEND"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "zero",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Zero Padding",
+                      "description": "BEFORE and AFTER: use zero.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ZERO"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "trend",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Trend Extrapolation",
+                      "description": "Compute a linear trend, and extrapolate BEFORE and AFTER.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-TREND"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-adaptive"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "adaptive",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Adaptive Mean Filtering Width",
+                      "description": "Use adaptive mean filtering of width N (N must be odd and bigger than 3).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Smooths each voxel time series in a 3D+time dataset and produces as output a new 3D+time dataset (e.g., lowpass filter in time).",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

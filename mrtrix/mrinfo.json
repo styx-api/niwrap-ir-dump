@@ -1,0 +1,1894 @@
+{
+  "uid": "5dc17d2a1d5fe47e79268addf324166471b53837.boutiques",
+  "package": {
+    "name": "mrtrix",
+    "version": "3.0.4",
+    "docker": "mrtrix3/mrtrix3:3.0.4",
+    "docs": {
+      "title": "MRTrix3",
+      "description": "MRtrix3 provides a set of tools to perform various types of diffusion MRI analyses, from various forms of tractography through to next-generation group-level analyses. It is designed with consistency, performance, and stability in mind, and is freely available under an open-source license. It is developed and maintained by a team of experts in the field, fostering an active community of users from diverse backgrounds.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://www.mrtrix.org/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 58,
+      "name": "mrinfo",
+      "outputs": [
+        {
+          "id": 54,
+          "name": "json_keyval",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "json_keyval",
+            "description": "export header key/value entries to a JSON file ",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 55,
+          "name": "json_all",
+          "tokens": [
+            {
+              "refId": 15,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "json_all",
+            "description": "export all header contents to a JSON file ",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 56,
+          "name": "export_grad_mrtrix",
+          "tokens": [
+            {
+              "refId": 22,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "export_grad_mrtrix",
+            "description": "export the diffusion-weighted gradient table to file in MRtrix format ",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 57,
+          "name": "export_pe_table",
+          "tokens": [
+            {
+              "refId": 33,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "export_pe_table",
+            "description": "export phase-encoding table to file ",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Display image header information, or extract specific information from the header.\n\nBy default, all information contained in each image header will be printed to the console in a reader-friendly format.\n\nAlternatively, command-line options may be used to extract specific details from the header(s); these are printed to the console in a format more appropriate for scripting purposes or piping to file. If multiple options and/or images are provided, the requested header fields will be printed in the order in which they appear in the help page, with all requested details from each input image in sequence printed before the next image is processed.\n\nThe command can also write the diffusion gradient table from a single input image to file; either in the MRtrix or FSL format (bvecs/bvals file pair; includes appropriate diffusion gradient vector reorientation)\n\nThe -dwgrad, -export_* and -shell_* options provide (information about) the diffusion weighting gradient table after it has been processed by the MRtrix3 back-end (vectors normalised, b-values scaled by the square of the vector norm, depending on the -bvalue_scaling option). To see the raw gradient table information as stored in the image header, i.e. without MRtrix3 back-end processing, use \"-property dw_scheme\".\n\nThe -bvalue_scaling option controls an aspect of the import of diffusion gradient tables. When the input diffusion-weighting direction vectors have norms that differ substantially from unity, the b-values will be scaled by the square of their corresponding vector norm (this is how multi-shell acquisitions are frequently achieved on scanner platforms). However in some rare instances, the b-values may be correct, despite the vectors not being of unit norm (or conversely, the b-values may need to be rescaled even though the vectors are close to unit norm). This option allows the user to control this operation and override MRrtix3's automatic detection.\n\nReferences:\n\n",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "mrinfo",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "mrinfo"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "all",
+                    "outputs": [],
+                    "docs": {
+                      "title": "all",
+                      "description": "print all properties, rather than the first and last 2 of each.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-all"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "name",
+                    "outputs": [],
+                    "docs": {
+                      "title": "name",
+                      "description": "print the file system path of the image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-name"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "format",
+                    "outputs": [],
+                    "docs": {
+                      "title": "format",
+                      "description": "image file format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-format"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "ndim",
+                    "outputs": [],
+                    "docs": {
+                      "title": "ndim",
+                      "description": "number of image dimensions",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ndim"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "size",
+                    "outputs": [],
+                    "docs": {
+                      "title": "size",
+                      "description": "image size along each axis",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-size"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "spacing",
+                    "outputs": [],
+                    "docs": {
+                      "title": "spacing",
+                      "description": "voxel spacing along each image dimension",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-spacing"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "datatype",
+                    "outputs": [],
+                    "docs": {
+                      "title": "datatype",
+                      "description": "data type used for image data storage",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-datatype"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "strides",
+                    "outputs": [],
+                    "docs": {
+                      "title": "strides",
+                      "description": "data strides i.e. order and direction of axes data layout",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-strides"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "offset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "offset",
+                      "description": "image intensity offset",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-offset"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "multiplier",
+                    "outputs": [],
+                    "docs": {
+                      "title": "multiplier",
+                      "description": "image intensity multiplier",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-multiplier"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "transform",
+                      "description": "the transformation from image coordinates [mm] to scanner / real world coordinates [mm]",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-transform"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "property",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "any text properties embedded in the image header under the specified key (use 'all' to list all keys found)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "property",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-property"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 12,
+                                  "name": "key",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "key",
+                                    "description": "any text properties embedded in the image header under the specified key (use 'all' to list all keys found)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "any text properties embedded in the image header under the specified key (use 'all' to list all keys found)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-json_keyval"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "json_keyval",
+                    "outputs": [],
+                    "docs": {
+                      "title": "json_keyval",
+                      "description": "export header key/value entries to a JSON file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-json_all"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "json_all",
+                    "outputs": [],
+                    "docs": {
+                      "title": "json_all",
+                      "description": "export all header contents to a JSON file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-grad"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "grad",
+                    "outputs": [],
+                    "docs": {
+                      "title": "grad",
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in a text file. This should be supplied as a 4xN text file with each line is in the format [ X Y Z b ], where [ X Y Z ] describe the direction of the applied gradient, and b gives the b-value in units of s/mm^2. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "fslgrad",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "fslgrad",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-fslgrad"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 18,
+                                  "name": "bvecs",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvecs",
+                                    "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 19,
+                                  "name": "bvals",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvals",
+                                    "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "Provide the diffusion-weighted gradient scheme used in the acquisition in FSL bvecs/bvals format files. If a diffusion gradient scheme is present in the input image header, the data provided with this option will be instead used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-bvalue_scaling"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "bvalue_scaling",
+                    "outputs": [],
+                    "docs": {
+                      "title": "bvalue_scaling",
+                      "description": "enable or disable scaling of diffusion b-values by the square of the corresponding DW gradient norm (see Desciption). Valid choices are yes/no, true/false, 0/1 (default: automatic).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-export_grad_mrtrix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "export_grad_mrtrix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "export_grad_mrtrix",
+                      "description": "export the diffusion-weighted gradient table to file in MRtrix format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 28,
+                    "name": "export_grad_fsl",
+                    "outputs": [
+                      {
+                        "id": 26,
+                        "name": "bvecs_path",
+                        "tokens": [
+                          {
+                            "refId": 24,
+                            "fileRemoveSuffixes": []
+                          }
+                        ],
+                        "docs": {
+                          "title": "bvecs_path",
+                          "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                          "authors": [],
+                          "literature": [],
+                          "urls": []
+                        }
+                      },
+                      {
+                        "id": 27,
+                        "name": "bvals_path",
+                        "tokens": [
+                          {
+                            "refId": 25,
+                            "fileRemoveSuffixes": []
+                          }
+                        ],
+                        "docs": {
+                          "title": "bvals_path",
+                          "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                          "authors": [],
+                          "literature": [],
+                          "urls": []
+                        }
+                      }
+                    ],
+                    "docs": {
+                      "title": null,
+                      "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "export_grad_fsl",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-export_grad_fsl"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 24,
+                                  "name": "bvecs_path",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvecs_path",
+                                    "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 25,
+                                  "name": "bvals_path",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "bvals_path",
+                                    "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "export the diffusion-weighted gradient table to files in FSL (bvecs / bvals) format",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 29,
+                    "name": "dwgrad",
+                    "outputs": [],
+                    "docs": {
+                      "title": "dwgrad",
+                      "description": "the diffusion-weighting gradient table, as interpreted by MRtrix3",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-dwgrad"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 30,
+                    "name": "shell_bvalues",
+                    "outputs": [],
+                    "docs": {
+                      "title": "shell_bvalues",
+                      "description": "list the average b-value of each shell",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-shell_bvalues"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "shell_sizes",
+                    "outputs": [],
+                    "docs": {
+                      "title": "shell_sizes",
+                      "description": "list the number of volumes in each shell",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-shell_sizes"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "shell_indices",
+                    "outputs": [],
+                    "docs": {
+                      "title": "shell_indices",
+                      "description": "list the image volumes attributed to each b-value shell",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-shell_indices"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-export_pe_table"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "export_pe_table",
+                    "outputs": [],
+                    "docs": {
+                      "title": "export_pe_table",
+                      "description": "export phase-encoding table to file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 39,
+                    "name": "export_pe_eddy",
+                    "outputs": [
+                      {
+                        "id": 37,
+                        "name": "config",
+                        "tokens": [
+                          {
+                            "refId": 35,
+                            "fileRemoveSuffixes": []
+                          }
+                        ],
+                        "docs": {
+                          "title": "config",
+                          "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                          "authors": [],
+                          "literature": [],
+                          "urls": []
+                        }
+                      },
+                      {
+                        "id": 38,
+                        "name": "indices",
+                        "tokens": [
+                          {
+                            "refId": 36,
+                            "fileRemoveSuffixes": []
+                          }
+                        ],
+                        "docs": {
+                          "title": "indices",
+                          "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                          "authors": [],
+                          "literature": [],
+                          "urls": []
+                        }
+                      }
+                    ],
+                    "docs": {
+                      "title": null,
+                      "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "export_pe_eddy",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-export_pe_eddy"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 35,
+                                  "name": "config",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "config",
+                                    "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 36,
+                                  "name": "indices",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "indices",
+                                    "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "export phase-encoding information to an EDDY-style config / index file pair",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 40,
+                    "name": "petable",
+                    "outputs": [],
+                    "docs": {
+                      "title": "petable",
+                      "description": "print the phase encoding table",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-petable"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 41,
+                    "name": "nodelete",
+                    "outputs": [],
+                    "docs": {
+                      "title": "nodelete",
+                      "description": "don't delete temporary images or images passed to mrinfo via Unix pipes",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nodelete"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 42,
+                    "name": "info",
+                    "outputs": [],
+                    "docs": {
+                      "title": "info",
+                      "description": "display information messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-info"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 43,
+                    "name": "quiet",
+                    "outputs": [],
+                    "docs": {
+                      "title": "quiet",
+                      "description": "do not display information messages or progress status; alternatively, this can be achieved by setting the MRTRIX_QUIET environment variable to a non-empty string.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 44,
+                    "name": "debug",
+                    "outputs": [],
+                    "docs": {
+                      "title": "debug",
+                      "description": "display debugging messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-debug"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 45,
+                    "name": "force",
+                    "outputs": [],
+                    "docs": {
+                      "title": "force",
+                      "description": "force overwrite of output files (caution: using the same file as input and output might cause unexpected behaviour).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-force"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-nthreads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 46,
+                    "name": "nthreads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "nthreads",
+                      "description": "use this number of threads in multi-threaded applications (set to 0 to disable multi-threading).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 50,
+                    "name": "config",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "config",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-config"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 48,
+                                  "name": "key",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "key",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 49,
+                                  "name": "value",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "value",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 51,
+                    "name": "help",
+                    "outputs": [],
+                    "docs": {
+                      "title": "help",
+                      "description": "display this information page and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 52,
+                    "name": "version",
+                    "outputs": [],
+                    "docs": {
+                      "title": "version",
+                      "description": "display version information and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-version"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 53,
+                    "name": "image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "image",
+                      "description": "the input image(s).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Display image header information, or extract specific information from the header.\n\nBy default, all information contained in each image header will be printed to the console in a reader-friendly format.\n\nAlternatively, command-line options may be used to extract specific details from the header(s); these are printed to the console in a format more appropriate for scripting purposes or piping to file. If multiple options and/or images are provided, the requested header fields will be printed in the order in which they appear in the help page, with all requested details from each input image in sequence printed before the next image is processed.\n\nThe command can also write the diffusion gradient table from a single input image to file; either in the MRtrix or FSL format (bvecs/bvals file pair; includes appropriate diffusion gradient vector reorientation)\n\nThe -dwgrad, -export_* and -shell_* options provide (information about) the diffusion weighting gradient table after it has been processed by the MRtrix3 back-end (vectors normalised, b-values scaled by the square of the vector norm, depending on the -bvalue_scaling option). To see the raw gradient table information as stored in the image header, i.e. without MRtrix3 back-end processing, use \"-property dw_scheme\".\n\nThe -bvalue_scaling option controls an aspect of the import of diffusion gradient tables. When the input diffusion-weighting direction vectors have norms that differ substantially from unity, the b-values will be scaled by the square of their corresponding vector norm (this is how multi-shell acquisitions are frequently achieved on scanner platforms). However in some rare instances, the b-values may be correct, despite the vectors not being of unit norm (or conversely, the b-values may need to be rescaled even though the vectors are close to unit norm). This option allows the user to control this operation and override MRrtix3's automatic detection.\n\nReferences:\n\n",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

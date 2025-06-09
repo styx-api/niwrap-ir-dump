@@ -1,0 +1,659 @@
+{
+  "uid": "12e4cb21b35db70d6b2ca1c1f10b19ffe465fb9d.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 20,
+      "name": "@measure_in2out",
+      "outputs": [
+        {
+          "id": 12,
+          "name": "inout_dist",
+          "tokens": [
+            "inout_dist.nii.gz"
+          ],
+          "docs": {
+            "title": "Thickness distance file",
+            "description": "Volumetric thickness/distance from in to out",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 13,
+          "name": "in_and_out",
+          "tokens": [
+            "in_and_out.nii.gz"
+          ],
+          "docs": {
+            "title": "Inside and outside distance file",
+            "description": "Volumetric distance to inside and outside in 2 volumes",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 14,
+          "name": "inout_thick",
+          "tokens": [
+            "inout_thick.niml.dset"
+          ],
+          "docs": {
+            "title": "Unsmoothed surface thickness file",
+            "description": "Unsmoothed thickness mapped to surface nodes",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "inout_thick_smooth",
+          "tokens": [
+            "inout_thick_smooth.niml.dset"
+          ],
+          "docs": {
+            "title": "Smoothed surface thickness file",
+            "description": "Smoothed thickness mapped to surface nodes",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 16,
+          "name": "maskset_output",
+          "tokens": [
+            "maskset.nii.gz"
+          ],
+          "docs": {
+            "title": "Mask file output",
+            "description": "Mask file",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 17,
+          "name": "maskset_rs",
+          "tokens": [
+            "maskset_rs.nii.gz"
+          ],
+          "docs": {
+            "title": "Resampled mask file output",
+            "description": "Resampled mask file",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 18,
+          "name": "anat_gii",
+          "tokens": [
+            "anat.gii"
+          ],
+          "docs": {
+            "title": "Anatomy file",
+            "description": "Surface representation of mask volume",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 19,
+          "name": "quick_spec",
+          "tokens": [
+            "quick.spec"
+          ],
+          "docs": {
+            "title": "Quick specification file",
+            "description": "Simple specification file for surface to use with suma commands",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Compute thickness of mask using in2out method.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "@measure_in2out",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "@measure_in2out"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-maskset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "maskset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input mask dataset",
+                      "description": "Mask dataset for input.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-surfset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "surfset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Surface dataset",
+                      "description": "Surface dataset onto which to map thickness (probably a pial/gray matter surface).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-outdir"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "outdir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output directory",
+                      "description": "Output directory. If not specified, in2out_thickdir is used.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-resample"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "resample",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Resample input",
+                      "description": "Resample input to mm in millimeters (put a number here). Set this to half a voxel or \"auto\". No resampling is done by default. Resampling is highly recommended for most 1mm data.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-increment"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "increment",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Increment in millimeters",
+                      "description": "Test thickness at increments of sub-voxel distance. Default is 1/4 voxel minimum distance (in-plane).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-surfsmooth"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "surfsmooth",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Surface smoothing in millimeters",
+                      "description": "Smooth surface map of thickness by mm millimeters. Default is 6 mm.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-maxthick"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "maxthick",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Maximum thickness in millimeters",
+                      "description": "Search for maximum thickness value of mm millimeters. Default is 6 mm.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-depthsearch"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "depthsearch",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Depth search in millimeters",
+                      "description": "Map to surface by looking for max along mm millimeter normal vectors. Default is 3 mm.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-maskinoutvals"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "maskinoutvals",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask inside and outside values",
+                      "description": "Use v1 for value of mask, v2 and v3 for inside and outside mask values (e.g., '1 -2 -1').",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": 3,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "keep_temp_files",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Keep temporary files",
+                      "description": "Do not delete the intermediate files (for testing).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-keep_temp_files"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-surfsmooth_method"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "surfsmooth_method",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Surface smoothing method",
+                      "description": "Heat method used for smoothing surfaces. Default is HEAT_07 but HEAT_05 is also useful for some models.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-fs_cort_dir"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "fs_cort_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "FreeSurfer SUMA directory",
+                      "description": "Use FreeSurfer SUMA directory from @SUMA_Make_Spec_FS for processing.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Compute thickness of mask using in2out method.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

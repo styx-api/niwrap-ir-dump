@@ -1,0 +1,651 @@
+{
+  "uid": "1da2f095a43ac3c7dfc286883ae9220b1018660e.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 16,
+      "name": "mri_3d_photo_recon",
+      "outputs": [
+        {
+          "id": 14,
+          "name": "reconstructed_volume",
+          "tokens": [
+            {
+              "refId": 4,
+              "fileRemoveSuffixes": []
+            },
+            "/reconstructed_volume.nii.gz"
+          ],
+          "docs": {
+            "title": "Reconstructed Volume",
+            "description": "Reconstructed photo volume output file",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "reference_data",
+          "tokens": [
+            {
+              "refId": 4,
+              "fileRemoveSuffixes": []
+            },
+            "/reference_data.nii.gz"
+          ],
+          "docs": {
+            "title": "Reference Data",
+            "description": "Output reference data",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Code for 3D photo reconstruction (Tregidgo, et al., MICCAI 2020)",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "mri_3d_photo_recon",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "mri_3d_photo_recon"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--input_photo_dir"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "input_photo_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Photo Directory",
+                      "description": "Directory with input photos (required)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--input_segmentation_dir"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_segmentation_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Segmentation Directory",
+                      "description": "Directory with input slab masks / segmentations (required)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--slice_thickness"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "slice_thickness",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Slice Thickness",
+                      "description": "Slice thickness in mm",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--photo_resolution"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "photo_resolution",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Photo Resolution",
+                      "description": "Resolution of the photos in mm",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--output_directory"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "output_directory",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Directory",
+                      "description": "Output directory with reconstructed photo volume and reference",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref_mask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "ref_mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Mask",
+                      "description": "Reference binary mask",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref_surface"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "ref_surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Surface",
+                      "description": "Reference surface file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref_soft_mask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "ref_soft_mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Soft Mask",
+                      "description": "Reference soft mask",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--mesh_reorient_with_indices"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "mesh_reorient_with_indices",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mesh Reorient Indices",
+                      "description": "Vertex indices of frontal pole, occipital pole, and top of central sulcus, separated with commas, for mesh alignment",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "photos_posterior_side",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Photos Posterior Side Flag",
+                      "description": "Use when photos are taken of posterior side of slabs (default is anterior side)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--photos_of_posterior_side"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "order_posterior_to_anterior",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Order Posterior to Anterior Flag",
+                      "description": "Use when photos are ordered from posterior to anterior (default is anterior to posterior)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--order_posterior_to_anterior"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "allow_z_stretch",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Allow Z Stretch Flag",
+                      "description": "Use to adjust the slice thickness to best match the reference. You should probably *never* use this with soft references (ref_soft_mask)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--allow_z_stretch"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "rigid_only_for_photos",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rigid Only for Photos Flag",
+                      "description": "Switch on if you want photos to deform only rigidly (not affine)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--rigid_only_for_photos"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--gpu"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "gpu_index",
+                    "outputs": [],
+                    "docs": {
+                      "title": "GPU Index",
+                      "description": "Index of GPU to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Code for 3D photo reconstruction (Tregidgo, et al., MICCAI 2020)",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

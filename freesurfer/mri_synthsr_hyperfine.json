@@ -1,0 +1,277 @@
+{
+  "uid": "4e58102f9b885e826be8d96a7d9856f922b77bc5.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 6,
+      "name": "mri_synthsr_hyperfine",
+      "outputs": [
+        {
+          "id": 5,
+          "name": "synthetic_mprage",
+          "tokens": [
+            {
+              "refId": 2,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Synthetic MP-RAGE",
+            "description": "Synthetic 1mm MP-RAGE(s) generated from T1 and T2 inputs",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair of T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial)",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "mri_synthsr_hyperfine",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "mri_synthsr_hyperfine"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--t1"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "t1_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "T1 Image",
+                      "description": "T1 image(s) to super-resolve, at native 1.5x1.5x5 axial resolution. Can be a path to an image or to a folder.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--t2"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "t2_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "T2 Image",
+                      "description": "T2 image(s). Must be a folder if --t1 designates a folder. These must be registered to the T1s, in physical coordinates (i.e., with the headers, do NOT resample when registering; see instructions on FreeSurfer wiki)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output",
+                      "description": "Output(s), i.e. synthetic 1mm MP-RAGE(s). Must be a folder if --t1 designates a folder.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--threads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "threads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Threads",
+                      "description": "(optional) Number of cores to be used. Default is 1.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 1
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "cpu",
+                    "outputs": [],
+                    "docs": {
+                      "title": "CPU Flag",
+                      "description": "(optional) Enforce running with CPU rather than GPU.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--cpu"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair of T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial)",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

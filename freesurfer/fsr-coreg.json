@@ -1,0 +1,337 @@
+{
+  "uid": "b6136f2ba4c2e2f78f88acaab07f5da54d1d4acf.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 8,
+      "name": "fsr-coreg",
+      "outputs": [
+        {
+          "id": 6,
+          "name": "aligned_volume",
+          "tokens": [
+            {
+              "refId": 4,
+              "fileRemoveSuffixes": []
+            },
+            "/mode.mgz"
+          ],
+          "docs": {
+            "title": "Aligned Volume",
+            "description": "Volume produced for each mode in alignment with the reference mode",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 7,
+          "name": "registration_transform",
+          "tokens": [
+            {
+              "refId": 4,
+              "fileRemoveSuffixes": []
+            },
+            "/mode.reg-to-ref.lta"
+          ],
+          "docs": {
+            "title": "Registration Transform File",
+            "description": "Registration transform file for mode to reference mode",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Co-registers input data in preparation for FreeSurfer analysis",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "fsr-coreg",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "fsr-coreg"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "import_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Import Directory",
+                      "description": "Data directory created by fsr-import",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "reference_mode",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Mode",
+                      "description": "Mode to use as a reference (all modes register to this mode)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--threads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "num_threads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Number of Threads",
+                      "description": "Number of threads to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "force_update",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Force Update Flag",
+                      "description": "Force update of files regardless of time stamp",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--force-update"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "output_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Directory",
+                      "description": "Set the output directory, default is importdir",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--expert"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "expert_options",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Expert Options File",
+                      "description": "Expert options file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Co-registers input data in preparation for FreeSurfer analysis",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

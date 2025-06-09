@@ -1,0 +1,1356 @@
+{
+  "uid": "6c6102f2ec5d75766ebd1b6dbfc43af1a75b18e2.boutiques",
+  "package": {
+    "name": "mrtrix",
+    "version": "3.0.4",
+    "docker": "mrtrix3/mrtrix3:3.0.4",
+    "docs": {
+      "title": "MRTrix3",
+      "description": "MRtrix3 provides a set of tools to perform various types of diffusion MRI analyses, from various forms of tractography through to next-generation group-level analyses. It is designed with consistency, performance, and stability in mind, and is freely available under an open-source license. It is developed and maintained by a team of experts in the field, fostering an active community of users from diverse backgrounds.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://www.mrtrix.org/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 36,
+      "name": "tckmap",
+      "outputs": [
+        {
+          "id": 35,
+          "name": "output",
+          "tokens": [
+            {
+              "refId": 34,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "output",
+            "description": "the output track-weighted image",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Use track data as a form of contrast for producing a high-resolution image.\n\nNote: if you run into limitations with RAM usage, make sure you output the results to a .mif file or .mih / .dat file pair - this will avoid the allocation of an additional buffer to store the output for write-out.\n\nReferences:\n\n* For TDI or DEC TDI:\nCalamante, F.; Tournier, J.-D.; Jackson, G. D. & Connelly, A. Track-density imaging (TDI): Super-resolution white matter imaging using whole-brain track-density mapping. NeuroImage, 2010, 53, 1233-1243\n\n* If using -contrast length and -stat_vox mean:\nPannek, K.; Mathias, J. L.; Bigler, E. D.; Brown, G.; Taylor, J. D. & Rose, S. E. The average pathlength map: A diffusion MRI tractography-derived index for studying brain pathology. NeuroImage, 2011, 55, 133-141\n\n* If using -dixel option with TDI contrast only:\nSmith, R.E., Tournier, J-D., Calamante, F., Connelly, A. A novel paradigm for automated segmentation of very large whole-brain probabilistic tractography data sets. In proc. ISMRM, 2011, 19, 673\n\n* If using -dixel option with any other contrast:\nPannek, K., Raffelt, D., Salvado, O., Rose, S. Incorporating directional information in diffusion tractography derived maps: angular track imaging (ATI). In Proc. ISMRM, 2012, 20, 1912\n\n* If using -tod option:\nDhollander, T., Emsell, L., Van Hecke, W., Maes, F., Sunaert, S., Suetens, P. Track Orientation Density Imaging (TODI) and Track Orientation Distribution (TOD) based tractography. NeuroImage, 2014, 94, 312-336\n\n* If using other contrasts / statistics:\nCalamante, F.; Tournier, J.-D.; Smith, R. E. & Connelly, A. A generalised framework for super-resolution track-weighted imaging. NeuroImage, 2012, 59, 2494-2503\n\n* If using -precise mapping option:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. SIFT: Spherical-deconvolution informed filtering of tractograms. NeuroImage, 2013, 67, 298-312 (Appendix 3)",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "tckmap",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "tckmap"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-template"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "template",
+                    "outputs": [],
+                    "docs": {
+                      "title": "template",
+                      "description": "an image file to be used as a template for the output (the output image will have the same transform and field of view).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-vox"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "vox",
+                    "outputs": [],
+                    "docs": {
+                      "title": "vox",
+                      "description": "provide either an isotropic voxel size (in mm), or comma-separated list of 3 voxel dimensions.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": ","
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-datatype"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "datatype",
+                    "outputs": [],
+                    "docs": {
+                      "title": "datatype",
+                      "description": "specify output image data type.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "dec",
+                    "outputs": [],
+                    "docs": {
+                      "title": "dec",
+                      "description": "perform track mapping in directionally-encoded colour (DEC) space",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-dec"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-dixel"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "dixel",
+                    "outputs": [],
+                    "docs": {
+                      "title": "dixel",
+                      "description": "map streamlines to dixels within each voxel; requires either a number of dixels (references an internal direction set), or a path to a text file containing a set of directions stored as azimuth/elevation pairs",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct_union",
+                    "alts": [
+                      {
+                        "base": {
+                          "id": 6,
+                          "name": "VariousString",
+                          "outputs": [],
+                          "docs": {
+                            "title": null,
+                            "description": null,
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "VariousString",
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 5,
+                                        "name": "obj",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Object",
+                                          "description": "String object.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": null,
+                            "description": null,
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      },
+                      {
+                        "base": {
+                          "id": 8,
+                          "name": "VariousFile",
+                          "outputs": [],
+                          "docs": {
+                            "title": null,
+                            "description": null,
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "VariousFile",
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 7,
+                                        "name": "obj",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Object",
+                                          "description": "File object.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "file",
+                                        "resolveParent": false,
+                                        "mutable": false
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": null,
+                            "description": null,
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      }
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-tod"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "tod",
+                    "outputs": [],
+                    "docs": {
+                      "title": "tod",
+                      "description": "generate a Track Orientation Distribution (TOD) in each voxel; need to specify the maximum spherical harmonic degree lmax to use when generating Apodised Point Spread Functions",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-contrast"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "contrast",
+                    "outputs": [],
+                    "docs": {
+                      "title": "contrast",
+                      "description": "define the desired form of contrast for the output image\nOptions are: tdi, length, invlength, scalar_map, scalar_map_count, fod_amp, curvature, vector_file (default: tdi)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "image",
+                      "description": "provide the scalar image map for generating images with 'scalar_map' / 'scalar_map_count' contrast, or the spherical harmonics image for 'fod_amp' contrast",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-vector_file"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "vector_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "vector_file",
+                      "description": "provide the vector data file for generating images with 'vector_file' contrast",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-stat_vox"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "stat_vox",
+                    "outputs": [],
+                    "docs": {
+                      "title": "stat_vox",
+                      "description": "define the statistic for choosing the final voxel intensities for a given contrast type given the individual values from the tracks passing through each voxel. \nOptions are: sum, min, mean, max (default: sum)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-stat_tck"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "stat_tck",
+                    "outputs": [],
+                    "docs": {
+                      "title": "stat_tck",
+                      "description": "define the statistic for choosing the contribution to be made by each streamline as a function of the samples taken along their lengths. \nOnly has an effect for 'scalar_map', 'fod_amp' and 'curvature' contrast types. \nOptions are: sum, min, mean, max, median, mean_nonzero, gaussian, ends_min, ends_mean, ends_max, ends_prod (default: mean)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-fwhm_tck"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "fwhm_tck",
+                    "outputs": [],
+                    "docs": {
+                      "title": "fwhm_tck",
+                      "description": "when using gaussian-smoothed per-track statistic, specify the desired full-width half-maximum of the Gaussian smoothing kernel (in mm)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "map_zero",
+                    "outputs": [],
+                    "docs": {
+                      "title": "map_zero",
+                      "description": "if a streamline has zero contribution based on the contrast & statistic, typically it is not mapped; use this option to still contribute to the map even if this is the case (these non-contributing voxels can then influence the mean value in each voxel of the map)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-map_zero"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "backtrack",
+                    "outputs": [],
+                    "docs": {
+                      "title": "backtrack",
+                      "description": "when using -stat_tck ends_*, if the streamline endpoint is outside the FoV, backtrack along the streamline trajectory until an appropriate point is found",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-backtrack"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-upsample"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "upsample",
+                    "outputs": [],
+                    "docs": {
+                      "title": "upsample",
+                      "description": "upsample the tracks by some ratio using Hermite interpolation before mappping\n(If omitted, an appropriate ratio will be determined automatically)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "precise",
+                    "outputs": [],
+                    "docs": {
+                      "title": "precise",
+                      "description": "use a more precise streamline mapping strategy, that accurately quantifies the length through each voxel (these lengths are then taken into account during TWI calculation)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-precise"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "ends_only",
+                    "outputs": [],
+                    "docs": {
+                      "title": "ends_only",
+                      "description": "only map the streamline endpoints to the image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ends_only"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-tck_weights_in"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "tck_weights_in",
+                    "outputs": [],
+                    "docs": {
+                      "title": "tck_weights_in",
+                      "description": "specify a text scalar file containing the streamline weights",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "info",
+                    "outputs": [],
+                    "docs": {
+                      "title": "info",
+                      "description": "display information messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-info"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "quiet",
+                    "outputs": [],
+                    "docs": {
+                      "title": "quiet",
+                      "description": "do not display information messages or progress status; alternatively, this can be achieved by setting the MRTRIX_QUIET environment variable to a non-empty string.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 24,
+                    "name": "debug",
+                    "outputs": [],
+                    "docs": {
+                      "title": "debug",
+                      "description": "display debugging messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-debug"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 25,
+                    "name": "force",
+                    "outputs": [],
+                    "docs": {
+                      "title": "force",
+                      "description": "force overwrite of output files (caution: using the same file as input and output might cause unexpected behaviour).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-force"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-nthreads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "nthreads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "nthreads",
+                      "description": "use this number of threads in multi-threaded applications (set to 0 to disable multi-threading).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 30,
+                    "name": "config",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "config",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-config"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 28,
+                                  "name": "key",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "key",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 29,
+                                  "name": "value",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "value",
+                                    "description": "temporarily set the value of an MRtrix config file entry.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "temporarily set the value of an MRtrix config file entry.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "help",
+                    "outputs": [],
+                    "docs": {
+                      "title": "help",
+                      "description": "display this information page and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "version",
+                    "outputs": [],
+                    "docs": {
+                      "title": "version",
+                      "description": "display version information and exit.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-version"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "tracks",
+                    "outputs": [],
+                    "docs": {
+                      "title": "tracks",
+                      "description": "the input track file.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 34,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "output",
+                      "description": "the output track-weighted image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Use track data as a form of contrast for producing a high-resolution image.\n\nNote: if you run into limitations with RAM usage, make sure you output the results to a .mif file or .mih / .dat file pair - this will avoid the allocation of an additional buffer to store the output for write-out.\n\nReferences:\n\n* For TDI or DEC TDI:\nCalamante, F.; Tournier, J.-D.; Jackson, G. D. & Connelly, A. Track-density imaging (TDI): Super-resolution white matter imaging using whole-brain track-density mapping. NeuroImage, 2010, 53, 1233-1243\n\n* If using -contrast length and -stat_vox mean:\nPannek, K.; Mathias, J. L.; Bigler, E. D.; Brown, G.; Taylor, J. D. & Rose, S. E. The average pathlength map: A diffusion MRI tractography-derived index for studying brain pathology. NeuroImage, 2011, 55, 133-141\n\n* If using -dixel option with TDI contrast only:\nSmith, R.E., Tournier, J-D., Calamante, F., Connelly, A. A novel paradigm for automated segmentation of very large whole-brain probabilistic tractography data sets. In proc. ISMRM, 2011, 19, 673\n\n* If using -dixel option with any other contrast:\nPannek, K., Raffelt, D., Salvado, O., Rose, S. Incorporating directional information in diffusion tractography derived maps: angular track imaging (ATI). In Proc. ISMRM, 2012, 20, 1912\n\n* If using -tod option:\nDhollander, T., Emsell, L., Van Hecke, W., Maes, F., Sunaert, S., Suetens, P. Track Orientation Density Imaging (TODI) and Track Orientation Distribution (TOD) based tractography. NeuroImage, 2014, 94, 312-336\n\n* If using other contrasts / statistics:\nCalamante, F.; Tournier, J.-D.; Smith, R. E. & Connelly, A. A generalised framework for super-resolution track-weighted imaging. NeuroImage, 2012, 59, 2494-2503\n\n* If using -precise mapping option:\nSmith, R. E.; Tournier, J.-D.; Calamante, F. & Connelly, A. SIFT: Spherical-deconvolution informed filtering of tractograms. NeuroImage, 2013, 67, 298-312 (Appendix 3)",
+        "authors": [
+          "MRTrix3 Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://www.mrtrix.org/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

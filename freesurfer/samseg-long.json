@@ -1,0 +1,386 @@
+{
+  "uid": "765b3bcdab2d7c42a40957c0344f10707c49df51.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 10,
+      "name": "samseg-long",
+      "outputs": [
+        {
+          "id": 7,
+          "name": "tp001_output",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/tp001"
+          ],
+          "docs": {
+            "title": "Timepoint 001 output folder",
+            "description": "Samseg output folder for the first time point.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 8,
+          "name": "tp002_output",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/tp002"
+          ],
+          "docs": {
+            "title": "Timepoint 002 output folder",
+            "description": "Samseg output folder for the second time point.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 9,
+          "name": "base_output",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/base"
+          ],
+          "docs": {
+            "title": "Base output folder",
+            "description": "Base folder created by the samseg-long process.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Longitudinal analysis tool using SAMSEG in FreeSurfer",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "samseg-long",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "samseg-long"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "output_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output directory",
+                      "description": "Output directory.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_files",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input files",
+                      "description": "Input image files. All inputs must be a single modality.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "align_mc",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Align using robust register (MC)",
+                      "description": "Align all inputs using robust register.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--mc"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "align_no_mc",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Do not align",
+                      "description": "Do not align inputs using robust register.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--no-mc"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--threads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "threads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Threads",
+                      "description": "Number of threads to use.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "save_posteriors",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Save posteriors flag",
+                      "description": "Save posterior probabilities.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--save-posteriors"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "force_update",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Force update flag",
+                      "description": "Force update of outputs.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--force-update"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Longitudinal analysis tool using SAMSEG in FreeSurfer",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

@@ -1,0 +1,749 @@
+{
+  "uid": "2843a00e8fadbec7ad493f34ea9f70cf9067b50a.boutiques",
+  "package": {
+    "name": "fsl",
+    "version": "6.0.4",
+    "docker": "brainlife/fsl:6.0.4-patched2",
+    "docs": {
+      "title": "FSL",
+      "description": "FSL is a comprehensive library of analysis tools for FMRI, MRI and diffusion brain imaging data. It runs on macOS (Intel and M1/M2/M3), Linux, and Windows via the Windows Subsystem for Linux, and is very easy to install. Most of the tools can be run both from the command line and as GUIs (\"point-and-click\" graphical user interfaces). To quote the relevant references for FSL tools you should look in the individual tools' manual pages, and also please reference one or more of the FSL overview papers:\n\nM.W. Woolrich, S. Jbabdi, B. Patenaude, M. Chappell, S. Makni, T. Behrens, C. Beckmann, M. Jenkinson, S.M. Smith. Bayesian analysis of neuroimaging data in FSL. NeuroImage, 45:S173-86, 2009\n\nS.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johansen-Berg, P.R. Bannister, M. De Luca, I. Drobnjak, D.E. Flitney, R. Niazy, J. Saunders, J. Vickers, Y. Zhang, N. De Stefano, J.M. Brady, and P.M. Matthews. Advances in functional and structural MR image analysis and implementation as FSL. NeuroImage, 23(S1):208-19, 2004\n\nM. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 19,
+      "name": "fsl_anat",
+      "outputs": [
+        {
+          "id": 18,
+          "name": "output_anat_dir",
+          "tokens": [
+            {
+              "refId": 2,
+              "fileRemoveSuffixes": []
+            },
+            ".anat"
+          ],
+          "docs": {
+            "title": "Output Anatomical Directory",
+            "description": "Output anatomical directory",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "A wrapper for FSL tools to process anatomical scans.",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "fsl_anat",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "fsl_anat"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "structural_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Structural Image",
+                      "description": "Filename of input image (for one image only)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-d"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "existing_anat_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Existing Anat Directory",
+                      "description": "Directory name for existing .anat directory where this script will be run in place",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "output_dir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Directory",
+                      "description": "Basename of directory for output (default is input image basename followed by .anat)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "clobber_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Clobber Flag",
+                      "description": "If .anat directory exists (as specified by -o or default from -i) then delete it and make a new one",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--clobber"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "strongbias_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Strong Bias Flag",
+                      "description": "Used for images with very strong bias fields",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--strongbias"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "weakbias_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Weak Bias Flag",
+                      "description": "Used for images with smoother, more typical, bias fields (default setting)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--weakbias"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "noreorient_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Reorient Flag",
+                      "description": "Turn off step that does reorientation to standard (fslreorient2std)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--noreorient"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "nocrop_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Crop Flag",
+                      "description": "Turn off step that does automated cropping (robustfov)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nocrop"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "nobias_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Bias Correction Flag",
+                      "description": "Turn off steps that do bias field correction (via FAST)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nobias"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "noreg_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Registration Flag",
+                      "description": "Turn off steps that do registration to standard (FLIRT and FNIRT)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--noreg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "nononlinreg_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Non-linear Registration Flag",
+                      "description": "Turn off step that does non-linear registration (FNIRT)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nononlinreg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "noseg_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Segmentation Flag",
+                      "description": "Turn off step that does tissue-type segmentation (FAST)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--noseg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "nosubcortseg_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Sub-cortical Segmentation Flag",
+                      "description": "Turn off step that does sub-cortical segmentation (FIRST)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nosubcortseg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-s"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "bias_smoothing",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Bias Smoothing Value",
+                      "description": "Specify the value for bias field smoothing (the -l option in FAST)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-t"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "image_type",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Image Type",
+                      "description": "Specify the type of image (choose one of T1 T2 PD - default is T1)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "nosearch_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Search Flag",
+                      "description": "Specify that linear registration uses the -nosearch option (FLIRT)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nosearch"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--betfparam"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "bet_f_param",
+                    "outputs": [],
+                    "docs": {
+                      "title": "BET f Parameter",
+                      "description": "Specify f parameter for BET (only used if not running non-linear reg and also wanting brain extraction done)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "nocleanup_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Cleanup Flag",
+                      "description": "Do not remove intermediate files",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--nocleanup"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "A wrapper for FSL tools to process anatomical scans.",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

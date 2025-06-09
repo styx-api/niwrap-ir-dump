@@ -1,0 +1,759 @@
+{
+  "uid": "2295d98cda024ded2d2eadd5e1580f26abde5005.boutiques",
+  "package": {
+    "name": "c3d",
+    "version": "1.1.0",
+    "docker": "pyushkevich/itksnap:v3.8.2",
+    "docs": {
+      "title": "Convert3D",
+      "description": "Convert3D (unix name c3d) is a command-line image processing tool that offers complementary features to ITK-SNAP. Originally developed to convert between various 3D image formats, the tool has become more of a Swiss army knife for medical image processing. In addition to many standard filters and resampling commands, c3d offers tools specialized for multilabel images (such as segmentation images output by ITK-SNAP) and multicomponent images (such as RGB images read by SNAP). Through the use of reverse polish notation on the command line, c3d allows many image processing tasks to be combined in small command-line mini-programs. This saves on the need to save intermediate image files, saving disk space and network bandwidth. We use c3d extensively to run studies with thousands of 3D images, and are continually adding commands and features to the tool.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "http://www.itksnap.org/pmwiki/pmwiki.php?n=Convert3D.Convert3D"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 20,
+      "name": "c3d_affine_tool",
+      "outputs": [
+        {
+          "id": 17,
+          "name": "itk_transform_outfile",
+          "tokens": [
+            {
+              "refId": 12,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Output ITK transform",
+            "description": "Output ITK transform file.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 18,
+          "name": "irtk_transform_outfile",
+          "tokens": [
+            {
+              "refId": 13,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Output ITK transform",
+            "description": "Output IRTK transform file.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 19,
+          "name": "matrix_transform_outfile",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Output ITK transform",
+            "description": "Write output matrix.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "RAS affine transform tool",
+        "authors": [
+          "Convert3D Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://www.itksnap.org/pmwiki/pmwiki.php?n=Convert3D.Convert3D"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "c3d_affine_tool",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "c3d_affine_tool"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "transform_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Transform file",
+                      "description": "file or string representing the transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ref"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "reference_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference file",
+                      "description": "Set reference (fixed) image - only for -fsl2ras and -ras2fsl.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-src"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "source_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Source file",
+                      "description": "Set source (moving) image - only for -fsl2ras and -ras2fsl.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-sform"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "sform_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Sform file",
+                      "description": "Read matrix from NifTI sform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "invert",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Invert",
+                      "description": "Invert matrix.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-inv"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "determinant",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Determinant",
+                      "description": "Print the determinant.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-det"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "multiply",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Multiply",
+                      "description": "Multiply matrices.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-mult"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "sqrt",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Square root",
+                      "description": "Matrix square root (i.e., Q s.t. A = Q * Q).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-sqrt"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-itk"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "itk_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "ITK transform",
+                      "description": "Import ITK transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-irtk"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "irtk_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "IRTK transform",
+                      "description": "Import IRTK .dof format transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "fsl2ras",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Fsl2ras",
+                      "description": "Convert FSL to RAS.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fsl2ras"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "ras2fsl",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Ras2fsl",
+                      "description": "Convert RAS to FSL.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ras2fsl"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-oitk"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "out_itk_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output ITK transform",
+                      "description": "Export ITK transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-oirtk"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "out_irtk_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output IRTK transform",
+                      "description": "Export IRTK .dof format transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "out_matfile",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output matrix",
+                      "description": "Write output matrix.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "info",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Info",
+                      "description": "Print matrix.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-info"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "info_full",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Info full",
+                      "description": "Print matrix and more detail about the transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-info-full"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "RAS affine transform tool",
+        "authors": [
+          "Convert3D Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://www.itksnap.org/pmwiki/pmwiki.php?n=Convert3D.Convert3D"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

@@ -1,0 +1,696 @@
+{
+  "uid": "ead66a78d253bbef7d330bdf2dee14d07d54b7fe.boutiques",
+  "package": {
+    "name": "ants",
+    "version": "2.5.3",
+    "docker": "antsx/ants:v2.5.3",
+    "docs": {
+      "title": "ANTs",
+      "description": "Advanced Normalization Tools (ANTs) is a C++ library available through the command line that computes high-dimensional mappings to capture the statistics of brain structure and function. It allows one to organize, visualize and statistically explore large biomedical image sets. Additionally, it integrates imaging modalities in space + time and works across species or organ systems with minimal customization.\n\nThe ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/ANTsX/ANTs"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 18,
+      "name": "antsJointFusion",
+      "outputs": [
+        {
+          "id": 14,
+          "name": "label_fusion_image",
+          "tokens": [
+            "[LABELFUSIONIMAGE]"
+          ],
+          "docs": {
+            "title": "Label Fusion Image",
+            "description": "The output label fusion image.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "intensity_fusion_image",
+          "tokens": [
+            "[INTENSITYFUSIONIMAGEFILENAMEFORMAT]"
+          ],
+          "docs": {
+            "title": "Intensity Fusion Image",
+            "description": "The output intensity fusion image format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 16,
+          "name": "label_posterior_probability_image",
+          "tokens": [
+            "[LABELPOSTERIORPROBABILITYIMAGEFILENAMEFORMAT]"
+          ],
+          "docs": {
+            "title": "Label Posterior Probability Image",
+            "description": "The output label posterior probability image format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 17,
+          "name": "atlas_voting_weight_image",
+          "tokens": [
+            "[ATLASVOTINGWEIGHTIMAGEFILENAMEFORMAT]"
+          ],
+          "docs": {
+            "title": "Atlas Voting Weight Image",
+            "description": "The output atlas voting weight image format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and Paul Yushkevich. This implementation is based on Paul's original ITK-style implementation and Brian's ANTsR implementation. The original label fusion framework was extended to accommodate intensities.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "antsJointFusion",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "antsJointFusion"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--image-dimensionality"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "image_dimensionality",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Image Dimensionality",
+                      "description": "This option forces the image to be treated as a specified-dimensional image. If not specified, the program tries to infer the dimensionality from the input image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--target-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "target_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Target Image",
+                      "description": "The target image (or multimodal target images) assumed to be aligned to a common image domain.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--atlas-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "atlas_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas Image",
+                      "description": "The atlas image (or multimodal atlas images) assumed to be aligned to a common image domain.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--atlas-segmentation"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "atlas_segmentation",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Atlas Segmentation",
+                      "description": "The atlas segmentation images. For performing label fusion the number of specified segmentations should be identical to the number of atlas image sets.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--alpha"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "alpha",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Alpha",
+                      "description": "Regularization term added to matrix Mx for calculating the inverse. Default = 0.1.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 0.1
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--beta"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "beta",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Beta",
+                      "description": "Exponent for mapping intensity difference to the joint error. Default = 2.0.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 2.0
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--constrain-nonnegative"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "constrain_nonnegative",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Constrain Non-negative",
+                      "description": "Constrain solution to non-negative weights.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--patch-radius"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "patch_radius",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Patch Radius",
+                      "description": "Patch radius for similarity measures. Default = 2x2x2.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": "2x2x2"
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--patch-metric"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "patch_metric",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Patch Metric",
+                      "description": "Metric to be used in determining the most similar neighborhood patch. Options include Pearson's correlation (PC) and mean squares (MSQ). Default = PC (Pearson correlation).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "PC",
+                    "MSQ"
+                  ],
+                  "defaultValue": "PC"
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--search-radius"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "search_radius",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Search Radius",
+                      "description": "Search radius for similarity measures. Default = 3x3x3. One can also specify an image where the value at the voxel specifies the isotropic search radius at that voxel.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": "3x3x3"
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--exclusion-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "exclusion_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Exclusion Image",
+                      "description": "Specify an exclusion region for the given label.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--mask-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "mask_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask Image",
+                      "description": "If a mask image is specified, fusion is only performed in the mask region.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--output"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output",
+                      "description": "The output is the intensity and/or label fusion image. Additional optional outputs include the label posterior probability images and the atlas voting weight images.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--verbose"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose",
+                      "description": "Verbose output.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and Paul Yushkevich. This implementation is based on Paul's original ITK-style implementation and Brian's ANTsR implementation. The original label fusion framework was extended to accommodate intensities.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

@@ -1,0 +1,271 @@
+{
+  "uid": "69d4eb9bd4a197a90cb255e74008d918a4d6fbec.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 7,
+      "name": "3dClustCount",
+      "outputs": [
+        {
+          "id": 4,
+          "name": "clustcount_niml",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".clustcount.niml"
+          ],
+          "docs": {
+            "title": "Cluster count NIML file",
+            "description": "Summed results file in NIML format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 5,
+          "name": "clustcount_1D",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".1D"
+          ],
+          "docs": {
+            "title": "Cluster count 1D file",
+            "description": "Summed results file in 1D format (when '-final' is used).",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 6,
+          "name": "final_clustcount_niml",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".niml"
+          ],
+          "docs": {
+            "title": "Final Cluster count NIML file",
+            "description": "Summed results file in NIML format (when '-final' is used).",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "This program takes as input 1 or more datasets, thresholds them at various levels, and counts up the number of clusters of various sizes.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "3dClustCount",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "3dClustCount"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "datasets",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input datasets",
+                      "description": "Input datasets to be processed.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Prefix",
+                      "description": "Prefix of the filename into which results will be summed. Actual filename will be 'sss.clustcount.niml'. If this file already exists, results from the current run will be summed into the existing results and the file then re-written.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "final",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Final flag",
+                      "description": "Output results in a format similar to 3dClustSim -- as 1D and NIML formatted files with probabilities of various cluster sizes. This option can be used without any input datasets to create final output files from saved '.clustcount.niml' output file from earlier runs.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-final"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "quiet",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Quiet flag",
+                      "description": "Suppresses progress reports and other informational messages. Should be placed first in the command line to quiet most messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "This program takes as input 1 or more datasets, thresholds them at various levels, and counts up the number of clusters of various sizes.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

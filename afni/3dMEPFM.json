@@ -1,0 +1,352 @@
+{
+  "uid": "d38c4d0eb3693584d4549cd2a7bc0b493dbd1836.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 11,
+      "name": "3dMEPFM",
+      "outputs": [
+        {
+          "id": 5,
+          "name": "dr2_output",
+          "tokens": [
+            "DR2_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "DR2 output volume",
+            "description": "Changes in R2* parameter, assumed to represent neuronal-related signal changes",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 6,
+          "name": "dr2fit_output",
+          "tokens": [
+            "DR2fit_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "DR2fit output volume",
+            "description": "Convolution of DR2 with HRF, one volume per echo",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 7,
+          "name": "ds0_output",
+          "tokens": [
+            "DS0_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "DS0 output volume",
+            "description": "Changes in net magnetization (S0) (if estimated)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 8,
+          "name": "lambda_output",
+          "tokens": [
+            "lambda_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "Lambda output volume",
+            "description": "Regularization parameter",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 9,
+          "name": "sigmas_mad_output",
+          "tokens": [
+            "sigmas_MAD_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "Sigmas MAD output volume",
+            "description": "Estimate of the noise standard deviation after wavelet decomposition for each input dataset",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 10,
+          "name": "costs_output",
+          "tokens": [
+            "costs_[PREFIX]_*.nii.gz"
+          ],
+          "docs": {
+            "title": "Costs output volume",
+            "description": "Cost function to select the regularization parameter (lambda) according to selection criterion",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Voxelwise deconvolution of Multiecho fMRI data to yield time-varying estimates of changes in transverse relaxation (DR2*) and optionally, net magnetization (DS0)",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "3dMEPFM",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "3dMEPFM"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-input"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "input_files",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input files",
+                      "description": "Dataset to analyze with Multiecho Paradigm Free Mapping, along with the echo time",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "dbgArgs",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Debug arguments flag",
+                      "description": "Enable R to save the parameters in .3dMEPFM.dbg.AFNI.args in the current directory",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-dbgArgs"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-mask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask file",
+                      "description": "Process voxels inside this mask only. Default is no masking.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-hrf"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "hrf_model",
+                    "outputs": [],
+                    "docs": {
+                      "title": "HRF model",
+                      "description": "Haemodynamic response function used for deconvolution",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-verb"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "verbosity",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbosity level",
+                      "description": "Verbosity level. 0 for quiet, 1 (default) or more: talkative.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Voxelwise deconvolution of Multiecho fMRI data to yield time-varying estimates of changes in transverse relaxation (DR2*) and optionally, net magnetization (DS0)",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

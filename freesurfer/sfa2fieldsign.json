@@ -1,0 +1,553 @@
+{
+  "uid": "7f94ee11352613b06c9c4748c7eadb754e7722c8.boutiques",
+  "package": {
+    "name": "freesurfer",
+    "version": "7.4.1",
+    "docker": "freesurfer/freesurfer:7.4.1",
+    "docs": {
+      "title": "FreeSurfer",
+      "description": "FreeSurfer is a software package for the analysis and visualization of neuroimaging data from cross-sectional and longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Martinos Center for Biomedical Imaging.\n\nFreeSurfer provides full processing streams for structural and functional MRI and includes tools for linear and nonlinear registration, cortical and subcortical segmentation, cortical surface reconstruction, statistical analysis of group morphometry, diffusion MRI, PET analysis, and much more. It is also the structural MRI analysis software of choice for the Human Connectome Project.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/freesurfer/freesurfer"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 16,
+      "name": "sfa2fieldsign",
+      "outputs": [
+        {
+          "id": 10,
+          "name": "fsig_bin",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/fsig.bin.nii"
+          ],
+          "docs": {
+            "title": "FSIG Bin",
+            "description": "Intersection of polar and eccentricity thresholded fieldsigns",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 11,
+          "name": "eccen_masked",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/eccen.masked.nii"
+          ],
+          "docs": {
+            "title": "Eccentricity Masked",
+            "description": "Eccentricity angle (rad) volume masked by fieldsign bin",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 12,
+          "name": "polar_masked",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/polar.masked.nii"
+          ],
+          "docs": {
+            "title": "Polar Masked",
+            "description": "Polar angle (rad) volume masked by fieldsign bin",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 13,
+          "name": "eccen_masked_mgh",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/?h.eccen.masked.mgh"
+          ],
+          "docs": {
+            "title": "Eccentricity Masked MGH",
+            "description": "Masked eccentricity angle sampled on the hemisphere surface",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 14,
+          "name": "polar_masked_mgh",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/?h.polar.masked.mgh"
+          ],
+          "docs": {
+            "title": "Polar Masked MGH",
+            "description": "Masked polar angle sampled on the hemisphere surface",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "fieldsign_masked_mgh",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "/[OSD or fieldsign]/?h.fieldsign.masked.mgh"
+          ],
+          "docs": {
+            "title": "Fieldsign Masked MGH",
+            "description": "Masked fieldsign map",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Computes fieldsign map from sfa-sess output. Masks the angle volumes and samples them to the surface.",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "sfa2fieldsign",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "sfa2fieldsign"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--sfa"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "sfadir",
+                    "outputs": [],
+                    "docs": {
+                      "title": "SFA Directory",
+                      "description": "Output directory of sfa-sess",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--reg"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "register_dat",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Register File",
+                      "description": "Registration file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--thresh"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "threshold",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Threshold",
+                      "description": "Sigthresh threshold (Default: 2)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 2
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--fwhm"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "fwhm",
+                    "outputs": [],
+                    "docs": {
+                      "title": "FWHM",
+                      "description": "Full width at half maximum (FWHM) (Default: 10mm)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 10
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--proj-frac"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "proj_frac",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Projection Fraction",
+                      "description": "Projection fraction (Default: 0.5)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": 0.5
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "occip",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Occipital Patch Flag",
+                      "description": "Use ?h.occip.patch.flat",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--occip"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--patch"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "patch",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Patch",
+                      "description": "Use specific patch (?)h.patch",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--osd"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "osd",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Subdirectory",
+                      "description": "Directory under SFA to put output (Default: fieldsign)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "lh",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Left Hemisphere Flag",
+                      "description": "Process left hemisphere only",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--lh"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "rh",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Right Hemisphere Flag",
+                      "description": "Process right hemisphere only",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--rh"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Computes fieldsign map from sfa-sess output. Masks the angle volumes and samples them to the surface.",
+        "authors": [
+          "FreeSurfer Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/freesurfer/freesurfer"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

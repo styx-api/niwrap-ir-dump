@@ -1,0 +1,336 @@
+{
+  "uid": "476f4d1a86214009b6eb0878d5070c11cd6a6a27.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 9,
+      "name": "adjunct_tort_plot_dp_align",
+      "outputs": [
+        {
+          "id": 5,
+          "name": "align_params",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            "_align.1D"
+          ],
+          "docs": {
+            "title": "Alignment Parameters File",
+            "description": "Text file containing 6 columns of data for the rigid-body alignment parameters estimated by DIFFPREP.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 6,
+          "name": "enorm_file",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            "_enorm.1D"
+          ],
+          "docs": {
+            "title": "Enorm File",
+            "description": "Text file with 1 column of data, the Euclidean norm of the differences of the rigid body alignment parameters.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 7,
+          "name": "plot_jpg",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".jpg"
+          ],
+          "docs": {
+            "title": "Plot Image (JPG)",
+            "description": "A plot of enorm and the alignment parameters in JPG format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 8,
+          "name": "plot_svg",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            ".svg"
+          ],
+          "docs": {
+            "title": "Plot Image (SVG)",
+            "description": "A plot of enorm and the alignment parameters in SVG format.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Tool to display the rigid-body alignment parameters from TORTOISE's DIFFPREP, useful for analyzing subject motion in DWI data.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "adjunct_tort_plot_dp_align",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "adjunct_tort_plot_dp_align"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-input"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "input_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "DIFFPREP Transform File",
+                      "description": "Name of DIFFPREP-produced file to parse, probably ending in '_transformations.txt'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "output_prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Prefix",
+                      "description": "Base of output files; can contain path information. Should *not* include any extension.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-enorm_max"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "enorm_max",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Enorm Max Value",
+                      "description": "Specify max value of y-axis of enorm plot in SVG image. Useful for having a constant value across a study.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-enorm_hline"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "enorm_hline",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Enorm Horizontal Line Value",
+                      "description": "Specify value of a horizontal, dotted, bright cyan line for the enorm plot in SVG image. Can help with visualization.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "no_svg",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Disable SVG Plot",
+                      "description": "Opt to turn off even checking to plot an SVG version of the figure.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-no_svg"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Tool to display the rigid-body alignment parameters from TORTOISE's DIFFPREP, useful for analyzing subject motion in DWI data.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

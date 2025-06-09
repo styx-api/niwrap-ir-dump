@@ -1,0 +1,630 @@
+{
+  "uid": "4e275d528a8a916f8bf15e461ab3aaee99ba8b52.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 18,
+      "name": "@afni_refacer_run",
+      "outputs": [
+        {
+          "id": 13,
+          "name": "output_deface",
+          "tokens": [
+            {
+              "refId": 5,
+              "fileRemoveSuffixes": []
+            },
+            ".deface.nii.gz"
+          ],
+          "docs": {
+            "title": "Output Deface File",
+            "description": "Defaced volume (face+ears replaced with zeros)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 14,
+          "name": "output_reface",
+          "tokens": [
+            {
+              "refId": 5,
+              "fileRemoveSuffixes": []
+            },
+            ".reface.nii.gz"
+          ],
+          "docs": {
+            "title": "Output Reface File",
+            "description": "Refaced volume (face+ears replaced with artificial values)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "output_reface_plus",
+          "tokens": [
+            {
+              "refId": 5,
+              "fileRemoveSuffixes": []
+            },
+            ".reface_plus.nii.gz"
+          ],
+          "docs": {
+            "title": "Output Reface Plus File",
+            "description": "Reface_plused volume (face+ears+skull replaced with artificial values)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 16,
+          "name": "output_face",
+          "tokens": [
+            {
+              "refId": 5,
+              "fileRemoveSuffixes": []
+            },
+            ".face.nii.gz"
+          ],
+          "docs": {
+            "title": "Output Face File",
+            "description": "Face+ears used to replace or remove subject data",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 17,
+          "name": "output_face_plus",
+          "tokens": [
+            {
+              "refId": 5,
+              "fileRemoveSuffixes": []
+            },
+            ".face_plus.nii.gz"
+          ],
+          "docs": {
+            "title": "Output Face Plus File",
+            "description": "Face+ears+skull used to replace subject data",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "This script re-faces one input dataset, using a master shell dataset to write over the subject's 'face' region.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "@afni_refacer_run",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "@afni_refacer_run"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-input"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "input_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input File",
+                      "description": "Name of input dataset; can contain path information.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "mode_deface",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mode Deface",
+                      "description": "Replace the computed face+ears voxels with all zeros instead of the artificial face (ears are also removed)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-mode_deface"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "mode_reface",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mode Reface",
+                      "description": "Replace the subject's face+ears with a scaled set of artificial values",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-mode_reface"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "mode_reface_plus",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mode Reface Plus",
+                      "description": "Replace the subject's face+ears+skull with a scaled set of artificial values (i.e., like 'refacing', but replacing a more complete shell around the subject's brain)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-mode_reface_plus"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "mode_all",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mode All",
+                      "description": "Output three volumes: one defaced, one refaced and one reface_plused",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-mode_all"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Prefix",
+                      "description": "Name of output dataset",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "anonymize_output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Anonymize Output",
+                      "description": "Use 3drefit and nifti_tool to anonymize the output datasets",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-anonymize_output"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-cost"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "cost_function",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Cost Function",
+                      "description": "Specify any cost function that is allowed by 3dAllineate (default: lpa)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-shell"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "shell_option",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shell Option",
+                      "description": "Specify which shell to use. Options: afni_refacer_shell_sym_1.0.nii.gz (traditional), afni_refacer_shell_sym_2.0.nii.gz (more face/neck removal). Default: afni_refacer_shell_sym_1.0.nii.gz",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "no_clean",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Clean",
+                      "description": "Don't delete temp working directory (default: remove working directory)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-no_clean"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "no_images",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Images",
+                      "description": "Don't make pretty images to automatically view the results of re/defacing",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-no_images"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "overwrite",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Overwrite",
+                      "description": "Final two file outputs will overwrite any existing files of the same name (default: don't do this). NB: this option does not apply to the working directory",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-overwrite"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose",
+                      "description": "Run the 3dAllineate part herein with '-verb' (for verbosity)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-verb_allin"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "This script re-faces one input dataset, using a master shell dataset to write over the subject's 'face' region.",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

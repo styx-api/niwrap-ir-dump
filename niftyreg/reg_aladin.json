@@ -1,0 +1,588 @@
+{
+  "uid": "35a28b870460506a2848c942f448b48ae179b00e.boutiques",
+  "package": {
+    "name": "niftyreg",
+    "version": "1.4.0",
+    "docker": "vnmd/niftyreg_1.4.0:20220819",
+    "docs": {
+      "title": "NiftyReg",
+      "description": "NiftyReg is an open-source software for efficient medical image registration. It has been mainly developed by members of the Centre for Medical Image Computing at University College London, UK.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 14,
+      "name": "reg_aladin",
+      "outputs": [
+        {
+          "id": 13,
+          "name": "output_affine_file",
+          "tokens": [
+            "outputAffine.txt"
+          ],
+          "docs": {
+            "title": "Output Affine Transformation File",
+            "description": "File containing the output affine transformation",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Block Matching algorithm for global registration based on \"Reconstructing a 3D structure from serial histological sections\", Image and Vision Computing, 2001",
+        "authors": [
+          "NiftyReg Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "reg_aladin",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "reg_aladin"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ref"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "reference_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Image",
+                      "description": "Filename of the reference (target) image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-flo"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "floating_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Floating Image",
+                      "description": "Filename of the floating (source) image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "symmetric",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Symmetric Version",
+                      "description": "Uses symmetric version of the algorithm",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-sym"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-aff"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "output_affine",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Affine Transformation",
+                      "description": "Filename which contains the output affine transformation",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "rigid_only",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rigid Registration Only",
+                      "description": "To perform a rigid registration only",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-rigOnly"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "direct_affine",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Direct Affine Optimization",
+                      "description": "Directly optimize 12 DoF affine",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-affDirect"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-smooR"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "smooth_ref",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Smooth Reference Image",
+                      "description": "Smooth the reference image using the specified sigma (mm)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-smooF"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "smooth_float",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Smooth Floating Image",
+                      "description": "Smooth the floating image using the specified sigma (mm)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ln"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "num_levels",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Number of Levels",
+                      "description": "Number of levels to perform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-lp"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "first_levels",
+                    "outputs": [],
+                    "docs": {
+                      "title": "First Levels",
+                      "description": "Only perform the first levels",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "use_nifti_origin",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Use NIFTI Origins",
+                      "description": "Use the NIFTI header origins to initialize the translation",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nac"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-%v"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "percent_block",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Percentage of Block",
+                      "description": "Percentage of block to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-%i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "percent_inlier",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Percentage of Inlier",
+                      "description": "Percentage of inlier for the LTS",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Block Matching algorithm for global registration based on \"Reconstructing a 3D structure from serial histological sections\", Image and Vision Computing, 2001",
+        "authors": [
+          "NiftyReg Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

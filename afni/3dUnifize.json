@@ -1,0 +1,639 @@
+{
+  "uid": "6277d1cde4dea26d7a71d4b0fc2e2e04b1054790.boutiques",
+  "package": {
+    "name": "afni",
+    "version": "24.2.06",
+    "docker": "afni/afni_make_build:AFNI_24.2.06",
+    "docs": {
+      "title": "AFNI",
+      "description": "AFNI (Analysis of Functional NeuroImages) is a leading software suite of C, Python, R programs and shell scripts primarily developed for the analysis and display of multiple MRI modalities: anatomical, functional MRI (FMRI) and diffusion weighted (DW) data. It is freely available (both as open source code and as precompiled binaries) for research purposes. The software is made to run on virtually any Unix system with X11 and Motif displays. Binary packages are provided for MacOS and Linux systems such as Fedora, CentOS/Red Hat and Ubuntu (which includes the Windows Subsystem for Linux).",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://afni.nimh.nih.gov/"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 16,
+      "name": "3dUnifize",
+      "outputs": [
+        {
+          "id": 14,
+          "name": "out_file",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Out file",
+            "description": "Output image file name.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 15,
+          "name": "scale_file_outfile",
+          "tokens": [
+            {
+              "refId": 9,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Scale file",
+            "description": "Scale factor file.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "3dUnifize - for uniformizing image intensity\n* The input dataset is supposed to be a T1-weighted volume, possibly already skull-stripped (e.g., via 3dSkullStrip). However, this program can be a useful step to take BEFORE 3dSkullStrip, since the latter program can fail if the input volume is strongly shaded -- 3dUnifize will (mostly) remove such shading artifacts.\n* The output dataset has the white matter (WM) intensity approximately uniformized across space, and scaled to peak at about 1000.\n* The output dataset is always stored in float format!\n* If the input dataset has more than 1 sub-brick, only sub-brick #0 will be processed!\n* Want to correct EPI datasets for nonuniformity? You can try the new and experimental [Mar 2017] '-EPI' option.\n* The principal motive for this program is for use in an image registration script, and it may or may not be useful otherwise.\n* This program replaces the older (and very different) 3dUniformize, which is no longer maintained and may sublimate at any moment. (In other words, we do not recommend the use of 3dUniformize.)",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "3dUnifize",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "3dUnifize"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-clfrac"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "cl_frac",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Cl frac",
+                      "description": "Option for afni experts only.set the automask 'clip level fraction'. must be between 0.1 and 0.9. a small fraction means to make the initial threshold for clipping (a la 3dcliplevel) smaller, which will tend to make the mask larger.  [default=0.1].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "epi",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Epi",
+                      "description": "Assume the input dataset is a t2 (or t2\\*) weighted epi time series. after computing the scaling, apply it to all volumes (trs) in the input dataset. that is, a given voxel will be scaled by the same factor at each tr. this option also implies '-noduplo' and '-t2'.this option turns off '-gm' if you turned it on.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-EPI"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "gm",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Gm",
+                      "description": "Also scale to unifize 'gray matter' = lower intensity voxels (to aid in registering images from different scanners).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-GM"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "no_duplo",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No duplo",
+                      "description": "Do not use the 'duplo down' step; this can be useful for lower resolution datasets.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-noduplo"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "num_threads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Num threads",
+                      "description": "Set number of threads.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "outputtype",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Outputtype",
+                      "description": "'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "NIFTI",
+                    "AFNI",
+                    "NIFTI_GZ"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "quiet",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Quiet",
+                      "description": "Don't print the progress messages.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-quiet"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-rbt"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "rbt",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rbt",
+                      "description": "(a float, a float, a float). Option for afni experts only.specify the 3 parameters for the algorithm:r = radius; same as given by option '-urad', [default=18.3]b = bottom percentile of normalizing data range, [default=70.0]r = top percentile of normalizing data range, [default=80.0].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": 3,
+                    "countMax": 3,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Prefix",
+                      "description": "Output image file name.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ssave"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "scale_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Scale file",
+                      "description": "Output file name to save the scale factor used at each voxel .",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "t2",
+                    "outputs": [],
+                    "docs": {
+                      "title": "T2",
+                      "description": "Treat the input as if it were t2-weighted, rather than t1-weighted. this processing is done simply by inverting the image contrast, processing it as if that result were t1-weighted, and then re-inverting the results counts of voxel overlap, i.e., each voxel will contain the number of masks that it is set in.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-T2"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-T2up"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "t2_up",
+                    "outputs": [],
+                    "docs": {
+                      "title": "T2 up",
+                      "description": "Option for afni experts only.set the upper percentile point used for t2-t1 inversion. allowed to be anything between 90 and 100 (inclusive), with default to 98.5  (for no good reason).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-Urad"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "urad",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Urad",
+                      "description": "Sets the radius (in voxels) of the ball used for the sneaky trick. default value is 18.3, and should be changed proportionally if the dataset voxel size differs significantly from 1 mm.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-input"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "in_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "In file",
+                      "description": "Input file to 3dunifize.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "3dUnifize - for uniformizing image intensity\n* The input dataset is supposed to be a T1-weighted volume, possibly already skull-stripped (e.g., via 3dSkullStrip). However, this program can be a useful step to take BEFORE 3dSkullStrip, since the latter program can fail if the input volume is strongly shaded -- 3dUnifize will (mostly) remove such shading artifacts.\n* The output dataset has the white matter (WM) intensity approximately uniformized across space, and scaled to peak at about 1000.\n* The output dataset is always stored in float format!\n* If the input dataset has more than 1 sub-brick, only sub-brick #0 will be processed!\n* Want to correct EPI datasets for nonuniformity? You can try the new and experimental [Mar 2017] '-EPI' option.\n* The principal motive for this program is for use in an image registration script, and it may or may not be useful otherwise.\n* This program replaces the older (and very different) 3dUniformize, which is no longer maintained and may sublimate at any moment. (In other words, we do not recommend the use of 3dUniformize.)",
+        "authors": [
+          "AFNI Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://afni.nimh.nih.gov/"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

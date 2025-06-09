@@ -1,0 +1,495 @@
+{
+  "uid": "0debcf31d81e0909931ada9539ccaa0a6392ea4a.boutiques",
+  "package": {
+    "name": "niftyreg",
+    "version": "1.4.0",
+    "docker": "vnmd/niftyreg_1.4.0:20220819",
+    "docs": {
+      "title": "NiftyReg",
+      "description": "NiftyReg is an open-source software for efficient medical image registration. It has been mainly developed by members of the Centre for Medical Image Computing at University College London, UK.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 12,
+      "name": "reg_resample",
+      "outputs": [
+        {
+          "id": 10,
+          "name": "output_resampled_image",
+          "tokens": [
+            {
+              "refId": 6,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Resampled Image",
+            "description": "File containing the resampled image",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 11,
+          "name": "output_resampled_blank",
+          "tokens": [
+            {
+              "refId": 7,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Resampled Blank Grid",
+            "description": "File containing the resampled blank grid",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Tool for resampling floating images to the reference image space using different transformations.",
+        "authors": [
+          "NiftyReg Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "reg_resample",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "reg_resample"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ref"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "reference_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference Image",
+                      "description": "Filename of the reference image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-flo"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "floating_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Floating Image",
+                      "description": "Filename of the floating image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-aff"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "affine_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Affine Transformation",
+                      "description": "Filename which contains an affine transformation (Affine*Reference=Floating)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-affFlirt"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "flirt_affine_transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Flirt Affine Transformation",
+                      "description": "Filename which contains a radiological flirt affine transformation",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-cpp"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "control_point_grid",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Control Point Grid",
+                      "description": "Filename of the control point grid image (from reg_f3d)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-def"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "deformation_field",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Deformation Field",
+                      "description": "Filename of the deformation field image (from reg_transform)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-res"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "resampled_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Resampled Image",
+                      "description": "Filename of the resampled image",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-blank"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "resampled_blank",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Resampled Blank Grid",
+                      "description": "Filename of the resampled blank grid",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "nearest_neighbor",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Nearest Neighbor Interpolation",
+                      "description": "Use a Nearest Neighbor interpolation for the source resampling (cubic spline by default)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-NN"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "linear_interpolation",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Linear Interpolation",
+                      "description": "Use a Linear interpolation for the source resampling (cubic spline by default)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-LIN"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Tool for resampling floating images to the reference image space using different transformations.",
+        "authors": [
+          "NiftyReg Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "http://cmictig.cs.ucl.ac.uk/wiki/index.php/NiftyReg"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

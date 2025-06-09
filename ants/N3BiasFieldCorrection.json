@@ -1,0 +1,551 @@
+{
+  "uid": "b990a157f047038c6c36199d59b074fb02282e95.boutiques",
+  "package": {
+    "name": "ants",
+    "version": "2.5.3",
+    "docker": "antsx/ants:v2.5.3",
+    "docs": {
+      "title": "ANTs",
+      "description": "Advanced Normalization Tools (ANTs) is a C++ library available through the command line that computes high-dimensional mappings to capture the statistics of brain structure and function. It allows one to organize, visualize and statistically explore large biomedical image sets. Additionally, it integrates imaging modalities in space + time and works across species or organ systems with minimal customization.\n\nThe ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/ANTsX/ANTs"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 13,
+      "name": "N3BiasFieldCorrection",
+      "outputs": [
+        {
+          "id": 11,
+          "name": "corrected_image",
+          "tokens": [
+            {
+              "refId": 9,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Corrected Image",
+            "description": "The bias-corrected version of the input image.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 12,
+          "name": "bias_field",
+          "tokens": [
+            "[BIS_FIELD]"
+          ],
+          "docs": {
+            "title": "Bias Field",
+            "description": "The estimated bias field, if specified in the output.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "This N3 is a variant of the popular N3 (nonparametric nonuniform normalization) retrospective bias correction algorithm. Based on the assumption that the corruption of the low frequency bias field can be modeled as a convolution of the intensity histogram by a Gaussian, the basic algorithmic protocol is to iterate between deconvolving the intensity histogram by a Gaussian, remapping the intensities, and then spatially smoothing this result by a B-spline modeling of the bias field itself.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "N3BiasFieldCorrection",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "N3BiasFieldCorrection"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--image-dimensionality"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "image_dimensionality",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Image Dimensionality",
+                      "description": "This option forces the image to be treated as a specified-dimensional image. If not specified, N3 tries to infer the dimensionality from the input image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--input-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Image",
+                      "description": "A scalar image is expected as input for bias correction. Since N3 log transforms the intensities, negative values or values close to zero should be processed prior to correction.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--mask-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "mask_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask Image",
+                      "description": "If a mask image is specified, the final bias correction is only performed in the mask region. If a mask image is not specified, the entire image region will be used as the mask region. Note: this differs from the original N3 implementation.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--rescale-intensities"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "rescale_intensities",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rescale Intensities",
+                      "description": "This option rescales the intensity range within the user-specified mask to the original [min, max] range.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--weight-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "weight_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Weight Image",
+                      "description": "The weight image allows the user to perform a relative weighting of specific voxels during the B-spline fitting.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--shrink-factor"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "shrink_factor",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shrink Factor",
+                      "description": "Shrink factor to resample the input image. Commonly used values are <= 4.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--convergence"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "convergence",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Convergence",
+                      "description": "Describes the convergence criteria with default value as [50,0.0].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--bspline-fitting"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "bspline_fitting",
+                    "outputs": [],
+                    "docs": {
+                      "title": "B-Spline Fitting",
+                      "description": "Describes the parameters for B-Spline fitting. Defaults are [splineDistance,4,3].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--histogram-sharpening"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "histogram_sharpening",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Histogram Sharpening",
+                      "description": "Describes histogram sharpening parameters; defaults are [0.15,0.01,200].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--output"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output",
+                      "description": "The bias-corrected version of the input image and optionally the estimated bias field.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--verbose"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose",
+                      "description": "Verbose output.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "This N3 is a variant of the popular N3 (nonparametric nonuniform normalization) retrospective bias correction algorithm. Based on the assumption that the corruption of the low frequency bias field can be modeled as a convolution of the intensity histogram by a Gaussian, the basic algorithmic protocol is to iterate between deconvolving the intensity histogram by a Gaussian, remapping the intensities, and then spatially smoothing this result by a B-spline modeling of the bias field itself.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

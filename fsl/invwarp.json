@@ -1,0 +1,400 @@
+{
+  "uid": "ca17763e68539125d3ca62f44ed0ea1f0df99819.boutiques",
+  "package": {
+    "name": "fsl",
+    "version": "6.0.4",
+    "docker": "brainlife/fsl:6.0.4-patched2",
+    "docs": {
+      "title": "FSL",
+      "description": "FSL is a comprehensive library of analysis tools for FMRI, MRI and diffusion brain imaging data. It runs on macOS (Intel and M1/M2/M3), Linux, and Windows via the Windows Subsystem for Linux, and is very easy to install. Most of the tools can be run both from the command line and as GUIs (\"point-and-click\" graphical user interfaces). To quote the relevant references for FSL tools you should look in the individual tools' manual pages, and also please reference one or more of the FSL overview papers:\n\nM.W. Woolrich, S. Jbabdi, B. Patenaude, M. Chappell, S. Makni, T. Behrens, C. Beckmann, M. Jenkinson, S.M. Smith. Bayesian analysis of neuroimaging data in FSL. NeuroImage, 45:S173-86, 2009\n\nS.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johansen-Berg, P.R. Bannister, M. De Luca, I. Drobnjak, D.E. Flitney, R. Niazy, J. Saunders, J. Vickers, Y. Zhang, N. De Stefano, J.M. Brady, and P.M. Matthews. Advances in functional and structural MR image analysis and implementation as FSL. NeuroImage, 23(S1):208-19, 2004\n\nM. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 10,
+      "name": "invwarp",
+      "outputs": [
+        {
+          "id": 9,
+          "name": "inverse_warp",
+          "tokens": [
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            }
+          ],
+          "docs": {
+            "title": "Inverse warp",
+            "description": "Name of output file, containing warps that are the \"reverse\" of those in --warp. this will be a field-file (rather than a file of spline coefficients), and it will have any affine component included as part of the displacements.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "\nUse FSL Invwarp to invert a FNIRT warp",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "invwarp",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "invwarp"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--warp=",
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "warp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Warp",
+                      "description": "Filename for warp/shiftmap transform (volume).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--out=",
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "out_img",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output image",
+                      "description": "Filename for output (inverse warped) image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref=",
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "ref_img",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference image",
+                      "description": "Filename for new reference image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "absolute",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Absolute warp convention",
+                      "description": "Use absolute warp convention (default): x' = w(x).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--abs"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "relative",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Absolute warp convention",
+                      "description": "Use relative warp convention (default): x' = x + w(x).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--rel"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "noconstraint",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No constraint",
+                      "description": "Do not apply jacobian constraint.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--noconstraint"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--jmin=",
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "jacobian_min",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Jacobian min",
+                      "description": "Minimum acceptable jacobian value for constraint (default 0.01).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--jmax=",
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "jacobian_max",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Jacobian max",
+                      "description": "Maximum acceptable jacobian value for constraint (default 100.0).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "debug",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Debug",
+                      "description": "Turn on debugging output.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--debug"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "\nUse FSL Invwarp to invert a FNIRT warp",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

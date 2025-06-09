@@ -1,0 +1,494 @@
+{
+  "uid": "f5c4948fa2560385a828a453a54af7e3a4ab4be7.boutiques",
+  "package": {
+    "name": "ants",
+    "version": "2.5.3",
+    "docker": "antsx/ants:v2.5.3",
+    "docs": {
+      "title": "ANTs",
+      "description": "Advanced Normalization Tools (ANTs) is a C++ library available through the command line that computes high-dimensional mappings to capture the statistics of brain structure and function. It allows one to organize, visualize and statistically explore large biomedical image sets. Additionally, it integrates imaging modalities in space + time and works across species or organ systems with minimal customization.\n\nThe ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/ANTsX/ANTs"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 12,
+      "name": "antsSliceRegularizedRegistration",
+      "outputs": [
+        {
+          "id": 10,
+          "name": "polynomial_fit",
+          "tokens": [
+            "[OUTPUT_PREFIX]TxTy_poly.csv"
+          ],
+          "docs": {
+            "title": "Polynomial fit Tx/Ty",
+            "description": "Output is the polynomial fit to Tx & Ty.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 11,
+          "name": "transformed_image",
+          "tokens": [
+            "[OUTPUT_PREFIX].nii.gz"
+          ],
+          "docs": {
+            "title": "Transformed image",
+            "description": "Output is the transformed image.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "This program is a user-level application for slice-by-slice translation registration. Results are regularized in z using polynomial regression. The program is targeted at spinal cord MRI. Only one stage is supported where a stage consists of a transform; an image metric; and iterations, shrink factors, and smoothing sigmas for each level. Specialized for 3D data: fixed image is 3D, moving image is 3D. Registration is performed slice-by-slice then regularized in z. The parameter -p controls the polynomial degree. -p 0 means no regularization.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "antsSliceRegularizedRegistration",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "antsSliceRegularizedRegistration"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-p"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "polydegree",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Polynomial degree",
+                      "description": "Degree of polynomial up to zDimension-2. Controls the polynomial degree. 0 means no regularization.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output transform prefix",
+                      "description": "Specify the output transform prefix (output format is .nii.gz). Optionally, one can choose to warp the moving image to the fixed space, and if the inverse transform exists, one can also output the warped fixed image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-m"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "metric",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Metric",
+                      "description": "Four image metrics are available: GC: global correlation, CC: ANTS neighborhood cross correlation, MI: Mutual information, and MeanSquares: mean-squares intensity difference.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-t"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "transform",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Transform",
+                      "description": "Several transform options are available. The gradientStep or learningRate characterizes the gradient descent optimization.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "iterations",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Iterations",
+                      "description": "Specify the number of iterations at each level.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-f"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "shrink_factors",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shrink factors",
+                      "description": "Specify the shrink factor for the virtual domain (typically the fixed image) at each level.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-s"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "smoothing_sigmas",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Smoothing sigmas",
+                      "description": "Specify the amount of smoothing at each level.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-x"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask in fixed image space",
+                      "description": "Fixed image mask to limit voxels considered by the metric.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-n"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "interpolation",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Interpolation",
+                      "description": "Several interpolation options are available in ITK.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "Linear",
+                    "NearestNeighbor",
+                    "MultiLabel",
+                    "Gaussian",
+                    "BSpline",
+                    "CosineWindowedSinc",
+                    "WelchWindowedSinc",
+                    "HammingWindowedSinc",
+                    "LanczosWindowedSinc",
+                    "GenericLabel"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-v"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose",
+                      "description": "Verbose option.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "This program is a user-level application for slice-by-slice translation registration. Results are regularized in z using polynomial regression. The program is targeted at spinal cord MRI. Only one stage is supported where a stage consists of a transform; an image metric; and iterations, shrink factors, and smoothing sigmas for each level. Specialized for 3D data: fixed image is 3D, moving image is 3D. Registration is performed slice-by-slice then regularized in z. The parameter -p controls the polynomial degree. -p 0 means no regularization.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

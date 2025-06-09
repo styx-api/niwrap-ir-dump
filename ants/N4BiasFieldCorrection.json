@@ -1,0 +1,978 @@
+{
+  "uid": "e1dc7f6a95071b641e72a957ad7c86a8591d637a.boutiques",
+  "package": {
+    "name": "ants",
+    "version": "2.5.3",
+    "docker": "antsx/ants:v2.5.3",
+    "docs": {
+      "title": "ANTs",
+      "description": "Advanced Normalization Tools (ANTs) is a C++ library available through the command line that computes high-dimensional mappings to capture the statistics of brain structure and function. It allows one to organize, visualize and statistically explore large biomedical image sets. Additionally, it integrates imaging modalities in space + time and works across species or organ systems with minimal customization.\n\nThe ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://github.com/ANTsX/ANTs"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 29,
+      "name": "N4BiasFieldCorrection",
+      "outputs": [],
+      "docs": {
+        "title": null,
+        "description": "N4 is a variant of the popular N3 (nonparameteric nonuniform normalization) retrospective bias correction algorithm. Based on the assumption that the corruption of the low frequency bias field can be modeled as a convolution of the intensity histogram by a Gaussian, the basic algorithmic protocol is to iterate between deconvolving the intensity histogram by a Gaussian, remapping the intensities, and then spatially smoothing this result by a B-spline modeling of the bias field itself.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "N4BiasFieldCorrection",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "N4BiasFieldCorrection"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--image-dimensionality"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "image_dimensionality",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Image dimensionality",
+                      "description": "-d, --image-dimensionality 2/3/4. This option forces the image to be treated as a specified-dimensional image. If not specified, N4 tries to infer the dimensionality from the input image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--shrink-factor"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "shrink_factor",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shrink factor",
+                      "description": "-s, --shrink-factor 1/2/3/(4)/... Running N4 on large images can be time consuming. To lessen computation time, the input image can be resampled. The shrink factor, specified as a single integer, describes this resampling. Shrink factors <= 4 are commonly used. Note that the shrink factor is only applied to the first two or three dimensions which we assume are spatial.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--mask-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "mask_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask image",
+                      "description": "-x, --mask-image maskImageFilename. If a mask image is specified, the final bias correction is only performed in the mask region. If a weight image is not specified, only intensity values inside the masked region are used during the execution of the algorithm. If a weight image is specified, only the non-zero weights are used in the execution of the algorithm although the mask region defines where bias correction is performed in the final output. Otherwise bias correction occurs over the entire image domain.  See also the option description for the weight image. If a mask image is *not* specified then the entire image region will be used as the mask region. Note that this is different than the N3 implementation which uses the results of Otsu thresholding to define a mask. However, this leads to unknown anatomical regions being included and excluded during the bias correction.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--rescale-intensities"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "rescale_intensities",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rescale intensities",
+                      "description": "-r, --rescale-intensities 0/(1). At each iteration, a new intensity mapping is calculated and applied but there is nothing which constrains the new intensity range to be within certain values.  The result is that the range can \"drift\" from the original at each iteration.  This option rescales to the [min,max] range of the original image intensities within the user-specified mask. A mask is required to perform rescaling.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--weight-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "weight_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Weight image",
+                      "description": "-w, --weight-image weightImageFilename. The weight image allows the user to perform a relative weighting of specific voxels during the B-spline fitting. For example, some studies have shown that N3 performed on white matter segmentations improves performance. If one has a spatial probability map of the white matter, one can use this map to weight the b-spline fitting towards those voxels which are more probabilistically classified as white matter. See also the option description for the mask image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--convergence"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "convergence",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "-c, --convergence [<numberOfIterations=50x50x50x50>,<convergenceThreshold=0.0>]. Convergence is determined by calculating the coefficient of variation between subsequent iterations. When this value is less than the specified threshold from the previous iteration or the maximum number of iterations is exceeded the program terminates. Multiple resolutions can be specified by using 'x' between the number of iterations at each resolution, e.g. 100x50x50.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "convergence",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "[",
+                              {
+                                "base": {
+                                  "id": 6,
+                                  "name": "convergence",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Convergence",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": {
+                                  "countMin": null,
+                                  "countMax": null,
+                                  "join": "x"
+                                },
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              },
+                              ",",
+                              {
+                                "base": {
+                                  "id": 7,
+                                  "name": "convergence_threshold",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Convergence threshold",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              },
+                              "]"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--bspline-fitting"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "bspline_fitting",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "-b, --bspline-fitting [splineDistance,<splineOrder=3>]. These options describe the b-spline fitting parameters. The initial b-spline mesh at the coarsest resolution is specified either as the number of elements in each dimension, e.g. 2x2x3 for 3-D images, or it can be specified as a single scalar parameter which describes the isotropic sizing of the mesh elements. The latter option is typically preferred. For each subsequent level, the spline distance decreases in half, or equivalently, the number of mesh elements doubles Cubic splines (order = 3) are typically used. The default setting is to employ a single mesh element over the entire domain, i.e., -b [1x1x1,3].",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "bspline_fitting",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "[",
+                              {
+                                "base": {
+                                  "id": 10,
+                                  "name": "spline_distance",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Spline distance",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": {
+                                  "countMin": null,
+                                  "countMax": null,
+                                  "join": "x"
+                                },
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              },
+                              ",",
+                              {
+                                "base": {
+                                  "id": 11,
+                                  "name": "spline_order",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Spline order",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              },
+                              "]"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--histogram-sharpening"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "histogram_sharpening",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "-t, --histogram-sharpening [<FWHM=0.15>,<wienerNoise=0.01>,<numberOfHistogramBins=200>]. These options describe the histogram sharpening parameters, i.e. the deconvolution step parameters described in the original N3 algorithm. The default values have been shown to work fairly well.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "histogram_sharpening",
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "[",
+                              {
+                                "base": {
+                                  "id": 14,
+                                  "name": "fwhm",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "FWHM",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              },
+                              ",",
+                              {
+                                "base": {
+                                  "id": 15,
+                                  "name": "wiener_noise",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Wiener noise",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              },
+                              ",",
+                              {
+                                "base": {
+                                  "id": 16,
+                                  "name": "number_of_histogram_bins",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Number of histogram bins",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              },
+                              "]"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--verbose"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose",
+                      "description": "Verbose output.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--input-image"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "input_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input image",
+                      "description": "-i, --input-image inputImageFilename. A scalar image is expected as input for bias correction. Since N4 log transforms the intensities, negative values or values close to zero should be processed prior to correction.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--output"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "output",
+                    "outputs": [],
+                    "docs": {
+                      "title": "output",
+                      "description": "The bias corrected version of the input image, with optional noise image.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct_union",
+                    "alts": [
+                      {
+                        "base": {
+                          "id": 23,
+                          "name": "correctedOutput",
+                          "outputs": [
+                            {
+                              "id": 22,
+                              "name": "output_image_outfile",
+                              "tokens": [
+                                {
+                                  "refId": 21,
+                                  "fileRemoveSuffixes": []
+                                }
+                              ],
+                              "docs": {
+                                "title": "Output image",
+                                "description": "Bias corrected image.",
+                                "authors": [],
+                                "literature": [],
+                                "urls": []
+                              }
+                            }
+                          ],
+                          "docs": {
+                            "title": null,
+                            "description": "Bias corrected version of the input image.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "correctedOutput",
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 21,
+                                        "name": "correctedOutputFileName",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Bias corrected output file name",
+                                          "description": "Output file name.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": null,
+                            "description": "Bias corrected version of the input image.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      },
+                      {
+                        "base": {
+                          "id": 28,
+                          "name": "correctedOutputNoise",
+                          "outputs": [
+                            {
+                              "id": 26,
+                              "name": "output_image_outfile",
+                              "tokens": [
+                                {
+                                  "refId": 24,
+                                  "fileRemoveSuffixes": []
+                                }
+                              ],
+                              "docs": {
+                                "title": "Output image",
+                                "description": "Bias corrected image.",
+                                "authors": [],
+                                "literature": [],
+                                "urls": []
+                              }
+                            },
+                            {
+                              "id": 27,
+                              "name": "output_bias_image",
+                              "tokens": [
+                                {
+                                  "refId": 25,
+                                  "fileRemoveSuffixes": []
+                                }
+                              ],
+                              "docs": {
+                                "title": "Bias field image",
+                                "description": "Bias field image.",
+                                "authors": [],
+                                "literature": [],
+                                "urls": []
+                              }
+                            }
+                          ],
+                          "docs": {
+                            "title": null,
+                            "description": "Bias corrected version of the input image, along with noise image.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "correctedOutputNoise",
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "[",
+                                    {
+                                      "base": {
+                                        "id": 24,
+                                        "name": "correctedOutputFileName",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Bias corrected output file name",
+                                          "description": "Output file name.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    },
+                                    ",",
+                                    {
+                                      "base": {
+                                        "id": 25,
+                                        "name": "biasFile",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Bias field output file name",
+                                          "description": "Output bias field image.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": true,
+                                      "choices": null,
+                                      "defaultValue": {
+                                        "_special": "SET_TO_NONE"
+                                      }
+                                    },
+                                    "]"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": null,
+                            "description": "Bias corrected version of the input image, along with noise image.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      }
+                    ]
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "N4 is a variant of the popular N3 (nonparameteric nonuniform normalization) retrospective bias correction algorithm. Based on the assumption that the corruption of the low frequency bias field can be modeled as a convolution of the intensity histogram by a Gaussian, the basic algorithmic protocol is to iterate between deconvolving the intensity histogram by a Gaussian, remapping the intensities, and then spatially smoothing this result by a B-spline modeling of the bias field itself.",
+        "authors": [
+          "ANTs Developers"
+        ],
+        "literature": [],
+        "urls": [
+          "https://github.com/ANTsX/ANTs"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}

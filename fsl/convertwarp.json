@@ -1,0 +1,679 @@
+{
+  "uid": "1722d9741fdb14cd21fb68c9172f1e0ae6c04632.boutiques",
+  "package": {
+    "name": "fsl",
+    "version": "6.0.4",
+    "docker": "brainlife/fsl:6.0.4-patched2",
+    "docs": {
+      "title": "FSL",
+      "description": "FSL is a comprehensive library of analysis tools for FMRI, MRI and diffusion brain imaging data. It runs on macOS (Intel and M1/M2/M3), Linux, and Windows via the Windows Subsystem for Linux, and is very easy to install. Most of the tools can be run both from the command line and as GUIs (\"point-and-click\" graphical user interfaces). To quote the relevant references for FSL tools you should look in the individual tools' manual pages, and also please reference one or more of the FSL overview papers:\n\nM.W. Woolrich, S. Jbabdi, B. Patenaude, M. Chappell, S. Makni, T. Behrens, C. Beckmann, M. Jenkinson, S.M. Smith. Bayesian analysis of neuroimaging data in FSL. NeuroImage, 45:S173-86, 2009\n\nS.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johansen-Berg, P.R. Bannister, M. De Luca, I. Drobnjak, D.E. Flitney, R. Niazy, J. Saunders, J. Vickers, Y. Zhang, N. De Stefano, J.M. Brady, and P.M. Matthews. Advances in functional and structural MR image analysis and implementation as FSL. NeuroImage, 23(S1):208-19, 2004\n\nM. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012",
+      "authors": [],
+      "literature": [],
+      "urls": [
+        "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+      ]
+    }
+  },
+  "command": {
+    "base": {
+      "id": 18,
+      "name": "convertwarp",
+      "outputs": [
+        {
+          "id": 16,
+          "name": "out_file",
+          "tokens": [
+            {
+              "refId": 10,
+              "fileRemoveSuffixes": []
+            },
+            "_concatwarp"
+          ],
+          "docs": {
+            "title": "Out file",
+            "description": "Name of output file, containing warps that are the combination of all those given as arguments. the format of this will be a field-file (rather than spline coefficients) with any affine components included.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        },
+        {
+          "id": 17,
+          "name": "out_file",
+          "tokens": [
+            "out_file"
+          ],
+          "docs": {
+            "title": "Out file",
+            "description": "Name of output file, containing the warp as field or coefficients.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          }
+        }
+      ],
+      "docs": {
+        "title": null,
+        "description": "Use FSL convertwarp for combining multiple transforms into one.",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "body": {
+      "type": "struct",
+      "name": "convertwarp",
+      "groups": [
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "convertwarp"
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "abswarp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Abswarp",
+                      "description": "If set it indicates that the warps in --warp1 and --warp2 should be interpreted as absolute. i.e. the values in --warp1/2 are the coordinates in the next space, rather than displacements. this flag is ignored if --warp1/2 was created by fnirt, which always creates relative displacements.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--abs"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "cons_jacobian",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Cons jacobian",
+                      "description": "Constrain the jacobian of the warpfield to lie within specified min/max limits.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--constrainj"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--jmax=",
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "jacobian_max",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Jacobian max",
+                      "description": "Maximum acceptable jacobian value for constraint (default 100.0).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--jmin=",
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "jacobian_min",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Jacobian min",
+                      "description": "Minimum acceptable jacobian value for constraint (default 0.01).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--midmat=",
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "midmat",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Midmat",
+                      "description": "Name of file containing mid-warp-affine transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "out_abswarp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Out abswarp",
+                      "description": "If set it indicates that the warps in --out should be absolute, i.e. the values in --out are displacements from the coordinates in --ref.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--absout"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "out_relwarp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Out relwarp",
+                      "description": "If set it indicates that the warps in --out should be relative, i.e. the values in --out are displacements from the coordinates in --ref.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--relout"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "output_type",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output type",
+                      "description": "'nifti' or 'nifti_pair' or 'nifti_gz' or 'nifti_pair_gz'. Fsl output type.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "NIFTI",
+                    "NIFTI_PAIR",
+                    "NIFTI_GZ",
+                    "NIFTI_PAIR_GZ"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--postmat=",
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "postmat",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Postmat",
+                      "description": "Name of file containing an affine transform (applied last). it could e.g. be an affine transform that maps the mni152-space into a better approximation to the talairach-space (if indeed there is one).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--premat=",
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "premat",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Premat",
+                      "description": "Filename for pre-transform (affine matrix).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--ref=",
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "reference",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Reference",
+                      "description": "Name of a file in target space of the full transform.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "relwarp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Relwarp",
+                      "description": "If set it indicates that the warps in --warp1/2 should be interpreted as relative. i.e. the values in --warp1/2 are displacements from the coordinates in the next space.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--rel"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--shiftdir=",
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "shift_direction",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shift direction",
+                      "description": "'y-' or 'y' or 'x' or 'x-' or 'z' or 'z-'. Indicates the direction that the distortions from --shiftmap goes. it depends on the direction and polarity of the phase-encoding in the epi sequence.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "y-",
+                    "y",
+                    "x",
+                    "x-",
+                    "z",
+                    "z-"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--shiftmap=",
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "shift_in_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shift in file",
+                      "description": "Name of file containing a \"shiftmap\", a non-linear transform with displacements only in one direction (applied first, before premat). this would typically be a fieldmap that has been pre-processed using fugue that maps a subjects functional (epi) data onto an undistorted space (i.e. a space that corresponds to his/her true anatomy).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--warp1=",
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "warp1",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Warp1",
+                      "description": "Name of file containing initial warp-fields/coefficients (follows premat). this could e.g. be a fnirt-transform from a subjects structural scan to an average of a group of subjects.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--warp2=",
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "warp2",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Warp2",
+                      "description": "Name of file containing secondary warp-fields/coefficients (after warp1/midmat but before postmat). this could e.g. be a fnirt-transform from the average of a group of subjects to some standard space (e.g. mni152).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        }
+      ],
+      "join": null,
+      "docs": {
+        "title": null,
+        "description": "Use FSL convertwarp for combining multiple transforms into one.",
+        "authors": [
+          "FMRIB Analysis Group, University of Oxford"
+        ],
+        "literature": [],
+        "urls": [
+          "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki"
+        ]
+      }
+    },
+    "list": null,
+    "nullable": false,
+    "choices": null,
+    "defaultValue": null
+  },
+  "stdoutAsStringOutput": null,
+  "stderrAsStringOutput": null
+}
