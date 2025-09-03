@@ -1,5 +1,5 @@
 {
-  "uid": "19293a431a3099e1044a725ff53be407555c7b79.boutiques",
+  "uid": "a95d25c6d9f2c0adb3ad36d80c962341239e28e0.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,18 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 22,
-      "name": "gen_ss_review_scripts",
+      "id": 19,
+      "name": "align_epi_anat.py",
       "outputs": [
         {
-          "id": 19,
-          "name": "basic_review",
+          "id": 17,
+          "name": "anat_aligned",
           "tokens": [
-            "./@ss_review_basic"
+            {
+              "refId": 1,
+              "fileRemoveSuffixes": []
+            },
+            "+orig"
           ],
           "docs": {
-            "title": "Basic review script output",
-            "description": "Basic review script output",
+            "title": "Aligned Anatomical Dataset",
+            "description": "A version of the anatomy that is aligned to the EPI",
             "authors": [],
             "literature": [],
             "urls": []
@@ -35,29 +39,18 @@
           "mediaTypes": []
         },
         {
-          "id": 20,
-          "name": "driver_review",
+          "id": 18,
+          "name": "epi_aligned",
           "tokens": [
-            "./@ss_review_driver"
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "+orig"
           ],
           "docs": {
-            "title": "Driver review script output",
-            "description": "Driver review script output",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 21,
-          "name": "driver_commands",
-          "tokens": [
-            "./@ss_review_driver_commands"
-          ],
-          "docs": {
-            "title": "Driver commands script output",
-            "description": "Driver commands script output",
+            "title": "Aligned EPI Dataset",
+            "description": "A version of the EPI dataset aligned to the Anatomy",
             "authors": [],
             "literature": [],
             "urls": []
@@ -66,8 +59,8 @@
         }
       ],
       "docs": {
-        "title": "gen_ss_review_scripts",
-        "description": "Generate single subject analysis review scripts",
+        "title": "align_epi_anat.py",
+        "description": "Align EPI to anatomical datasets or vice versa",
         "authors": [
           "AFNI Developers"
         ],
@@ -79,14 +72,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "gen_ss_review_scripts",
+      "name": "align_epi_anat.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "gen_ss_review_scripts.py"
+                "align_epi_anat.py"
               ],
               "join": null
             }
@@ -97,7 +90,7 @@
           "cargs": [
             {
               "tokens": [
-                "-subj"
+                "-epi"
               ],
               "join": null
             },
@@ -106,25 +99,26 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "subject_id",
+                    "name": "epi",
                     "outputs": [],
                     "docs": {
-                      "title": "Subject ID",
-                      "description": "Subject ID",
+                      "title": "EPI Dataset",
+                      "description": "EPI dataset to align or to which to align",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -136,7 +130,7 @@
           "cargs": [
             {
               "tokens": [
-                "-rm_trs"
+                "-anat"
               ],
               "join": null
             },
@@ -145,27 +139,26 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "rm_trs",
+                    "name": "anat",
                     "outputs": [],
                     "docs": {
-                      "title": "Number of TRs removed",
-                      "description": "Number of TRs removed per run",
+                      "title": "Anatomical Dataset",
+                      "description": "Anatomical dataset to align or to which to align",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -177,7 +170,7 @@
           "cargs": [
             {
               "tokens": [
-                "-num_stim"
+                "-epi_base"
               ],
               "join": null
             },
@@ -186,93 +179,11 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "num_stim",
+                    "name": "epi_base",
                     "outputs": [],
                     "docs": {
-                      "title": "Number of stimuli",
-                      "description": "Number of main stimulus classes",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-mb_level"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "mb_level",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Multiband level",
-                      "description": "Multiband slice acquisition level (>= 1)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-slice_pattern"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "slice_pattern",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Slice timing pattern",
-                      "description": "Slice timing pattern",
+                      "title": "EPI Base Sub-brick",
+                      "description": "Base sub-brick to use for alignment (0/mean/median/max/subbrick#)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -282,11 +193,9 @@
                     "type": "string"
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -298,7 +207,77 @@
           "cargs": [
             {
               "tokens": [
-                "-motion_dset"
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "anat2epi",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Align anatomical to EPI dataset",
+                      "description": "Align anatomical to EPI dataset (default)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-anat2epi"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "epi2anat",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Align EPI to anatomical dataset",
+                      "description": "Align EPI to anatomical dataset",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-epi2anat"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-suffix"
               ],
               "join": null
             },
@@ -307,21 +286,18 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "motion_dset",
+                    "name": "suffix",
                     "outputs": [],
                     "docs": {
-                      "title": "Motion dataset",
-                      "description": "Motion parameters dataset",
+                      "title": "Output Suffix",
+                      "description": "Append suffix to the original anat/epi dataset to use in the resulting dataset names",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": true,
@@ -338,39 +314,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-outlier_dset"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 6,
-                    "name": "outlier_dset",
+                    "name": "AddEdge",
                     "outputs": [],
                     "docs": {
-                      "title": "Outlier fraction dataset",
-                      "description": "Outlier fraction time series dataset",
+                      "title": "AddEdge",
+                      "description": "Run @AddEdge script to create composite edge images",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-AddEdge"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -380,39 +349,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-enorm_dset"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 7,
-                    "name": "enorm_dset",
+                    "name": "big_move",
                     "outputs": [],
                     "docs": {
-                      "title": "Enorm dataset",
-                      "description": "Euclidean norm of motion parameters dataset",
+                      "title": "Big movement between datasets",
+                      "description": "Large displacement is needed to align the two volumes",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-big_move"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -422,38 +384,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-mot_limit"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 8,
-                    "name": "mot_limit",
+                    "name": "giant_move",
                     "outputs": [],
                     "docs": {
-                      "title": "Motion limit",
-                      "description": "Motion limit",
+                      "title": "Giant movement between datasets",
+                      "description": "Even larger movement required, uses cmass, two passes and very large angles and shifts",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-giant_move"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -463,38 +419,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-out_limit"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 9,
-                    "name": "out_limit",
+                    "name": "ginormous_move",
                     "outputs": [],
                     "docs": {
-                      "title": "Outlier limit",
-                      "description": "Outlier fraction limit",
+                      "title": "Ginormous movement between datasets",
+                      "description": "Adds align_centers to giant_move",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ginormous_move"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -504,39 +454,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-xmat_regress"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 10,
-                    "name": "xmat_regress",
+                    "name": "keep_rm_files",
                     "outputs": [],
                     "docs": {
-                      "title": "X matrix file",
-                      "description": "X-matrix file used in regression",
+                      "title": "Keep temporary files",
+                      "description": "Don't delete any of the temporary files created",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-keep_rm_files"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -546,39 +489,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-xmat_uncensored"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 11,
-                    "name": "xmat_uncensored",
+                    "name": "prep_only",
                     "outputs": [],
                     "docs": {
-                      "title": "Uncensored X matrix file",
-                      "description": "Un-censored X-matrix file",
+                      "title": "Preprocessing only",
+                      "description": "Do preprocessing steps only without alignment",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-prep_only"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -590,7 +526,7 @@
           "cargs": [
             {
               "tokens": [
-                "-stats_dset"
+                "-anat_has_skull"
               ],
               "join": null
             },
@@ -599,25 +535,25 @@
                 {
                   "base": {
                     "id": 12,
-                    "name": "stats_dset",
+                    "name": "ana_has_skull",
                     "outputs": [],
                     "docs": {
-                      "title": "Stats dataset",
-                      "description": "Output from 3dDeconvolve",
+                      "title": "Anatomical dataset has skull",
+                      "description": "Do not skullstrip anat dataset",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "yes",
+                    "no"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -632,7 +568,7 @@
           "cargs": [
             {
               "tokens": [
-                "-final_anat"
+                "-epi_strip"
               ],
               "join": null
             },
@@ -641,25 +577,26 @@
                 {
                   "base": {
                     "id": 13,
-                    "name": "final_anat",
+                    "name": "epi_strip",
                     "outputs": [],
                     "docs": {
-                      "title": "Final anatomical dataset",
-                      "description": "Final anatomical dataset",
+                      "title": "Skull stripping method for EPI dataset",
+                      "description": "Method to remove skull for EPI data",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "3dSkullStrip",
+                    "3dAutomask",
+                    "None"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -674,7 +611,7 @@
           "cargs": [
             {
               "tokens": [
-                "-final_view"
+                "-volreg_method"
               ],
               "join": null
             },
@@ -683,11 +620,11 @@
                 {
                   "base": {
                     "id": 14,
-                    "name": "final_view",
+                    "name": "volreg_method",
                     "outputs": [],
                     "docs": {
-                      "title": "Final view",
-                      "description": "Final view of data (e.g. 'orig' or 'tlrc')",
+                      "title": "Volume Registration Method",
+                      "description": "Time series volume registration method",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -698,7 +635,11 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "3dvolreg",
+                    "3dWarpDrive",
+                    "3dAllineate"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -713,7 +654,7 @@
           "cargs": [
             {
               "tokens": [
-                "-prefix"
+                "-ex_mode"
               ],
               "join": null
             },
@@ -722,11 +663,11 @@
                 {
                   "base": {
                     "id": 15,
-                    "name": "prefix",
+                    "name": "ex_mode",
                     "outputs": [],
                     "docs": {
-                      "title": "Output prefix",
-                      "description": "Set the prefix for script names",
+                      "title": "Execution Mode",
+                      "description": "Command execution mode",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -737,7 +678,12 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "quiet",
+                    "echo",
+                    "dry_run",
+                    "script"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -750,122 +696,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-verb"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 16,
-                    "name": "verbosity",
+                    "name": "overwrite",
                     "outputs": [],
                     "docs": {
-                      "title": "Verbosity level",
-                      "description": "Set the verbosity level",
+                      "title": "Overwrite existing files",
+                      "description": "Overwrite existing files",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-overwrite"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-write_uvars_json"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 17,
-                    "name": "uvars_json",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Uvars JSON file",
-                      "description": "Write JSON file of user variables dict",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-init_uvars_json"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 18,
-                    "name": "init_uvars_json",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Initialize uvars JSON file",
-                      "description": "Initialize user variables from the given JSON file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -876,8 +732,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "gen_ss_review_scripts",
-        "description": "Generate single subject analysis review scripts",
+        "title": "align_epi_anat.py",
+        "description": "Align EPI to anatomical datasets or vice versa",
         "authors": [
           "AFNI Developers"
         ],

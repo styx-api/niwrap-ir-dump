@@ -1,5 +1,5 @@
 {
-  "uid": "46cc1bbfa68d9508d98e3c8d1703d0d91c133340.boutiques",
+  "uid": "5920f7c4edf531d99fbcd79f62063134f553617f.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,22 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 19,
-      "name": "find_variance_lines",
+      "id": 22,
+      "name": "3dROIMaker",
       "outputs": [
         {
-          "id": 15,
-          "name": "variance_maps",
+          "id": 20,
+          "name": "gm_map",
           "tokens": [
             {
-              "refId": 8,
+              "refId": 2,
               "fileRemoveSuffixes": []
             },
-            "/variance_map_run*.nii.gz"
+            "_GM+orig.*.HEAD"
           ],
           "docs": {
-            "title": "Variance Maps",
-            "description": "Variance maps per run",
+            "title": "GM map of ROIs",
+            "description": "GM map of ROIs based on value- and volume-thresholding, corresponding to gray matter regions of activation.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -39,56 +39,18 @@
           "mediaTypes": []
         },
         {
-          "id": 16,
-          "name": "scaled_variance_maps",
+          "id": 21,
+          "name": "gmi_map",
           "tokens": [
             {
-              "refId": 8,
+              "refId": 2,
               "fileRemoveSuffixes": []
             },
-            "/scaled_variance_map_run*.nii.gz"
+            "_GMI+orig.*.HEAD"
           ],
           "docs": {
-            "title": "Scaled Variance Maps",
-            "description": "Scaled variance maps per run",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 17,
-          "name": "cluster_reports",
-          "tokens": [
-            {
-              "refId": 8,
-              "fileRemoveSuffixes": []
-            },
-            "/cluster_report_run*.txt"
-          ],
-          "docs": {
-            "title": "Cluster Reports",
-            "description": "Cluster reports",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 18,
-          "name": "jpeg_images",
-          "tokens": [
-            {
-              "refId": 8,
-              "fileRemoveSuffixes": []
-            },
-            "/*.jpg"
-          ],
-          "docs": {
-            "title": "JPEG Images",
-            "description": "JPEG images showing locations of high variance",
+            "title": "GMI map of inflated ROIs",
+            "description": "Map of inflated GM ROIs based on GM map, with ROIs inflated either by user-design or WM skeleton.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -97,8 +59,8 @@
         }
       ],
       "docs": {
-        "title": "find_variance_lines",
-        "description": "Look for bars of high variance that might suggest scanner interference in EPI datasets.",
+        "title": "3dROIMaker",
+        "description": "Create a labelled set of ROIs from input data, useful in combining functional and tractographic/structural data.",
         "authors": [
           "AFNI Developers"
         ],
@@ -110,14 +72,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "find_variance_lines",
+      "name": "3dROIMaker",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "find_variance_lines.tcsh"
+                "3dROIMaker"
               ],
               "join": null
             }
@@ -131,11 +93,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "input_files",
+                    "name": "inset",
                     "outputs": [],
                     "docs": {
-                      "title": "Input Files",
-                      "description": "Input EPI datasets",
+                      "title": "Input dataset",
+                      "description": "3D volume(s) of values, especially functionally-derived quantities like correlation values or ICA Z-scores.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -147,11 +109,7 @@
                     "mutable": false,
                     "mediaTypes": []
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
+                  "list": null,
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
@@ -166,7 +124,7 @@
           "cargs": [
             {
               "tokens": [
-                "-mask"
+                "-thresh"
               ],
               "join": null
             },
@@ -175,25 +133,25 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "mask",
+                    "name": "thresh",
                     "outputs": [],
                     "docs": {
-                      "title": "Mask",
-                      "description": "Mask for computations (default=AUTO)",
+                      "title": "Threshold value",
+                      "description": "Threshold for values in INSET, used to create ROI islands from the 3D volume's sea of values.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -205,7 +163,7 @@
           "cargs": [
             {
               "tokens": [
-                "-min_cvox"
+                "-prefix"
               ],
               "join": null
             },
@@ -214,27 +172,23 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "min_cvox",
+                    "name": "prefix",
                     "outputs": [],
                     "docs": {
-                      "title": "Min Voxels",
-                      "description": "Minimum voxels for valid mask column (default=5)",
+                      "title": "Output prefix",
+                      "description": "Prefix of output name, with output files being: PREFIX_GM* and PREFIX_GMI*",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -246,7 +200,7 @@
           "cargs": [
             {
               "tokens": [
-                "-min_nt"
+                "-refset"
               ],
               "join": null
             },
@@ -255,20 +209,21 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "min_nt",
+                    "name": "refset",
                     "outputs": [],
                     "docs": {
-                      "title": "Min Time Points",
-                      "description": "Minimum number of time points required (default=10)",
+                      "title": "Reference dataset",
+                      "description": "3D (or multi-subbrick) volume containing integer values with which to label specific GM ROIs after thresholding.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -287,7 +242,7 @@
           "cargs": [
             {
               "tokens": [
-                "-nerode"
+                "-volthr"
               ],
               "join": null
             },
@@ -296,18 +251,18 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "nerode",
+                    "name": "volthr",
                     "outputs": [],
                     "docs": {
-                      "title": "Erode Levels",
-                      "description": "How much to erode input or auto-mask (default=0)",
+                      "title": "Volume threshold",
+                      "description": "Minimum size a cluster of voxels must have in order to remain a GM ROI after thresholding. Can reduce 'noisy' clusters.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
+                    "type": "float",
                     "minValue": null,
                     "maxValue": null
                   },
@@ -328,7 +283,7 @@
           "cargs": [
             {
               "tokens": [
-                "-nfirst"
+                "-only_some_top"
               ],
               "join": null
             },
@@ -337,18 +292,18 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "nfirst",
+                    "name": "only_some_top",
                     "outputs": [],
                     "docs": {
-                      "title": "Discard Initial Time Points",
-                      "description": "Discard the first VAL time points (default=0)",
+                      "title": "Keep top N voxels",
+                      "description": "Restrict each found region to keep only N voxels with the highest inset values.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
+                    "type": "float",
                     "minValue": null,
                     "maxValue": null
                   },
@@ -369,7 +324,7 @@
           "cargs": [
             {
               "tokens": [
-                "-perc"
+                "-only_conn_top"
               ],
               "join": null
             },
@@ -378,20 +333,20 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "percentile",
+                    "name": "only_conn_top",
                     "outputs": [],
                     "docs": {
-                      "title": "Variance Percentile",
-                      "description": "Percentile of variance values to scale to (default=90)",
+                      "title": "Keep top N contiguous voxels",
+                      "description": "Select N max contiguous voxels in a region starting from peak voxel and expanding.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": 0,
-                    "maxValue": 99
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -410,7 +365,7 @@
           "cargs": [
             {
               "tokens": [
-                "-polort"
+                "-inflate"
               ],
               "join": null
             },
@@ -419,18 +374,20 @@
                 {
                   "base": {
                     "id": 7,
-                    "name": "polort",
+                    "name": "inflate",
                     "outputs": [],
                     "docs": {
-                      "title": "Polynomial Detrending",
-                      "description": "Polynomial detrending degree (default=A)",
+                      "title": "Inflation size",
+                      "description": "Number of voxels to pad each found ROI in order to turn GM ROIs into inflated (GMI) ROIs.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -447,36 +404,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-rdir"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 8,
-                    "name": "output_dir",
+                    "name": "trim_off_wm",
                     "outputs": [],
                     "docs": {
-                      "title": "Output Directory",
-                      "description": "Name of the output directory (default=vlines.result)",
+                      "title": "Trim off WM",
+                      "description": "Trim the INSET to exclude voxels in WM by excluding those which overlap an input WM skeleton.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "bool",
+                    "valueTrue": [
+                      "-trim_off_wm"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -488,7 +441,7 @@
           "cargs": [
             {
               "tokens": [
-                "-do_clean"
+                "-wm_skel"
               ],
               "join": null
             },
@@ -497,20 +450,21 @@
                 {
                   "base": {
                     "id": 9,
-                    "name": "do_clean",
+                    "name": "wm_skel",
                     "outputs": [],
                     "docs": {
-                      "title": "Clean Up",
-                      "description": "Do we clean up a little? (default=1)",
+                      "title": "WM skeleton",
+                      "description": "3D volume containing info of WM, as might be defined from an FA map or anatomical segmentation.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": 0,
-                    "maxValue": 1
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -529,7 +483,7 @@
           "cargs": [
             {
               "tokens": [
-                "-do_img"
+                "-skel_thr"
               ],
               "join": null
             },
@@ -538,20 +492,20 @@
                 {
                   "base": {
                     "id": 10,
-                    "name": "do_img",
+                    "name": "skel_thr",
                     "outputs": [],
                     "docs": {
-                      "title": "Generate Images",
-                      "description": "Make vline images? (default=1)",
+                      "title": "Skeleton threshold",
+                      "description": "Threshold value for WM skeleton if it is not a mask.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": 0,
-                    "maxValue": 1
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -573,11 +527,11 @@
                 {
                   "base": {
                     "id": 11,
-                    "name": "echo",
+                    "name": "skel_stop",
                     "outputs": [],
                     "docs": {
-                      "title": "Shell Echo",
-                      "description": "Run script with shell 'echo' set (default=no)",
+                      "title": "Stop at WM skeleton",
+                      "description": "Stop inflation at locations which are already on WM skeleton.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -586,7 +540,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-echo"
+                      "-skel_stop"
                     ],
                     "valueFalse": []
                   },
@@ -608,11 +562,11 @@
                 {
                   "base": {
                     "id": 12,
-                    "name": "help",
+                    "name": "skel_stop_strict",
                     "outputs": [],
                     "docs": {
-                      "title": "Help",
-                      "description": "Show this help",
+                      "title": "Strictly stop at WM skeleton",
+                      "description": "Do not allow any inflation into the skel-region.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -621,7 +575,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-help"
+                      "-skel_stop_strict"
                     ],
                     "valueFalse": []
                   },
@@ -638,16 +592,100 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-csf_skel"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 13,
-                    "name": "hist",
+                    "name": "csf_skel",
                     "outputs": [],
                     "docs": {
-                      "title": "History",
-                      "description": "Show the version history",
+                      "title": "CSF skeleton",
+                      "description": "3D volume containing info of CSF. Info must be a binary mask already.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-mask"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "mask",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input mask",
+                      "description": "Mask within which to apply threshold. Useful if the MINTHR is a negative value.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "neigh_upto_vert",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Vertex neighbor grouping",
+                      "description": "Define neighbors loosely so that voxels can be grouped into the same ROI if they share at least one vertex.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -656,7 +694,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-hist"
+                      "-neigh_upto_vert"
                     ],
                     "valueFalse": []
                   },
@@ -677,12 +715,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 14,
-                    "name": "ver",
+                    "id": 16,
+                    "name": "nifti",
                     "outputs": [],
                     "docs": {
-                      "title": "Version",
-                      "description": "Show the current version",
+                      "title": "Output NIFTI files",
+                      "description": "Switch to output *.nii.gz GM and GMI files",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -691,7 +729,125 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-ver"
+                      "-nifti"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-preinfl_inset"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "preinfl_inset",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Pre-inflation inset",
+                      "description": "Start with a WM ROI, inflate it to find the nearest GM, then expand that GM and subtract away the WM+CSF parts.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-preinfl_inflate"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "preinfl_inflate",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Pre-inflation size",
+                      "description": "Number of voxels for initial inflation of PSET.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "dump_no_labtab",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Disable labeltable",
+                      "description": "Switch for turning off labeltable attachment to the output GM and GMI files.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-dump_no_labtab"
                     ],
                     "valueFalse": []
                   },
@@ -709,8 +865,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "find_variance_lines",
-        "description": "Look for bars of high variance that might suggest scanner interference in EPI datasets.",
+        "title": "3dROIMaker",
+        "description": "Create a labelled set of ROIs from input data, useful in combining functional and tractographic/structural data.",
         "authors": [
           "AFNI Developers"
         ],

@@ -1,5 +1,5 @@
 {
-  "uid": "be0a3158fe3df52caf8c7307710e4bd60769efcd.boutiques",
+  "uid": "95009f6df9fe408c5a8a3786bc0c7164b9b8f38b.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,51 +16,12 @@
   },
   "command": {
     "base": {
-      "id": 9,
-      "name": "fat_mvm_prep",
-      "outputs": [
-        {
-          "id": 7,
-          "name": "mvmtbl",
-          "tokens": [
-            {
-              "refId": 0,
-              "fileRemoveSuffixes": []
-            },
-            "_MVMtbl.txt"
-          ],
-          "docs": {
-            "title": "Output MVM Table",
-            "description": "Output tabular text file for 3dMVM.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 8,
-          "name": "mvmprep_log",
-          "tokens": [
-            {
-              "refId": 0,
-              "fileRemoveSuffixes": []
-            },
-            "_MVMprep.log"
-          ],
-          "docs": {
-            "title": "Output MVM Prep Log",
-            "description": "Log file detailing subject matching and ROI list.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        }
-      ],
+      "id": 11,
+      "name": "uber_skel.py",
+      "outputs": [],
       "docs": {
-        "title": "fat_mvm_prep",
-        "description": "Combine FATCAT output with CSV data for statistical modeling.",
+        "title": "uber_skel.py",
+        "description": "Sample uber processing program for initializing user and control variables, with options for both GUI and non-GUI modes.",
         "authors": [
           "AFNI Developers"
         ],
@@ -72,14 +33,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "fat_mvm_prep",
+      "name": "uber_skel.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "fat_mvm_prep.py"
+                "uber_skel.py"
               ],
               "join": null
             }
@@ -90,7 +51,7 @@
           "cargs": [
             {
               "tokens": [
-                "-p"
+                "-qt_opts"
               ],
               "join": null
             },
@@ -99,11 +60,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "prefix",
+                    "name": "qt_options",
                     "outputs": [],
                     "docs": {
-                      "title": "Output Prefix",
-                      "description": "Prefix for output files.",
+                      "title": "Qt Options",
+                      "description": "Pass PyQt4 options directly to the GUI",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -113,9 +74,11 @@
                     "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": null
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -125,137 +88,16 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-c"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 1,
-                    "name": "csv_file",
+                    "name": "no_gui_flag",
                     "outputs": [],
                     "docs": {
-                      "title": "CSV Input File",
-                      "description": "Comma-separated variable (CSV) file for input.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-m"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "matrix_files",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Matrix Files",
-                      "description": "Set of matrix (*.grid or *.netcc) files by searchable path.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-l"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "list_match",
-                    "outputs": [],
-                    "docs": {
-                      "title": "List Match File",
-                      "description": "Text file containing two columns: path to subject matrix file and CSV IDs.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "unionize_rois",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Unionize ROIs",
-                      "description": "Make the ROI list as the union of elements across the group.",
+                      "title": "No GUI Flag",
+                      "description": "Run without the GUI",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -264,7 +106,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-u"
+                      "-no_gui"
                     ],
                     "valueFalse": []
                   },
@@ -285,12 +127,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 5,
-                    "name": "na_warn_off",
+                    "id": 2,
+                    "name": "print_script",
                     "outputs": [],
                     "docs": {
-                      "title": "NA Warnings Off",
-                      "description": "Turn off the automatic warnings as the data table is created.",
+                      "title": "Print Script Flag",
+                      "description": "Print the script",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -299,7 +141,124 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-N"
+                      "-print_script"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-save_script"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "save_script",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Save Script",
+                      "description": "Save the script",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-uvar"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "user_var",
+                    "outputs": [],
+                    "docs": {
+                      "title": "User Variable",
+                      "description": "Initialize user variables. Usage: -uvar <name> <value>",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "help_howto_program",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help How to Program Flag",
+                      "description": "Show programming comments",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help_howto_program"
                     ],
                     "valueFalse": []
                   },
@@ -321,11 +280,11 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "extern_labels_no",
+                    "name": "help",
                     "outputs": [],
                     "docs": {
-                      "title": "Disable External Labels",
-                      "description": "Turn off the writing/usage of user-defined labels in the *.grid/*.netcc files.",
+                      "title": "Help Flag",
+                      "description": "Show help",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -334,7 +293,147 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-E"
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "help_gui",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help GUI Flag",
+                      "description": "Show help for the GUI",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help_gui"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "history",
+                    "outputs": [],
+                    "docs": {
+                      "title": "History Flag",
+                      "description": "Show history",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-hist"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "show_valid_opts",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Show Valid Options Flag",
+                      "description": "Show valid options",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-show_valid_opts"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "version",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Version Flag",
+                      "description": "Show version",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ver"
                     ],
                     "valueFalse": []
                   },
@@ -352,8 +451,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "fat_mvm_prep",
-        "description": "Combine FATCAT output with CSV data for statistical modeling.",
+        "title": "uber_skel.py",
+        "description": "Sample uber processing program for initializing user and control variables, with options for both GUI and non-GUI modes.",
         "authors": [
           "AFNI Developers"
         ],

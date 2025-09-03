@@ -1,5 +1,5 @@
 {
-  "uid": "54bddb6e07bcdce4629069126b94b563d0162fab.boutiques",
+  "uid": "0c22f3858e28e7ce9c5b403fa3a5edd50daad48f.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,22 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 12,
-      "name": "fat_mat_tableize",
+      "id": 9,
+      "name": "fat_mvm_prep.py",
       "outputs": [
         {
-          "id": 10,
-          "name": "output_table",
+          "id": 7,
+          "name": "mvmtbl",
           "tokens": [
             {
-              "refId": 3,
+              "refId": 0,
               "fileRemoveSuffixes": []
             },
-            "_tbl.txt"
+            "_MVMtbl.txt"
           ],
           "docs": {
-            "title": "Table File",
-            "description": "Table file usable in AFNI group analysis programs.",
+            "title": "Output MVM Table",
+            "description": "Output tabular text file for 3dMVM.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -39,18 +39,18 @@
           "mediaTypes": []
         },
         {
-          "id": 11,
-          "name": "output_log",
+          "id": 8,
+          "name": "mvmprep_log",
           "tokens": [
             {
-              "refId": 3,
+              "refId": 0,
               "fileRemoveSuffixes": []
             },
-            "_prep.log"
+            "_MVMprep.log"
           ],
           "docs": {
-            "title": "Log File",
-            "description": "Log file reporting inputs, matching, and aspects of creating the table file.",
+            "title": "Output MVM Prep Log",
+            "description": "Log file detailing subject matching and ROI list.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -59,8 +59,8 @@
         }
       ],
       "docs": {
-        "title": "fat_mat_tableize",
-        "description": "Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and 3dTrackID (*.grid) outputs, with optional additional subject information from CSV files.",
+        "title": "fat_mvm_prep.py",
+        "description": "Combine FATCAT output with CSV data for statistical modeling.",
         "authors": [
           "AFNI Developers"
         ],
@@ -72,14 +72,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "fat_mat_tableize",
+      "name": "fat_mvm_prep.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "fat_mat_tableize.py"
+                "fat_mvm_prep.py"
               ],
               "join": null
             }
@@ -90,7 +90,7 @@
           "cargs": [
             {
               "tokens": [
-                "-in_mat"
+                "-p"
               ],
               "join": null
             },
@@ -99,11 +99,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "input_matrices",
+                    "name": "prefix",
                     "outputs": [],
                     "docs": {
-                      "title": "Input Matrices",
-                      "description": "Names of *.netcc or *.grid files with matrices to be used to make table; can be provided using wildcard chars.",
+                      "title": "Output Prefix",
+                      "description": "Prefix for output files.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -112,11 +112,7 @@
                   "body": {
                     "type": "string"
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
+                  "list": null,
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
@@ -131,7 +127,7 @@
           "cargs": [
             {
               "tokens": [
-                "-in_csv"
+                "-c"
               ],
               "join": null
             },
@@ -140,11 +136,11 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "input_csv",
+                    "name": "csv_file",
                     "outputs": [],
                     "docs": {
-                      "title": "Input CSV",
-                      "description": "Name of a CSV file to include in the table. The first column must have subject ID labels that match with the input matrix files.",
+                      "title": "CSV Input File",
+                      "description": "Comma-separated variable (CSV) file for input.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -155,87 +151,6 @@
                     "resolveParent": false,
                     "mutable": false,
                     "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-in_listfile"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "input_list",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Input List File",
-                      "description": "File containing paths to subject matrices and optionally CSV IDs for matching.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-prefix"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "output_prefix",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output Prefix",
-                      "description": "Output basename for the table and log files. Suffix and file extensions will be added for the outputs.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
                   },
                   "list": null,
                   "nullable": false,
@@ -252,7 +167,7 @@
           "cargs": [
             {
               "tokens": [
-                "-pars"
+                "-m"
               ],
               "join": null
             },
@@ -260,12 +175,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 4,
-                    "name": "parameters",
+                    "id": 2,
+                    "name": "matrix_files",
                     "outputs": [],
                     "docs": {
-                      "title": "List of Parameters",
-                      "description": "List of matrices to be included in the table, identified by their parameter name.",
+                      "title": "Matrix Files",
+                      "description": "Set of matrix (*.grid or *.netcc) files by searchable path.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -274,16 +189,89 @@
                   "body": {
                     "type": "string"
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
+                  "list": null,
                   "nullable": true,
                   "choices": null,
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-l"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "list_match",
+                    "outputs": [],
+                    "docs": {
+                      "title": "List Match File",
+                      "description": "Text file containing two columns: path to subject matrix file and CSV IDs.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "unionize_rois",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Unionize ROIs",
+                      "description": "Make the ROI list as the union of elements across the group.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-u"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -298,11 +286,11 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "version",
+                    "name": "na_warn_off",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Version",
-                      "description": "Display current version.",
+                      "title": "NA Warnings Off",
+                      "description": "Turn off the automatic warnings as the data table is created.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -311,7 +299,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-ver"
+                      "-N"
                     ],
                     "valueFalse": []
                   },
@@ -333,11 +321,11 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "date",
+                    "name": "extern_labels_no",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Date",
-                      "description": "Display release/editing date of current version.",
+                      "title": "Disable External Labels",
+                      "description": "Turn off the writing/usage of user-defined labels in the *.grid/*.netcc files.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -346,112 +334,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-date"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "help",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Show Help",
-                      "description": "Display help in terminal.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-help"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 8,
-                    "name": "help_short",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Show Help (Short Flag)",
-                      "description": "Display help in terminal (short flag).",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-h"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 9,
-                    "name": "help_view",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Show Help in Editor",
-                      "description": "Display help in a separate text editor.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-hview"
+                      "-E"
                     ],
                     "valueFalse": []
                   },
@@ -469,8 +352,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "fat_mat_tableize",
-        "description": "Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and 3dTrackID (*.grid) outputs, with optional additional subject information from CSV files.",
+        "title": "fat_mvm_prep.py",
+        "description": "Combine FATCAT output with CSV data for statistical modeling.",
         "authors": [
           "AFNI Developers"
         ],

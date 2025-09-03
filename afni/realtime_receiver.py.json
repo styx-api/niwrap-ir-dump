@@ -1,5 +1,5 @@
 {
-  "uid": "651bed24d25f24b638ede9e2e579da34a9498f9a.boutiques",
+  "uid": "4401e83f760536192bb4ea37223936b510523699.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,31 +16,12 @@
   },
   "command": {
     "base": {
-      "id": 13,
-      "name": "gen_group_command",
-      "outputs": [
-        {
-          "id": 12,
-          "name": "output_script",
-          "tokens": [
-            {
-              "refId": 10,
-              "fileRemoveSuffixes": []
-            }
-          ],
-          "docs": {
-            "title": "Generated command script",
-            "description": "The generated command script file",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        }
-      ],
+      "id": 12,
+      "name": "realtime_receiver.py",
+      "outputs": [],
       "docs": {
-        "title": "gen_group_command",
-        "description": "Generate group analysis command scripts by parsing wildcard-based lists of input datasets.",
+        "title": "realtime_receiver.py",
+        "description": "Program to receive and display real-time plugin data from AFNI.",
         "authors": [
           "AFNI Developers"
         ],
@@ -52,14 +33,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "gen_group_command",
+      "name": "realtime_receiver.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "gen_group_command.py"
+                "realtime_receiver.py"
               ],
               "join": null
             }
@@ -70,7 +51,7 @@
           "cargs": [
             {
               "tokens": [
-                "-command"
+                "-show_data"
               ],
               "join": null
             },
@@ -79,11 +60,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "command_name",
+                    "name": "show_data",
                     "outputs": [],
                     "docs": {
-                      "title": "Command Name",
-                      "description": "Resulting command, such as 3dttest++",
+                      "title": "Show Data",
+                      "description": "Display incoming data in terminal window",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -93,9 +74,14 @@
                     "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
+                  "nullable": true,
+                  "choices": [
+                    "yes",
+                    "no"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -107,7 +93,7 @@
           "cargs": [
             {
               "tokens": [
-                "-dsets"
+                "-write_text_data"
               ],
               "join": null
             },
@@ -116,11 +102,11 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "datasets",
+                    "name": "write_text_data",
                     "outputs": [],
                     "docs": {
-                      "title": "Datasets",
-                      "description": "List of datasets, can be used multiple times for different groups",
+                      "title": "Write Text Data",
+                      "description": "Write data to text file",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -129,14 +115,12 @@
                   "body": {
                     "type": "string"
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": false,
+                  "list": null,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": null
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -148,7 +132,7 @@
           "cargs": [
             {
               "tokens": [
-                "-prefix"
+                "-data_choice"
               ],
               "join": null
             },
@@ -157,11 +141,11 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "prefix",
+                    "name": "data_choice",
                     "outputs": [],
                     "docs": {
-                      "title": "Prefix",
-                      "description": "Prefix for the output file names",
+                      "title": "Data Choice",
+                      "description": "Pick which data to send as feedback",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -172,7 +156,12 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "motion",
+                    "motion_norm",
+                    "all_extras",
+                    "diff_ratio"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -187,7 +176,7 @@
           "cargs": [
             {
               "tokens": [
-                "-set_labels"
+                "-serial_port"
               ],
               "join": null
             },
@@ -196,11 +185,11 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "set_labels",
+                    "name": "serial_port",
                     "outputs": [],
                     "docs": {
-                      "title": "Set Labels",
-                      "description": "Labels corresponding to datasets entries",
+                      "title": "Serial Port",
+                      "description": "Specify serial port file for feedback data",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -209,11 +198,7 @@
                   "body": {
                     "type": "string"
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
+                  "list": null,
                   "nullable": true,
                   "choices": null,
                   "defaultValue": {
@@ -230,7 +215,7 @@
           "cargs": [
             {
               "tokens": [
-                "-subj_prefix"
+                "-show_demo_gui"
               ],
               "join": null
             },
@@ -239,11 +224,11 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "subj_prefix",
+                    "name": "show_demo_gui",
                     "outputs": [],
                     "docs": {
-                      "title": "Subject Prefix",
-                      "description": "Prefix for subject names",
+                      "title": "Show Demo GUI",
+                      "description": "Demonstrate a feedback GUI",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -254,7 +239,10 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "yes",
+                    "no"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -269,7 +257,7 @@
           "cargs": [
             {
               "tokens": [
-                "-subj_suffix"
+                "-dc_params"
               ],
               "join": null
             },
@@ -278,11 +266,56 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "subj_suffix",
+                    "name": "dc_params",
                     "outputs": [],
                     "docs": {
-                      "title": "Subject Suffix",
-                      "description": "Suffix for subject names",
+                      "title": "Data Choice Parameters",
+                      "description": "Set data_choice parameters, e.g. for diff_ratio, params P1 P2",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-extras_on_one_line"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "extras_on_one_line",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Extras On One Line",
+                      "description": "Show 'extras' on one line only",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -293,7 +326,10 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": null,
+                  "choices": [
+                    "yes",
+                    "no"
+                  ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -306,83 +342,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-subs_betas"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "subs_betas",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Sub-brick Betas",
-                      "description": "Sub-bricks for beta weights",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subs_tstats"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 7,
-                    "name": "subs_tstats",
+                    "name": "show_comm_times",
                     "outputs": [],
                     "docs": {
-                      "title": "Sub-brick T-Stats",
-                      "description": "Sub-bricks for t-stats (3dMEMA)",
+                      "title": "Show Communication Times",
+                      "description": "Display communication times",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "bool",
+                    "valueTrue": [
+                      "-show_comm_times"
+                    ],
+                    "valueFalse": []
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": true,
+                  "list": null,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -394,7 +379,77 @@
           "cargs": [
             {
               "tokens": [
-                "-type"
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "show_demo_data",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Show Demo Data",
+                      "description": "Display feedback data in terminal window",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-show_demo_data"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "swap",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Swap Bytes",
+                      "description": "Swap bytes of incoming data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-swap"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-tcp_port"
               ],
               "join": null
             },
@@ -402,19 +457,21 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 8,
-                    "name": "type",
+                    "id": 10,
+                    "name": "tcp_port",
                     "outputs": [],
                     "docs": {
-                      "title": "Test Type",
-                      "description": "Specify the type of test to perform",
+                      "title": "TCP Port",
+                      "description": "Specify TCP port for incoming connections",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -441,8 +498,8 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 9,
-                    "name": "verb",
+                    "id": 11,
+                    "name": "verbosity",
                     "outputs": [],
                     "docs": {
                       "title": "Verbosity Level",
@@ -453,91 +510,11 @@
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-write_script"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 10,
-                    "name": "write_script",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Write Script",
-                      "description": "Write command script to specified file name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-options"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 11,
-                    "name": "other_options",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Other Options",
-                      "description": "List of options to pass along to result",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
                   "nullable": true,
                   "choices": null,
                   "defaultValue": {
@@ -553,8 +530,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "gen_group_command",
-        "description": "Generate group analysis command scripts by parsing wildcard-based lists of input datasets.",
+        "title": "realtime_receiver.py",
+        "description": "Program to receive and display real-time plugin data from AFNI.",
         "authors": [
           "AFNI Developers"
         ],

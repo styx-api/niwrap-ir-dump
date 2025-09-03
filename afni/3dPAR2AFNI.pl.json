@@ -1,5 +1,5 @@
 {
-  "uid": "5092ef596210a75b6b040d6dc8cfafbc8fb2a70b.boutiques",
+  "uid": "f2d0b5e6d8cb6c9ece3fa96d8f963b37f3584021.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,75 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 14,
-      "name": "ap_run_simple_rest",
+      "id": 11,
+      "name": "3dPAR2AFNI.pl",
       "outputs": [
         {
           "id": 10,
-          "name": "run_ap_script",
-          "tokens": [
-            "run_ap_",
-            {
-              "refId": 5,
-              "fileRemoveSuffixes": []
-            }
-          ],
-          "docs": {
-            "title": "afni_proc.py Command Script",
-            "description": "afni_proc.py command script",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 11,
-          "name": "proc_script",
-          "tokens": [
-            "proc.",
-            {
-              "refId": 5,
-              "fileRemoveSuffixes": []
-            }
-          ],
-          "docs": {
-            "title": "Proc Script",
-            "description": "proc script (if AP is run)",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 12,
-          "name": "proc_results_dir",
+          "name": "output_files",
           "tokens": [
             {
-              "refId": 5,
+              "refId": 0,
               "fileRemoveSuffixes": []
             },
-            ".results"
+            "_converted"
           ],
           "docs": {
-            "title": "Proc Results Directory",
-            "description": "proc results directory (if run)",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 13,
-          "name": "text_output_files",
-          "tokens": [
-            "out.*"
-          ],
-          "docs": {
-            "title": "Text Output Files",
-            "description": "Text output files from AP and proc scripts",
+            "title": "Converted Output Files",
+            "description": "Converted output files",
             "authors": [],
             "literature": [],
             "urls": []
@@ -93,8 +40,8 @@
         }
       ],
       "docs": {
-        "title": "ap_run_simple_rest",
-        "description": "Run a quick afni_proc.py analysis for QC",
+        "title": "3dPAR2AFNI.pl",
+        "description": "Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format",
         "authors": [
           "AFNI Developers"
         ],
@@ -106,14 +53,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "ap_run_simple_rest",
+      "name": "3dPAR2AFNI.pl",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "ap_run_simple_rest.tcsh"
+                "3dPAR2AFNI.pl"
               ],
               "join": null
             }
@@ -124,20 +71,14 @@
           "cargs": [
             {
               "tokens": [
-                "-anat"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "anat",
+                    "name": "input_file",
                     "outputs": [],
                     "docs": {
-                      "title": "Anatomical Dataset",
-                      "description": "Single anatomical dataset",
+                      "title": "Input File",
+                      "description": "Input PAR file (e.g., subject1.PAR)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -150,52 +91,6 @@
                     "mediaTypes": []
                   },
                   "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-epi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "epi",
-                    "outputs": [],
-                    "docs": {
-                      "title": "EPI Datasets",
-                      "description": "EPI datasets",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
@@ -210,36 +105,65 @@
           "cargs": [
             {
               "tokens": [
-                "-nt_rm"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
-                    "id": 2,
-                    "name": "nt_rm",
+                    "id": 1,
+                    "name": "skip_outliers_test",
                     "outputs": [],
                     "docs": {
-                      "title": "Number of Time Points to Remove",
-                      "description": "Number of time points to remove from starts of runs",
+                      "title": "Skip Outliers Test Flag",
+                      "description": "Skip the outliers test when converting 4D files. The default is to perform the outliers test.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-s"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "output_nifti",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output NIfTI Flag",
+                      "description": "Output NIfTI files instead of HEAD/BRIK. The default is to create HEAD/BRIK files.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-n"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -254,11 +178,11 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "run_ap",
+                    "name": "output_analyze",
                     "outputs": [],
                     "docs": {
-                      "title": "Run afni_proc.py Command",
-                      "description": "Run the afni_proc.py command",
+                      "title": "Output ANALYZE Flag",
+                      "description": "Output ANALYZE files instead of HEAD/BRIK.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -267,7 +191,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-run_ap"
+                      "-a"
                     ],
                     "valueFalse": []
                   },
@@ -284,16 +208,55 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-o"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 4,
-                    "name": "run_proc",
+                    "name": "output_dir",
                     "outputs": [],
                     "docs": {
-                      "title": "Run Proc Script",
-                      "description": "Run the proc script from afni_proc.py command",
+                      "title": "Output Directory",
+                      "description": "The name of the directory where the created files should be placed. If this directory does not exist, the program exits without performing any conversion.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "verbose_flag",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose Flag",
+                      "description": "Be verbose in operation.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -302,7 +265,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-run_proc"
+                      "-v"
                     ],
                     "valueFalse": []
                   },
@@ -321,76 +284,30 @@
           "cargs": [
             {
               "tokens": [
-                "-subjid"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "subjid",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Subject ID",
-                      "description": "Specify subject ID for file names",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-template"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 6,
-                    "name": "template",
+                    "name": "gzip_files",
                     "outputs": [],
                     "docs": {
-                      "title": "Template File",
-                      "description": "Specify template for standard space",
+                      "title": "Gzip Files Flag",
+                      "description": "Gzip the files created. The default is not to gzip the files.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-g"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -400,36 +317,32 @@
         },
         {
           "cargs": [
-            {
-              "tokens": [
-                "-compressor"
-              ],
-              "join": null
-            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 7,
-                    "name": "compressor",
+                    "name": "byte_swap_2",
                     "outputs": [],
                     "docs": {
-                      "title": "Compressor",
-                      "description": "Control automatic compression of *.BRIK files",
+                      "title": "2 Byte Swap Flag",
+                      "description": "2-Byte-swap the files created. The default is not to 2 byte-swap.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "bool",
+                    "valueTrue": [
+                      "-2"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -441,36 +354,30 @@
           "cargs": [
             {
               "tokens": [
-                "-verb"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 8,
-                    "name": "verb",
+                    "name": "byte_swap_4",
                     "outputs": [],
                     "docs": {
-                      "title": "Verbosity Level",
-                      "description": "Specify verbosity level",
+                      "title": "4 Byte Swap Flag",
+                      "description": "4-Byte-swap the files created. The default is not to 4 byte-swap.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-4"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -485,11 +392,11 @@
                 {
                   "base": {
                     "id": 9,
-                    "name": "echo",
+                    "name": "help_flag",
                     "outputs": [],
                     "docs": {
-                      "title": "Echo Flag",
-                      "description": "Same as verbosity level 3",
+                      "title": "Help Flag",
+                      "description": "Display help message.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -498,7 +405,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-echo"
+                      "-h"
                     ],
                     "valueFalse": []
                   },
@@ -516,8 +423,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "ap_run_simple_rest",
-        "description": "Run a quick afni_proc.py analysis for QC",
+        "title": "3dPAR2AFNI.pl",
+        "description": "Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format",
         "authors": [
           "AFNI Developers"
         ],

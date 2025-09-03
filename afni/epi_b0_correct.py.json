@@ -1,5 +1,5 @@
 {
-  "uid": "5b3355492db520e49a5f6a884aa39664389df7ac.boutiques",
+  "uid": "a3a00a001245e6beb2daa81beda534e4b2ca0e0e.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,22 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 22,
-      "name": "3DROIMaker",
+      "id": 29,
+      "name": "epi_b0_correct.py",
       "outputs": [
         {
-          "id": 20,
-          "name": "gm_map",
+          "id": 24,
+          "name": "warp_dset",
           "tokens": [
             {
-              "refId": 2,
+              "refId": 0,
               "fileRemoveSuffixes": []
             },
-            "_GM+orig.*.HEAD"
+            "_WARP.nii.gz"
           ],
           "docs": {
-            "title": "GM map of ROIs",
-            "description": "GM map of ROIs based on value- and volume-thresholding, corresponding to gray matter regions of activation.",
+            "title": "Warp dataset",
+            "description": "Warp dataset containing the warp along the phase encode axis.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -39,18 +39,75 @@
           "mediaTypes": []
         },
         {
-          "id": 21,
-          "name": "gmi_map",
+          "id": 25,
+          "name": "cmds_script",
           "tokens": [
             {
-              "refId": 2,
+              "refId": 0,
               "fileRemoveSuffixes": []
             },
-            "_GMI+orig.*.HEAD"
+            "_cmds.tcsh"
           ],
           "docs": {
-            "title": "GMI map of inflated ROIs",
-            "description": "Map of inflated GM ROIs based on GM map, with ROIs inflated either by user-design or WM skeleton.",
+            "title": "Commands script",
+            "description": "Script of the commands used to generate the warp and process the EPI.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 26,
+          "name": "params_txt",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "_pars.txt"
+          ],
+          "docs": {
+            "title": "Parameters text file",
+            "description": "Text file of parameters input or derived from datasets.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 27,
+          "name": "unwarped_epi",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "_unwarped.nii.gz"
+          ],
+          "docs": {
+            "title": "Unwarped EPI dataset",
+            "description": "EPI dataset with estimated distortion correction applied.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 28,
+          "name": "qc_image_dir",
+          "tokens": [
+            {
+              "refId": 0,
+              "fileRemoveSuffixes": []
+            },
+            "_QC/"
+          ],
+          "docs": {
+            "title": "QC images directory",
+            "description": "Directory containing QC images.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -59,8 +116,8 @@
         }
       ],
       "docs": {
-        "title": "3DROIMaker",
-        "description": "Create a labelled set of ROIs from input data, useful in combining functional and tractographic/structural data.",
+        "title": "epi_b0_correct.py",
+        "description": "B0 distortion correction tool using an acquired frequency (phase) image.",
         "authors": [
           "AFNI Developers"
         ],
@@ -72,14 +129,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "3DROIMaker",
+      "name": "epi_b0_correct.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "3dROIMaker"
+                "epi_b0_correct.py"
               ],
               "join": null
             }
@@ -93,90 +150,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "inset",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Input dataset",
-                      "description": "3D volume(s) of values, especially functionally-derived quantities like correlation values or ICA Z-scores.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-thresh"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "thresh",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Threshold value",
-                      "description": "Threshold for values in INSET, used to create ROI islands from the 3D volume's sea of values.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-prefix"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
                     "name": "prefix",
                     "outputs": [],
                     "docs": {
                       "title": "Output prefix",
-                      "description": "Prefix of output name, with output files being: PREFIX_GM* and PREFIX_GMI*",
+                      "description": "Prefix of output files; can include path.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -200,7 +178,87 @@
           "cargs": [
             {
               "tokens": [
-                "-refset"
+                "-in_freq"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_freq",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input frequency dataset",
+                      "description": "Phase dataset (frequency volume); should be at similar resolution and FOV as the EPI dataset; must be scaled appropriately.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-in_epi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "input_epi",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input EPI dataset",
+                      "description": "EPI dataset to which B0 distortion correction will be applied.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-in_mask"
               ],
               "join": null
             },
@@ -209,11 +267,11 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "refset",
+                    "name": "input_mask",
                     "outputs": [],
                     "docs": {
-                      "title": "Reference dataset",
-                      "description": "3D (or multi-subbrick) volume containing integer values with which to label specific GM ROIs after thresholding.",
+                      "title": "Input mask dataset",
+                      "description": "Mask of brain volume.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -242,7 +300,7 @@
           "cargs": [
             {
               "tokens": [
-                "-volthr"
+                "-in_magn"
               ],
               "join": null
             },
@@ -251,20 +309,21 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "volthr",
+                    "name": "input_magn",
                     "outputs": [],
                     "docs": {
-                      "title": "Volume threshold",
-                      "description": "Minimum size a cluster of voxels must have in order to remain a GM ROI after thresholding. Can reduce 'noisy' clusters.",
+                      "title": "Input magnitude dataset",
+                      "description": "Magnitude dataset from which to estimate brain mask; can be used for QC imaging.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -283,7 +342,7 @@
           "cargs": [
             {
               "tokens": [
-                "-only_some_top"
+                "-in_anat"
               ],
               "join": null
             },
@@ -292,20 +351,21 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "only_some_top",
+                    "name": "input_anat",
                     "outputs": [],
                     "docs": {
-                      "title": "Keep top N voxels",
-                      "description": "Restrict each found region to keep only N voxels with the highest inset values.",
+                      "title": "Input anatomical dataset",
+                      "description": "Anatomical dataset to be used as underlay for QC images (optional).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -324,7 +384,7 @@
           "cargs": [
             {
               "tokens": [
-                "-only_conn_top"
+                "-in_epi_json"
               ],
               "join": null
             },
@@ -333,20 +393,21 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "only_conn_top",
+                    "name": "input_json",
                     "outputs": [],
                     "docs": {
-                      "title": "Keep top N contiguous voxels",
-                      "description": "Select N max contiguous voxels in a region starting from peak voxel and expanding.",
+                      "title": "Input EPI JSON",
+                      "description": "JSON file containing parameters about the EPI dataset.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -365,7 +426,7 @@
           "cargs": [
             {
               "tokens": [
-                "-inflate"
+                "-epi_pe_dir"
               ],
               "join": null
             },
@@ -374,11 +435,48 @@
                 {
                   "base": {
                     "id": 7,
-                    "name": "inflate",
+                    "name": "epi_pe_dir",
                     "outputs": [],
                     "docs": {
-                      "title": "Inflation size",
-                      "description": "Number of voxels to pad each found ROI in order to turn GM ROIs into inflated (GMI) ROIs.",
+                      "title": "EPI PE direction",
+                      "description": "Direction (axis) of phase encoding, e.g., AP, PA, RL, ...",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-epi_pe_bwpp"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "epi_pe_bwpp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "EPI PE bandwidth per pixel",
+                      "description": "Bandwidth per pixel (in Hz) in the EPI dataset along the phase encode direction.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -406,42 +504,7 @@
           "cargs": [
             {
               "tokens": [
-                {
-                  "base": {
-                    "id": 8,
-                    "name": "trim_off_wm",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Trim off WM",
-                      "description": "Trim the INSET to exclude voxels in WM by excluding those which overlap an input WM skeleton.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-trim_off_wm"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-wm_skel"
+                "-epi_pe_echo_sp"
               ],
               "join": null
             },
@@ -450,21 +513,20 @@
                 {
                   "base": {
                     "id": 9,
-                    "name": "wm_skel",
+                    "name": "epi_pe_echo_sp",
                     "outputs": [],
                     "docs": {
-                      "title": "WM skeleton",
-                      "description": "3D volume containing info of WM, as might be defined from an FA map or anatomical segmentation.",
+                      "title": "EPI PE echo spacing",
+                      "description": "Effective TE spacing of the phase encoded volume, in seconds.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -483,7 +545,7 @@
           "cargs": [
             {
               "tokens": [
-                "-skel_thr"
+                "-epi_pe_voxdim"
               ],
               "join": null
             },
@@ -492,11 +554,11 @@
                 {
                   "base": {
                     "id": 10,
-                    "name": "skel_thr",
+                    "name": "epi_pe_vox_dim",
                     "outputs": [],
                     "docs": {
-                      "title": "Skeleton threshold",
-                      "description": "Threshold value for WM skeleton if it is not a mask.",
+                      "title": "EPI PE voxel dimension",
+                      "description": "Voxel size along the EPI dataset's phase encode axis, in mm.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -524,30 +586,36 @@
           "cargs": [
             {
               "tokens": [
+                "-scale_freq"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 11,
-                    "name": "skel_stop",
+                    "name": "scale_freq",
                     "outputs": [],
                     "docs": {
-                      "title": "Stop at WM skeleton",
-                      "description": "Stop inflation at locations which are already on WM skeleton.",
+                      "title": "Scale frequency",
+                      "description": "Scale to apply to frequency volume to match units (def: SF=1.0).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-skel_stop"
-                    ],
-                    "valueFalse": []
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -557,32 +625,36 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-out_cmds"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 12,
-                    "name": "skel_stop_strict",
+                    "name": "out_cmds",
                     "outputs": [],
                     "docs": {
-                      "title": "Strictly stop at WM skeleton",
-                      "description": "Do not allow any inflation into the skel-region.",
+                      "title": "Output commands script",
+                      "description": "Name for output script recording commands (def: PREFIX_cmds.tcsh).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-skel_stop_strict"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -594,7 +666,7 @@
           "cargs": [
             {
               "tokens": [
-                "-csf_skel"
+                "-out_pars"
               ],
               "join": null
             },
@@ -603,21 +675,18 @@
                 {
                   "base": {
                     "id": 13,
-                    "name": "csf_skel",
+                    "name": "out_pars",
                     "outputs": [],
                     "docs": {
-                      "title": "CSF skeleton",
-                      "description": "3D volume containing info of CSF. Info must be a binary mask already.",
+                      "title": "Output parameters file",
+                      "description": "Name for output text file recording relevant parameters (def: PREFIX_pars.txt).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": true,
@@ -636,7 +705,7 @@
           "cargs": [
             {
               "tokens": [
-                "-mask"
+                "-wdir_name"
               ],
               "join": null
             },
@@ -645,21 +714,18 @@
                 {
                   "base": {
                     "id": 14,
-                    "name": "mask",
+                    "name": "wdir_name",
                     "outputs": [],
                     "docs": {
-                      "title": "Input mask",
-                      "description": "Mask within which to apply threshold. Useful if the MINTHR is a negative value.",
+                      "title": "Working directory name",
+                      "description": "Working directory name (def: automatic name).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": true,
@@ -676,134 +742,22 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-blur_sigma"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 15,
-                    "name": "neigh_upto_vert",
+                    "name": "blur_sigma",
                     "outputs": [],
                     "docs": {
-                      "title": "Vertex neighbor grouping",
-                      "description": "Define neighbors loosely so that voxels can be grouped into the same ROI if they share at least one vertex.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-neigh_upto_vert"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 16,
-                    "name": "nifti",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output NIFTI files",
-                      "description": "Switch to output *.nii.gz GM and GMI files",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-nifti"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-preinfl_inset"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 17,
-                    "name": "preinfl_inset",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Pre-inflation inset",
-                      "description": "Start with a WM ROI, inflate it to find the nearest GM, then expand that GM and subtract away the WM+CSF parts.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-preinfl_inflate"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 18,
-                    "name": "preinfl_inflate",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Pre-inflation size",
-                      "description": "Number of voxels for initial inflation of PSET.",
+                      "title": "Blur sigma",
+                      "description": "Amount of blurring to apply to masked phase encode dataset (def: BS=9).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -820,6 +774,125 @@
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-do_recenter_freq"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "do_recenter_freq",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Recenter frequency method",
+                      "description": "Method to recenter the phase volume within the brain mask (def: MC=mode).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-mask_dilate"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "mask_dilate",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Mask dilation parameters",
+                      "description": "Erosion and dilation parameters for automask (when using magnitude image).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "no_clean",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No clean temporary files",
+                      "description": "Don't remove the temporary directory of intermediate files.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-no_clean"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -834,11 +907,11 @@
                 {
                   "base": {
                     "id": 19,
-                    "name": "dump_no_labtab",
+                    "name": "qc_box_focus_ulay",
                     "outputs": [],
                     "docs": {
-                      "title": "Disable labeltable",
-                      "description": "Switch for turning off labeltable attachment to the output GM and GMI files.",
+                      "title": "QC box focus underlay",
+                      "description": "Focus the QC images on an automask region of the underlay dataset.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -847,7 +920,147 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-dump_no_labtab"
+                      "-qc_box_focus_ulay"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "no_qc_image",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No QC images",
+                      "description": "Don't generate QC images.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-no_qc_image"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "help",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help",
+                      "description": "Display program help in terminal.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "ver",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Version",
+                      "description": "Display program version number in terminal.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ver"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "date",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Date",
+                      "description": "Display date of program's last update in terminal.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-date"
                     ],
                     "valueFalse": []
                   },
@@ -865,8 +1078,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "3DROIMaker",
-        "description": "Create a labelled set of ROIs from input data, useful in combining functional and tractographic/structural data.",
+        "title": "epi_b0_correct.py",
+        "description": "B0 distortion correction tool using an acquired frequency (phase) image.",
         "authors": [
           "AFNI Developers"
         ],

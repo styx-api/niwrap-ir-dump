@@ -1,5 +1,5 @@
 {
-  "uid": "19cc3a11622aea08b160e07a0c7e99e58530a33b.boutiques",
+  "uid": "40f222b46edf6b24d448637aef9886505378580a.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,22 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 10,
-      "name": "convert_cdiflist_to_grads",
+      "id": 14,
+      "name": "ap_run_simple_rest.tcsh",
       "outputs": [
         {
-          "id": 7,
-          "name": "output_rvec",
+          "id": 10,
+          "name": "run_ap_script",
           "tokens": [
+            "run_ap_",
             {
-              "refId": 2,
+              "refId": 5,
               "fileRemoveSuffixes": []
-            },
-            "_rvec.dat"
+            }
           ],
           "docs": {
-            "title": "Row gradient file",
-            "description": "Row-format of gradients (unit magnitude).",
+            "title": "afni_proc.py Command Script",
+            "description": "afni_proc.py command script",
             "authors": [],
             "literature": [],
             "urls": []
@@ -39,18 +39,18 @@
           "mediaTypes": []
         },
         {
-          "id": 8,
-          "name": "output_bval",
+          "id": 11,
+          "name": "proc_script",
           "tokens": [
+            "proc.",
             {
-              "refId": 2,
+              "refId": 5,
               "fileRemoveSuffixes": []
-            },
-            "_bval.dat"
+            }
           ],
           "docs": {
-            "title": "Row bvalue file",
-            "description": "Row-format of bvals.",
+            "title": "Proc Script",
+            "description": "proc script (if AP is run)",
             "authors": [],
             "literature": [],
             "urls": []
@@ -58,18 +58,33 @@
           "mediaTypes": []
         },
         {
-          "id": 9,
-          "name": "output_cvec",
+          "id": 12,
+          "name": "proc_results_dir",
           "tokens": [
             {
-              "refId": 2,
+              "refId": 5,
               "fileRemoveSuffixes": []
             },
-            "_cvec.dat"
+            ".results"
           ],
           "docs": {
-            "title": "Column gradient file",
-            "description": "Col-format of gradients (scaled by b-values).",
+            "title": "Proc Results Directory",
+            "description": "proc results directory (if run)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 13,
+          "name": "text_output_files",
+          "tokens": [
+            "out.*"
+          ],
+          "docs": {
+            "title": "Text Output Files",
+            "description": "Text output files from AP and proc scripts",
             "authors": [],
             "literature": [],
             "urls": []
@@ -78,8 +93,8 @@
         }
       ],
       "docs": {
-        "title": "convert_cdiflist_to_grads",
-        "description": "This program reads in a GE cdiflist and outputs gradient file and file of bvalues for subsequent processing.",
+        "title": "ap_run_simple_rest.tcsh",
+        "description": "Run a quick afni_proc.py analysis for QC",
         "authors": [
           "AFNI Developers"
         ],
@@ -91,14 +106,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "convert_cdiflist_to_grads",
+      "name": "ap_run_simple_rest.tcsh",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "convert_cdiflist_to_grads.py"
+                "ap_run_simple_rest.tcsh"
               ],
               "join": null
             }
@@ -109,7 +124,7 @@
           "cargs": [
             {
               "tokens": [
-                "-cdiflist"
+                "-anat"
               ],
               "join": null
             },
@@ -118,11 +133,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "cdiflist",
+                    "name": "anat",
                     "outputs": [],
                     "docs": {
-                      "title": "Cdiflist file",
-                      "description": "Name(s) of cdiflist text file output by GE scanners when acquiring DWIs.",
+                      "title": "Anatomical Dataset",
+                      "description": "Single anatomical dataset",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -135,6 +150,52 @@
                     "mediaTypes": []
                   },
                   "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-epi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "epi",
+                    "outputs": [],
+                    "docs": {
+                      "title": "EPI Datasets",
+                      "description": "EPI datasets",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
@@ -149,7 +210,7 @@
           "cargs": [
             {
               "tokens": [
-                "-bval_max"
+                "-nt_rm"
               ],
               "join": null
             },
@@ -157,12 +218,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 1,
-                    "name": "bval_max",
+                    "id": 2,
+                    "name": "nt_rm",
                     "outputs": [],
                     "docs": {
-                      "title": "Maximum bvalue",
-                      "description": "Max bvalue used, which provides a reference value for scaling everything else.",
+                      "title": "Number of Time Points to Remove",
+                      "description": "Number of time points to remove from starts of runs",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -174,46 +235,11 @@
                     "maxValue": null
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-prefix"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "prefix",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output prefix",
-                      "description": "Output basename for the subsequent grad and bvalue files (suffix and extensions will be added).",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -228,11 +254,11 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "ver",
+                    "name": "run_ap",
                     "outputs": [],
                     "docs": {
-                      "title": "Version flag",
-                      "description": "Display current version.",
+                      "title": "Run afni_proc.py Command",
+                      "description": "Run the afni_proc.py command",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -241,7 +267,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-ver"
+                      "-run_ap"
                     ],
                     "valueFalse": []
                   },
@@ -263,11 +289,11 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "date",
+                    "name": "run_proc",
                     "outputs": [],
                     "docs": {
-                      "title": "Date flag",
-                      "description": "Display release/editing date of current version.",
+                      "title": "Run Proc Script",
+                      "description": "Run the proc script from afni_proc.py command",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -276,7 +302,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-date"
+                      "-run_proc"
                     ],
                     "valueFalse": []
                   },
@@ -293,32 +319,158 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-subjid"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 5,
-                    "name": "help",
+                    "name": "subjid",
                     "outputs": [],
                     "docs": {
-                      "title": "Help flag",
-                      "description": "Display help in terminal.",
+                      "title": "Subject ID",
+                      "description": "Specify subject ID for file names",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-help"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-template"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "template",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Template File",
+                      "description": "Specify template for standard space",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-compressor"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "compressor",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Compressor",
+                      "description": "Control automatic compression of *.BRIK files",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-verb"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "verb",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbosity Level",
+                      "description": "Specify verbosity level",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -332,12 +484,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 6,
-                    "name": "hview",
+                    "id": 9,
+                    "name": "echo",
                     "outputs": [],
                     "docs": {
-                      "title": "Help in text editor flag",
-                      "description": "Display help in terminal.",
+                      "title": "Echo Flag",
+                      "description": "Same as verbosity level 3",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -346,7 +498,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-h"
+                      "-echo"
                     ],
                     "valueFalse": []
                   },
@@ -364,8 +516,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "convert_cdiflist_to_grads",
-        "description": "This program reads in a GE cdiflist and outputs gradient file and file of bvalues for subsequent processing.",
+        "title": "ap_run_simple_rest.tcsh",
+        "description": "Run a quick afni_proc.py analysis for QC",
         "authors": [
           "AFNI Developers"
         ],

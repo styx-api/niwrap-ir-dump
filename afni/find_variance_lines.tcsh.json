@@ -1,5 +1,5 @@
 {
-  "uid": "3861e74ecb1900a71d5f24f43aeca5e7e336549d.boutiques",
+  "uid": "9fa94416b9a9d640828d9ed8f46da535853bee78.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,12 +16,89 @@
   },
   "command": {
     "base": {
-      "id": 12,
-      "name": "realtime_receiver",
-      "outputs": [],
+      "id": 19,
+      "name": "find_variance_lines.tcsh",
+      "outputs": [
+        {
+          "id": 15,
+          "name": "variance_maps",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            },
+            "/variance_map_run*.nii.gz"
+          ],
+          "docs": {
+            "title": "Variance Maps",
+            "description": "Variance maps per run",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 16,
+          "name": "scaled_variance_maps",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            },
+            "/scaled_variance_map_run*.nii.gz"
+          ],
+          "docs": {
+            "title": "Scaled Variance Maps",
+            "description": "Scaled variance maps per run",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 17,
+          "name": "cluster_reports",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            },
+            "/cluster_report_run*.txt"
+          ],
+          "docs": {
+            "title": "Cluster Reports",
+            "description": "Cluster reports",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 18,
+          "name": "jpeg_images",
+          "tokens": [
+            {
+              "refId": 8,
+              "fileRemoveSuffixes": []
+            },
+            "/*.jpg"
+          ],
+          "docs": {
+            "title": "JPEG Images",
+            "description": "JPEG images showing locations of high variance",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        }
+      ],
       "docs": {
-        "title": "realtime_receiver",
-        "description": "Program to receive and display real-time plugin data from AFNI.",
+        "title": "find_variance_lines.tcsh",
+        "description": "Look for bars of high variance that might suggest scanner interference in EPI datasets.",
         "authors": [
           "AFNI Developers"
         ],
@@ -33,14 +110,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "realtime_receiver",
+      "name": "find_variance_lines.tcsh",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "realtime_receiver.py"
+                "find_variance_lines.tcsh"
               ],
               "join": null
             }
@@ -51,37 +128,33 @@
           "cargs": [
             {
               "tokens": [
-                "-show_data"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "show_data",
+                    "name": "input_files",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Data",
-                      "description": "Display incoming data in terminal window",
+                      "title": "Input Files",
+                      "description": "Input EPI datasets",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
-                  "list": null,
-                  "nullable": true,
-                  "choices": [
-                    "yes",
-                    "no"
-                  ],
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -93,7 +166,7 @@
           "cargs": [
             {
               "tokens": [
-                "-write_text_data"
+                "-mask"
               ],
               "join": null
             },
@@ -102,11 +175,11 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "write_text_data",
+                    "name": "mask",
                     "outputs": [],
                     "docs": {
-                      "title": "Write Text Data",
-                      "description": "Write data to text file",
+                      "title": "Mask",
+                      "description": "Mask for computations (default=AUTO)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -132,7 +205,7 @@
           "cargs": [
             {
               "tokens": [
-                "-data_choice"
+                "-min_cvox"
               ],
               "join": null
             },
@@ -141,27 +214,24 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "data_choice",
+                    "name": "min_cvox",
                     "outputs": [],
                     "docs": {
-                      "title": "Data Choice",
-                      "description": "Pick which data to send as feedback",
+                      "title": "Min Voxels",
+                      "description": "Minimum voxels for valid mask column (default=5)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": [
-                    "motion",
-                    "motion_norm",
-                    "all_extras",
-                    "diff_ratio"
-                  ],
+                  "choices": null,
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -176,7 +246,7 @@
           "cargs": [
             {
               "tokens": [
-                "-serial_port"
+                "-min_nt"
               ],
               "join": null
             },
@@ -185,18 +255,20 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "serial_port",
+                    "name": "min_nt",
                     "outputs": [],
                     "docs": {
-                      "title": "Serial Port",
-                      "description": "Specify serial port file for feedback data",
+                      "title": "Min Time Points",
+                      "description": "Minimum number of time points required (default=10)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
@@ -215,7 +287,7 @@
           "cargs": [
             {
               "tokens": [
-                "-show_demo_gui"
+                "-nerode"
               ],
               "join": null
             },
@@ -224,25 +296,24 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "show_demo_gui",
+                    "name": "nerode",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Demo GUI",
-                      "description": "Demonstrate a feedback GUI",
+                      "title": "Erode Levels",
+                      "description": "How much to erode input or auto-mask (default=0)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": [
-                    "yes",
-                    "no"
-                  ],
+                  "choices": null,
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -257,7 +328,7 @@
           "cargs": [
             {
               "tokens": [
-                "-dc_params"
+                "-nfirst"
               ],
               "join": null
             },
@@ -266,26 +337,22 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "dc_params",
+                    "name": "nfirst",
                     "outputs": [],
                     "docs": {
-                      "title": "Data Choice Parameters",
-                      "description": "Set data_choice parameters, e.g. for diff_ratio, params P1 P2",
+                      "title": "Discard Initial Time Points",
+                      "description": "Discard the first VAL time points (default=0)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
+                    "type": "int",
                     "minValue": null,
                     "maxValue": null
                   },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
+                  "list": null,
                   "nullable": true,
                   "choices": null,
                   "defaultValue": {
@@ -302,7 +369,7 @@
           "cargs": [
             {
               "tokens": [
-                "-extras_on_one_line"
+                "-perc"
               ],
               "join": null
             },
@@ -311,11 +378,52 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "extras_on_one_line",
+                    "name": "percentile",
                     "outputs": [],
                     "docs": {
-                      "title": "Extras On One Line",
-                      "description": "Show 'extras' on one line only",
+                      "title": "Variance Percentile",
+                      "description": "Percentile of variance values to scale to (default=90)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": 0,
+                    "maxValue": 99
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-polort"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "polort",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Polynomial Detrending",
+                      "description": "Polynomial detrending degree (default=A)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -326,10 +434,7 @@
                   },
                   "list": null,
                   "nullable": true,
-                  "choices": [
-                    "yes",
-                    "no"
-                  ],
+                  "choices": null,
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
                   }
@@ -344,65 +449,34 @@
           "cargs": [
             {
               "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "show_comm_times",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Show Communication Times",
-                      "description": "Display communication times",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-show_comm_times"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
+                "-rdir"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 8,
-                    "name": "show_demo_data",
+                    "name": "output_dir",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Demo Data",
-                      "description": "Display feedback data in terminal window",
+                      "title": "Output Directory",
+                      "description": "Name of the output directory (default=vlines.result)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-show_demo_data"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -412,32 +486,38 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-do_clean"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 9,
-                    "name": "swap",
+                    "name": "do_clean",
                     "outputs": [],
                     "docs": {
-                      "title": "Swap Bytes",
-                      "description": "Swap bytes of incoming data",
+                      "title": "Clean Up",
+                      "description": "Do we clean up a little? (default=1)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-swap"
-                    ],
-                    "valueFalse": []
+                    "type": "int",
+                    "minValue": 0,
+                    "maxValue": 1
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -449,7 +529,7 @@
           "cargs": [
             {
               "tokens": [
-                "-tcp_port"
+                "-do_img"
               ],
               "join": null
             },
@@ -458,20 +538,20 @@
                 {
                   "base": {
                     "id": 10,
-                    "name": "tcp_port",
+                    "name": "do_img",
                     "outputs": [],
                     "docs": {
-                      "title": "TCP Port",
-                      "description": "Specify TCP port for incoming connections",
+                      "title": "Generate Images",
+                      "description": "Make vline images? (default=1)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "int",
+                    "minValue": 0,
+                    "maxValue": 1
                   },
                   "list": null,
                   "nullable": true,
@@ -490,36 +570,135 @@
           "cargs": [
             {
               "tokens": [
-                "-verb"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 11,
-                    "name": "verbosity",
+                    "name": "echo",
                     "outputs": [],
                     "docs": {
-                      "title": "Verbosity Level",
-                      "description": "Set the verbosity level",
+                      "title": "Shell Echo",
+                      "description": "Run script with shell 'echo' set (default=no)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "bool",
+                    "valueTrue": [
+                      "-echo"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "help",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Help",
+                      "description": "Show this help",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-help"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "hist",
+                    "outputs": [],
+                    "docs": {
+                      "title": "History",
+                      "description": "Show the version history",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-hist"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "ver",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Version",
+                      "description": "Show the current version",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-ver"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -530,8 +709,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "realtime_receiver",
-        "description": "Program to receive and display real-time plugin data from AFNI.",
+        "title": "find_variance_lines.tcsh",
+        "description": "Look for bars of high variance that might suggest scanner interference in EPI datasets.",
         "authors": [
           "AFNI Developers"
         ],

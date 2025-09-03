@@ -1,5 +1,5 @@
 {
-  "uid": "8a1625af0dec0ca42ff6be27e5b3b994d19a0b23.boutiques",
+  "uid": "9e998b67f89b44f6b5b1d301245053ea4eff8a7b.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,22 +16,21 @@
   },
   "command": {
     "base": {
-      "id": 11,
-      "name": "3dPAR2AFNI",
+      "id": 13,
+      "name": "gen_group_command.py",
       "outputs": [
         {
-          "id": 10,
-          "name": "output_files",
+          "id": 12,
+          "name": "output_script",
           "tokens": [
             {
-              "refId": 0,
+              "refId": 10,
               "fileRemoveSuffixes": []
-            },
-            "_converted"
+            }
           ],
           "docs": {
-            "title": "Converted Output Files",
-            "description": "Converted output files",
+            "title": "Generated command script",
+            "description": "The generated command script file",
             "authors": [],
             "literature": [],
             "urls": []
@@ -40,8 +39,8 @@
         }
       ],
       "docs": {
-        "title": "3dPAR2AFNI",
-        "description": "Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format",
+        "title": "gen_group_command.py",
+        "description": "Generate group analysis command scripts by parsing wildcard-based lists of input datasets.",
         "authors": [
           "AFNI Developers"
         ],
@@ -53,14 +52,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "3dPAR2AFNI",
+      "name": "gen_group_command.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "3dPAR2AFNI.pl"
+                "gen_group_command.py"
               ],
               "join": null
             }
@@ -71,24 +70,27 @@
           "cargs": [
             {
               "tokens": [
+                "-command"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "input_file",
+                    "name": "command_name",
                     "outputs": [],
                     "docs": {
-                      "title": "Input File",
-                      "description": "Input PAR file (e.g., subject1.PAR)",
+                      "title": "Command Name",
+                      "description": "Resulting command, such as 3dttest++",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "string"
                   },
                   "list": null,
                   "nullable": false,
@@ -105,112 +107,7 @@
           "cargs": [
             {
               "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "skip_outliers_test",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Skip Outliers Test Flag",
-                      "description": "Skip the outliers test when converting 4D files. The default is to perform the outliers test.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-s"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "output_nifti",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output NIfTI Flag",
-                      "description": "Output NIfTI files instead of HEAD/BRIK. The default is to create HEAD/BRIK files.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-n"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "output_analyze",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output ANALYZE Flag",
-                      "description": "Output ANALYZE files instead of HEAD/BRIK.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-a"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-o"
+                "-dsets"
               ],
               "join": null
             },
@@ -218,12 +115,53 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 4,
-                    "name": "output_dir",
+                    "id": 1,
+                    "name": "datasets",
                     "outputs": [],
                     "docs": {
-                      "title": "Output Directory",
-                      "description": "The name of the directory where the created files should be placed. If this directory does not exist, the program exits without performing any conversion.",
+                      "title": "Datasets",
+                      "description": "List of datasets, can be used multiple times for different groups",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Prefix",
+                      "description": "Prefix for the output file names",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -249,30 +187,38 @@
           "cargs": [
             {
               "tokens": [
+                "-set_labels"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
-                    "id": 5,
-                    "name": "verbose_flag",
+                    "id": 3,
+                    "name": "set_labels",
                     "outputs": [],
                     "docs": {
-                      "title": "Verbose Flag",
-                      "description": "Be verbose in operation.",
+                      "title": "Set Labels",
+                      "description": "Labels corresponding to datasets entries",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-v"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
-                  "list": null,
-                  "nullable": false,
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -282,32 +228,118 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-subj_prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "subj_prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Subject Prefix",
+                      "description": "Prefix for subject names",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-subj_suffix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "subj_suffix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Subject Suffix",
+                      "description": "Suffix for subject names",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-subs_betas"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 6,
-                    "name": "gzip_files",
+                    "name": "subs_betas",
                     "outputs": [],
                     "docs": {
-                      "title": "Gzip Files Flag",
-                      "description": "Gzip the files created. The default is not to gzip the files.",
+                      "title": "Sub-brick Betas",
+                      "description": "Sub-bricks for beta weights",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-g"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
-                  "list": null,
-                  "nullable": false,
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -317,32 +349,40 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-subs_tstats"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 7,
-                    "name": "byte_swap_2",
+                    "name": "subs_tstats",
                     "outputs": [],
                     "docs": {
-                      "title": "2 Byte Swap Flag",
-                      "description": "2-Byte-swap the files created. The default is not to 2 byte-swap.",
+                      "title": "Sub-brick T-Stats",
+                      "description": "Sub-bricks for t-stats (3dMEMA)",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-2"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
-                  "list": null,
-                  "nullable": false,
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -352,32 +392,36 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-type"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 8,
-                    "name": "byte_swap_4",
+                    "name": "type",
                     "outputs": [],
                     "docs": {
-                      "title": "4 Byte Swap Flag",
-                      "description": "4-Byte-swap the files created. The default is not to 4 byte-swap.",
+                      "title": "Test Type",
+                      "description": "Specify the type of test to perform",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-4"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -389,30 +433,116 @@
           "cargs": [
             {
               "tokens": [
+                "-verb"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 9,
-                    "name": "help_flag",
+                    "name": "verb",
                     "outputs": [],
                     "docs": {
-                      "title": "Help Flag",
-                      "description": "Display help message.",
+                      "title": "Verbosity Level",
+                      "description": "Set the verbosity level",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-h"
-                    ],
-                    "valueFalse": []
+                    "type": "string"
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-write_script"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "write_script",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Write Script",
+                      "description": "Write command script to specified file name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-options"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "other_options",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Other Options",
+                      "description": "List of options to pass along to result",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -423,8 +553,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "3dPAR2AFNI",
-        "description": "Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format",
+        "title": "gen_group_command.py",
+        "description": "Generate group analysis command scripts by parsing wildcard-based lists of input datasets.",
         "authors": [
           "AFNI Developers"
         ],

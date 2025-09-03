@@ -1,5 +1,5 @@
 {
-  "uid": "9c8b94aec9b6f8e9660a86aa775db219d44ebe60.boutiques",
+  "uid": "816e034cced8070fa25bb9884d58654e29d3fb8d.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,12 +16,51 @@
   },
   "command": {
     "base": {
-      "id": 11,
-      "name": "uber_skel",
-      "outputs": [],
+      "id": 12,
+      "name": "fat_mat_tableize.py",
+      "outputs": [
+        {
+          "id": 10,
+          "name": "output_table",
+          "tokens": [
+            {
+              "refId": 3,
+              "fileRemoveSuffixes": []
+            },
+            "_tbl.txt"
+          ],
+          "docs": {
+            "title": "Table File",
+            "description": "Table file usable in AFNI group analysis programs.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 11,
+          "name": "output_log",
+          "tokens": [
+            {
+              "refId": 3,
+              "fileRemoveSuffixes": []
+            },
+            "_prep.log"
+          ],
+          "docs": {
+            "title": "Log File",
+            "description": "Log file reporting inputs, matching, and aspects of creating the table file.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        }
+      ],
       "docs": {
-        "title": "uber_skel",
-        "description": "Sample uber processing program for initializing user and control variables, with options for both GUI and non-GUI modes.",
+        "title": "fat_mat_tableize.py",
+        "description": "Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and 3dTrackID (*.grid) outputs, with optional additional subject information from CSV files.",
         "authors": [
           "AFNI Developers"
         ],
@@ -33,14 +72,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "uber_skel",
+      "name": "fat_mat_tableize.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "uber_skel.py"
+                "fat_mat_tableize.py"
               ],
               "join": null
             }
@@ -51,7 +90,7 @@
           "cargs": [
             {
               "tokens": [
-                "-qt_opts"
+                "-in_mat"
               ],
               "join": null
             },
@@ -60,11 +99,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "qt_options",
+                    "name": "input_matrices",
                     "outputs": [],
                     "docs": {
-                      "title": "Qt Options",
-                      "description": "Pass PyQt4 options directly to the GUI",
+                      "title": "Input Matrices",
+                      "description": "Names of *.netcc or *.grid files with matrices to be used to make table; can be provided using wildcard chars.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -72,6 +111,50 @@
                   },
                   "body": {
                     "type": "string"
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-in_csv"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "input_csv",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input CSV",
+                      "description": "Name of a CSV file to include in the table. The first column must have subject ID labels that match with the input matrix files.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": true,
@@ -90,65 +173,37 @@
           "cargs": [
             {
               "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "no_gui_flag",
-                    "outputs": [],
-                    "docs": {
-                      "title": "No GUI Flag",
-                      "description": "Run without the GUI",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-no_gui"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
+                "-in_listfile"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 2,
-                    "name": "print_script",
+                    "name": "input_list",
                     "outputs": [],
                     "docs": {
-                      "title": "Print Script Flag",
-                      "description": "Print the script",
+                      "title": "Input List File",
+                      "description": "File containing paths to subject matrices and optionally CSV IDs for matching.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-print_script"
-                    ],
-                    "valueFalse": []
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -160,7 +215,7 @@
           "cargs": [
             {
               "tokens": [
-                "-save_script"
+                "-prefix"
               ],
               "join": null
             },
@@ -169,11 +224,11 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "save_script",
+                    "name": "output_prefix",
                     "outputs": [],
                     "docs": {
-                      "title": "Save Script",
-                      "description": "Save the script",
+                      "title": "Output Prefix",
+                      "description": "Output basename for the table and log files. Suffix and file extensions will be added for the outputs.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -183,11 +238,9 @@
                     "type": "string"
                   },
                   "list": null,
-                  "nullable": true,
+                  "nullable": false,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -199,7 +252,7 @@
           "cargs": [
             {
               "tokens": [
-                "-uvar"
+                "-pars"
               ],
               "join": null
             },
@@ -208,11 +261,11 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "user_var",
+                    "name": "parameters",
                     "outputs": [],
                     "docs": {
-                      "title": "User Variable",
-                      "description": "Initialize user variables. Usage: -uvar <name> <value>",
+                      "title": "List of Parameters",
+                      "description": "List of matrices to be included in the table, identified by their parameter name.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -245,11 +298,11 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "help_howto_program",
+                    "name": "version",
                     "outputs": [],
                     "docs": {
-                      "title": "Help How to Program Flag",
-                      "description": "Show programming comments",
+                      "title": "Show Version",
+                      "description": "Display current version.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -258,7 +311,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-help_howto_program"
+                      "-ver"
                     ],
                     "valueFalse": []
                   },
@@ -280,11 +333,46 @@
                 {
                   "base": {
                     "id": 6,
+                    "name": "date",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Show Date",
+                      "description": "Display release/editing date of current version.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-date"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
                     "name": "help",
                     "outputs": [],
                     "docs": {
-                      "title": "Help Flag",
-                      "description": "Show help",
+                      "title": "Show Help",
+                      "description": "Display help in terminal.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -314,47 +402,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 7,
-                    "name": "help_gui",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Help GUI Flag",
-                      "description": "Show help for the GUI",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-help_gui"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
                     "id": 8,
-                    "name": "history",
+                    "name": "help_short",
                     "outputs": [],
                     "docs": {
-                      "title": "History Flag",
-                      "description": "Show history",
+                      "title": "Show Help (Short Flag)",
+                      "description": "Display help in terminal (short flag).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -363,7 +416,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-hist"
+                      "-h"
                     ],
                     "valueFalse": []
                   },
@@ -385,11 +438,11 @@
                 {
                   "base": {
                     "id": 9,
-                    "name": "show_valid_opts",
+                    "name": "help_view",
                     "outputs": [],
                     "docs": {
-                      "title": "Show Valid Options Flag",
-                      "description": "Show valid options",
+                      "title": "Show Help in Editor",
+                      "description": "Display help in a separate text editor.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -398,42 +451,7 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-show_valid_opts"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 10,
-                    "name": "version",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Version Flag",
-                      "description": "Show version",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-ver"
+                      "-hview"
                     ],
                     "valueFalse": []
                   },
@@ -451,8 +469,8 @@
       ],
       "join": null,
       "docs": {
-        "title": "uber_skel",
-        "description": "Sample uber processing program for initializing user and control variables, with options for both GUI and non-GUI modes.",
+        "title": "fat_mat_tableize.py",
+        "description": "Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and 3dTrackID (*.grid) outputs, with optional additional subject information from CSV files.",
         "authors": [
           "AFNI Developers"
         ],

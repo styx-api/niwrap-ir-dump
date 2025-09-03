@@ -1,5 +1,5 @@
 {
-  "uid": "5ab9f2d175d71ed28465ef305cf31b5079bd3841.boutiques",
+  "uid": "76894bfbe97ddef932d9c0866a0daefd5bc202e2.boutiques",
   "package": {
     "name": "afni",
     "version": "24.2.06",
@@ -16,21 +16,22 @@
   },
   "command": {
     "base": {
-      "id": 4,
-      "name": "@djunct_dwi_selector",
+      "id": 5,
+      "name": "fat_roi_row.py",
       "outputs": [
         {
-          "id": 3,
-          "name": "outfile",
+          "id": 4,
+          "name": "output_file",
           "tokens": [
             {
-              "refId": 2,
+              "refId": 0,
               "fileRemoveSuffixes": []
-            }
+            },
+            "_selected.row"
           ],
           "docs": {
-            "title": "Output File",
-            "description": "The main output file",
+            "title": "Output file",
+            "description": "Selected ROI row output file in .row format.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -39,8 +40,8 @@
         }
       ],
       "docs": {
-        "title": "@djunct_dwi_selector",
-        "description": "Selects DWI data and creates a representative image.",
+        "title": "fat_roi_row.py",
+        "description": "Select a single ROI's row out of a connectivity matrix file (*.grid or *.netcc) for viewing and/or further analysis.",
         "authors": [
           "AFNI Developers"
         ],
@@ -52,14 +53,14 @@
     },
     "body": {
       "type": "struct",
-      "name": "@djunct_dwi_selector",
+      "name": "fat_roi_row.py",
       "globalName": null,
       "groups": [
         {
           "cargs": [
             {
               "tokens": [
-                "@djunct_dwi_selector.tcsh"
+                "fat_roi_row.py"
               ],
               "join": null
             }
@@ -68,84 +69,22 @@
         },
         {
           "cargs": [
+            {
+              "tokens": [
+                "-r"
+              ],
+              "join": null
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "dwi",
+                    "name": "roi",
                     "outputs": [],
                     "docs": {
-                      "title": "DWI Input",
-                      "description": "Input DWI file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "png",
-                    "outputs": [],
-                    "docs": {
-                      "title": "PNG Image",
-                      "description": "Output PNG image",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "outfile",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Output File",
-                      "description": "Path to the output file",
+                      "title": "ROI",
+                      "description": "Specify which ROI's row of connectivity you want to select out. If labeltables were used, you may select the ROI by either the string label or the ROI mask number.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -164,12 +103,128 @@
             }
           ],
           "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-m"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "matrix_files",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Matrix files",
+                      "description": "Provide the set of matrix (*.grid or *.netcc) files by searchable path. This can be a globbable entry in quotes containing wildcard characters.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-l"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "list_file",
+                    "outputs": [],
+                    "docs": {
+                      "title": "List file",
+                      "description": "Provide the set of matrix (*.grid or *.netcc) files by explicit path in a text file. The LIST text file must contain at least one column with the path to subject matrix file.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "extern_labs_no",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Extern Labs No",
+                      "description": "Switch to turn off the writing/usage of user-defined labels in the *.grid/*.netcc files.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-E"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "@djunct_dwi_selector",
-        "description": "Selects DWI data and creates a representative image.",
+        "title": "fat_roi_row.py",
+        "description": "Select a single ROI's row out of a connectivity matrix file (*.grid or *.netcc) for viewing and/or further analysis.",
         "authors": [
           "AFNI Developers"
         ],
