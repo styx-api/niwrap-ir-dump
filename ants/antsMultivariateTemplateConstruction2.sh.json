@@ -1,33 +1,19 @@
 {
-  "uid": "b866ae2f76511eca887345fe0515e30b2318f31e.boutiques",
-  "package": {
-    "name": "ants",
-    "version": "2.5.3",
-    "docker": "antsx/ants:v2.5.3",
-    "docs": {
-      "title": "ANTs",
-      "description": "Advanced Normalization Tools (ANTs) is a C++ library available through the command line that computes high-dimensional mappings to capture the statistics of brain structure and function. It allows one to organize, visualize and statistically explore large biomedical image sets. Additionally, it integrates imaging modalities in space + time and works across species or organ systems with minimal customization.\n\nThe ANTs library is considered a state-of-the-art medical image registration and segmentation toolkit which depends on the Insight ToolKit, a widely used medical image processing library to which ANTs developers contribute. ANTs-related tools have also won several international, unbiased competitions such as MICCAI, BRATS, and STACOM.",
-      "authors": [],
-      "literature": [],
-      "urls": [
-        "https://github.com/ANTsX/ANTs"
-      ]
-    }
-  },
+  "uid": "db2efca66d9d39c14e98577f3a638cb0f63e4218.boutiques",
   "command": {
     "base": {
-      "id": 2,
+      "id": 28,
       "name": "antsMultivariateTemplateConstruction2.sh",
       "outputs": [
         {
-          "id": 1,
-          "name": "template",
+          "id": 27,
+          "name": "intermediate_templates_dir",
           "tokens": [
-            "<output-prefix>Template.nii.gz"
+            "intermediateTemplates"
           ],
           "docs": {
-            "title": "Template",
-            "description": "The output multivariate template.",
+            "title": "Intermediate Templates Directory",
+            "description": "Directory containing intermediate templates and shape update warps from each iteration",
             "authors": [],
             "literature": [],
             "urls": []
@@ -37,9 +23,9 @@
       ],
       "docs": {
         "title": "antsMultivariateTemplateConstruction2.sh",
-        "description": "The antsMultivariateTemplateConstruction2.sh script is part of the Advanced Normalization Tools (ANTs) suite. It is used for constructing multivariate templates.",
+        "description": "Multivariate template construction using ANTs registration tools (version 2). All images to be added to the template should be in the same directory, and this script should be invoked from that directory.",
         "authors": [
-          "ANTs Developers"
+          "Brian B. Avants, Nick Tustison and Gang Song"
         ],
         "literature": [],
         "urls": [
@@ -67,14 +53,63 @@
           "cargs": [
             {
               "tokens": [
+                "-d"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "input",
+                    "name": "dimension",
                     "outputs": [],
                     "docs": {
-                      "title": "Input Options",
-                      "description": "Options for setting up and running the multivariate template construction process.",
+                      "title": "Image Dimension",
+                      "description": "ImageDimension: 2 or 3 (for 2 or 3 dimensional registration of single volume), 4 (for template generation of time-series data)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-o"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "output_prefix",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Prefix",
+                      "description": "A prefix that is prepended to all output files (default = \"antsBTP\")",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -84,6 +119,1048 @@
                     "type": "string"
                   },
                   "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-a"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "image_statistic",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Image Statistic",
+                      "description": "Image statistic used to summarize images (default 1): 0 = mean, 1 = mean of normalized intensities, 2 = median. Normalization here means dividing each image by its mean intensity.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-A"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "sharpening",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Sharpening",
+                      "description": "Sharpening applied to template at each iteration (default 1): 0 = none, 1 = Laplacian, 2 = Unsharp mask",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-b"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "backup_images",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Backup Images",
+                      "description": "Backup images and results from all iterations (default = 0): Boolean to save the transform files, bias corrected inputs, templates, transforms, and warped images for each iteration. By default, only the templates and the shape update warp field are saved.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-c"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "parallel_control",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Parallel Control",
+                      "description": "Control for parallel computation (default 0): 0 = run serially, 1 = SGE qsub, 2 = use PEXEC (localhost), 3 = Apple XGrid, 4 = PBS qsub, 5 = SLURM",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-e"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "single_precision",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Single Precision",
+                      "description": "Use single precision (default 1)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-g"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "gradient_step",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Gradient Step Size",
+                      "description": "Gradient step size (default 0.25): smaller in magnitude results in more cautious steps. Use smaller steps to refine template details. 0.25 is an upper (aggressive) limit for this parameter.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": 0.25
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-i"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "iterations",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Iteration Limit",
+                      "description": "Iteration limit (default 4): iterations of the template construction (Iteration limit)*NumImages registrations",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-j"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "cpu_cores",
+                    "outputs": [],
+                    "docs": {
+                      "title": "CPU Cores",
+                      "description": "Number of cpu cores to use locally for pexec option (default 2; requires \"-c 2\")",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-k"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "num_modalities",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Number of Modalities",
+                      "description": "Number of modalities used to construct the template (default 1): For example, if one wanted to create a multimodal template consisting of T1,T2,and FA components (\"-k 3\").",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-w"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "modality_weights",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Modality Weights",
+                      "description": "Modality weights used in the similarity metric (default = 1): specified as e.g. 1x0.5x0.75.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-q"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "max_iterations",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Max Iterations",
+                      "description": "Max iterations for each pairwise registration (default = 100x100x70x20): specified in the form JxK...xF where J = max iterations at first (coarsest) resolution, K = max iterations at next resolution, F = max iterations at the final resolution",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-f"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "shrink_factors",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Shrink Factors",
+                      "description": "Shrink factors in pairwise registration (default = 6x4x2x1): in the same form as max iterations. Must have the same number of components as the iterations and smoothing. The shrink factors are integer factors for downsampling the virtual space (usually the template image) during registration.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-s"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "smoothing_kernels",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Smoothing Kernels",
+                      "description": "Smoothing kernels in pairwise registration (default = 3x2x1x0): also in the same form as max iterations and shrink factors, with the same number of components. Standard deviation of a Gaussian smoothing kernel applied to the images before downsampling at each level. The kernel may be specified in mm units or voxels with \"AxBxCmm\" or \"AxBxCvox\". Missing units implies vox.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-n"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "n4_bias_correction",
+                    "outputs": [],
+                    "docs": {
+                      "title": "N4 Bias Field Correction",
+                      "description": "N4BiasFieldCorrection of moving image: 0 off, 1 on (default 1)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-p"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "prepend_commands",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Prepend Commands",
+                      "description": "Commands to prepend to job scripts (e.g., change into appropriate directory, set paths, etc)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-r"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "rigid_registration",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Rigid Registration",
+                      "description": "Do rigid-body registration of inputs to the initial template, before doing the main pairwise registration. 0 off 1 on (default 0). If you are trying to refine or update an existing template, you would use '-r 0'. Rigid initialization is useful when you do not have an initial template, or you want to use a single image as a reference for rigid alignment only.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-l"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "linear_registration",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Linear Registration",
+                      "description": "Use linear image registration stages during the pairwise (template/subject) deformable registration. Otherwise, registration is limited to SyN or B-spline SyN (see '-t' option). This is '1' by default.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-m"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "similarity_metric",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Similarity Metric",
+                      "description": "Type of similarity metric used for pairwise registration (default = CC). Options are case sensitive. CC = cross-correlation, MI = mutual information, MSQ = mean square difference, DEMONS = demon's metric. A similarity metric per modality can be specified. If the CC metric is chosen, one can also specify the radius in brackets, e.g. '-m \"CC[4]\"'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-t"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "transformation_type",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Transformation Type",
+                      "description": "Type of transformation model used for registration (default = SyN): Options are case sensitive. SyN = Greedy SyN, BSplineSyN = Greedy B-spline SyN, TimeVaryingVelocityField = Time-varying velocity field, TimeVaryingBSplineVelocityField = Time-varying B-spline velocity field. Transformation parameters may be specified with brackets, eg '-t \"SyN[0.1,3,0]\"'. To use linear registration only, options are: Affine = Affine (runs Rigid + Affine), Rigid = Rigid (runs Rigid only).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-u"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "walltime",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Walltime",
+                      "description": "Walltime (default = 20:00:00): Option for PBS/SLURM qsub specifying requested time per pairwise registration",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-v"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "memory_limit",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Memory Limit",
+                      "description": "Memory limit (default = 8gb): Option for PBS/SLURM qsub specifying requested memory per pairwise registration",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-x"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "xgrid_args",
+                    "outputs": [],
+                    "docs": {
+                      "title": "XGrid Arguments",
+                      "description": "XGrid arguments (e.g., -x \"-p password -h controlhost\")",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-y"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 24,
+                    "name": "update_template",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Update Template",
+                      "description": "Update the template with the full affine transform (default 1). If 0, the rigid component of the affine transform will not be used to update the template. If your template drifts in translation or orientation try \"-y 0\".",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    0,
+                    1
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-z"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 25,
+                    "name": "target_volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Target Volume",
+                      "description": "Use this this volume as the target of all inputs. When not used, the script will create an unbiased starting point by averaging all inputs, then aligning the center of mass of all inputs to that of the initial average. If you do not use -z, it is recommended to use \"-r 1\". Use the full path. For multiple modalities, specify -z modality1.nii.gz -z modality2.nii.gz ... in the same modality order as the input images.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "input_images",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Input Images",
+                      "description": "List of images in the current directory, eg *_t1.nii.gz. Should be at the end of the command. Optionally, one can specify a .csv or .txt file where each line is the location of the input image. One can also specify more than one file for each image for multi-modal template construction (e.g. t1 and t2). For the multi-modal case, the templates will be consecutively numbered.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
@@ -98,9 +1175,9 @@
       "join": null,
       "docs": {
         "title": "antsMultivariateTemplateConstruction2.sh",
-        "description": "The antsMultivariateTemplateConstruction2.sh script is part of the Advanced Normalization Tools (ANTs) suite. It is used for constructing multivariate templates.",
+        "description": "Multivariate template construction using ANTs registration tools (version 2). All images to be added to the template should be in the same directory, and this script should be invoked from that directory.",
         "authors": [
-          "ANTs Developers"
+          "Brian B. Avants, Nick Tustison and Gang Song"
         ],
         "literature": [],
         "urls": [
@@ -114,5 +1191,18 @@
     "defaultValue": null
   },
   "stdoutAsStringOutput": null,
-  "stderrAsStringOutput": null
+  "stderrAsStringOutput": null,
+  "project": {
+    "name": "unknown",
+    "version": "0.1.0",
+    "docs": {
+      "title": null,
+      "description": null,
+      "authors": [],
+      "literature": [],
+      "urls": []
+    },
+    "license": null,
+    "extras": {}
+  }
 }
