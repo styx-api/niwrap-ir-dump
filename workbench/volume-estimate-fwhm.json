@@ -1,20 +1,16 @@
 {
-  "uid": "8594e5f631aa822147389c791fdc81f4fc470354.boutiques",
+  "uid": "25607ae5dff68c55973abc5a13016a50bb089e8e.workbench",
   "command": {
     "base": {
-      "id": 6,
+      "id": 7,
       "name": "volume-estimate-fwhm",
       "outputs": [],
       "docs": {
-        "title": "volume-estimate-fwhm",
-        "description": "Estimate fwhm smoothness of a volume.\n\nEstimates the smoothness of the input volume in X, Y, and Z directions separately, printing the estimates to standard output, in mm as FWHM.  If -subvolume or -whole-file are not specified, each subvolume is estimated and displayed separately.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "ESTIMATE FWHM SMOOTHNESS OF A VOLUME.\n\nEstimates the smoothness of the input volume in X, Y, and Z directions separately, printing the estimates to standard output, in mm as FWHM.  If -subvolume or -whole-file are not specified, each subvolume is estimated and displayed separately.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -29,15 +25,115 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-estimate-fwhm"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "roivol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use only data within an ROI\n\nthe volume to use as an ROI",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to estimate smoothness of\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-whole-file"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "demean",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "estimate for the whole file at once, not each subvolume separately\n\nsubtract the mean image before estimating smoothness",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-demean"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": false
+                }
               ],
               "join": null
             }
@@ -54,7 +150,7 @@
                     "name": "volume",
                     "outputs": [],
                     "docs": {
-                      "title": "volume",
+                      "title": null,
                       "description": "the input volume",
                       "authors": [],
                       "literature": [],
@@ -65,7 +161,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -77,191 +175,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "opt_roi_roivol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_roi_roivol",
-                      "description": "use only data within an ROI: the volume to use as an ROI",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to estimate smoothness of: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "whole_file",
-                    "outputs": [],
-                    "docs": {
-                      "title": "whole_file",
-                      "description": "estimate for the whole file at once, not each subvolume separately",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "whole_file",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-whole-file"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 4,
-                                  "name": "opt_demean",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_demean",
-                                    "description": "subtract the mean image before estimating smoothness",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "bool",
-                                  "valueTrue": [
-                                    "-demean"
-                                  ],
-                                  "valueFalse": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": false
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "whole_file",
-                      "description": "estimate for the whole file at once, not each subvolume separately",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-estimate-fwhm",
-        "description": "Estimate fwhm smoothness of a volume.\n\nEstimates the smoothness of the input volume in X, Y, and Z directions separately, printing the estimates to standard output, in mm as FWHM.  If -subvolume or -whole-file are not specified, each subvolume is estimated and displayed separately.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "ESTIMATE FWHM SMOOTHNESS OF A VOLUME.\n\nEstimates the smoothness of the input volume in X, Y, and Z directions separately, printing the estimates to standard output, in mm as FWHM.  If -subvolume or -whole-file are not specified, each subvolume is estimated and displayed separately.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

@@ -1,35 +1,13 @@
 {
-  "uid": "467892b0c56af1ac7a7fb22a622b70f03bfa2579.workbench",
+  "uid": "cd601df7eb26b8adf13c26cf609d763a8d458dd0.workbench",
   "command": {
     "base": {
-      "id": 11,
-      "name": "label-erode",
-      "outputs": [
-        {
-          "id": 4,
-          "name": "label-out",
-          "tokens": [
-            {
-              "refId": 3,
-              "fileRemoveSuffixes": [],
-              "fallback": null
-            }
-          ],
-          "docs": {
-            "title": null,
-            "description": "the output label file",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": [
-            "workbench/Label File"
-          ]
-        }
-      ],
+      "id": 6,
+      "name": "surface-geodesic-distance-sparse-text",
+      "outputs": [],
       "docs": {
         "title": null,
-        "description": "ERODE A LABEL FILE.\n\nAround each vertex that is unlabeled, set surrounding vertices to unlabeled.  The surrounding vertices are all immediate neighbors and all vertices within the specified distance.\n\nNote that the -corrected-areas option uses an approximate correction for distance along the surface.",
+        "description": "OUTPUT GEODESIC DISTANCES AS TEXT.\n\nSimilar to -geodesic-distance-all-to-all, but outputs in a text format that only lists the in-range vertices.  Each line in the output text file is a list of pairs, like '<vertex>,<distance>,<vertex>,<distance>,...' in csv format.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
         "authors": [],
         "literature": [],
         "urls": []
@@ -37,7 +15,7 @@
     },
     "body": {
       "type": "struct",
-      "name": "label-erode",
+      "name": "surface-geodesic-distance-sparse-text",
       "publicName": null,
       "groups": [
         {
@@ -50,102 +28,7 @@
             },
             {
               "tokens": [
-                "-label-erode"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "label-out",
-                    "outputs": [],
-                    "docs": {
-                      "title": null,
-                      "description": "the output label file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                "-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "roi-metric",
-                    "outputs": [],
-                    "docs": {
-                      "title": null,
-                      "description": "assume values outside this roi are labeled\n\nmetric file, positive values denote vertices that have data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": [
-                      "workbench/Metric File"
-                    ]
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                "-column"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "column",
-                    "outputs": [],
-                    "docs": {
-                      "title": null,
-                      "description": "select a single column to erode\n\nthe column number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": null
-                }
+                "-surface-geodesic-distance-sparse-text"
               ],
               "join": null
             },
@@ -159,12 +42,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 9,
+                    "id": 3,
                     "name": "area-metric",
                     "outputs": [],
                     "docs": {
                       "title": null,
-                      "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                      "description": "vertex areas to use to correct the distances on a group-average surface\n\nthe corrected vertex areas, as a metric",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -182,6 +65,36 @@
                   "nullable": true,
                   "choices": null,
                   "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "naive",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use only neighbors, don't crawl triangles (not recommended)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-naive"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -196,47 +109,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "label",
-                    "outputs": [],
-                    "docs": {
-                      "title": null,
-                      "description": "the input label",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": [
-                      "workbench/Label File"
-                    ]
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
                     "name": "surface",
                     "outputs": [],
                     "docs": {
                       "title": null,
-                      "description": "the surface to erode on",
+                      "description": "the surface to compute on",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -267,12 +144,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 2,
-                    "name": "erode-dist",
+                    "id": 1,
+                    "name": "limit",
                     "outputs": [],
                     "docs": {
                       "title": null,
-                      "description": "distance in mm to erode the labels",
+                      "description": "the geodesic distance limit in mm",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -293,12 +170,43 @@
             }
           ],
           "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "text-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "output - the output text file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
         }
       ],
       "join": null,
       "docs": {
         "title": null,
-        "description": "ERODE A LABEL FILE.\n\nAround each vertex that is unlabeled, set surrounding vertices to unlabeled.  The surrounding vertices are all immediate neighbors and all vertices within the specified distance.\n\nNote that the -corrected-areas option uses an approximate correction for distance along the surface.",
+        "description": "OUTPUT GEODESIC DISTANCES AS TEXT.\n\nSimilar to -geodesic-distance-all-to-all, but outputs in a text format that only lists the in-range vertices.  Each line in the output text file is a list of pairs, like '<vertex>,<distance>,<vertex>,<distance>,...' in csv format.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
         "authors": [],
         "literature": [],
         "urls": []

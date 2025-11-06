@@ -1,13 +1,13 @@
 {
-  "uid": "fff039813d35484e8dfeace02e6d5c8748973490.boutiques",
+  "uid": "9741081a1f9bdfe5deb553d7d2cb39c92eb6cafe.workbench",
   "command": {
     "base": {
-      "id": 8,
+      "id": 12,
       "name": "volume-rois-from-extrema",
       "outputs": [
         {
-          "id": 7,
-          "name": "volume_out",
+          "id": 3,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-rois-from-extrema",
-        "description": "Create volume roi maps from extrema maps.\n\nFor each nonzero value in each map, make a map with an ROI around that location.  If the -gaussian option is specified, then normalized gaussian kernels are output instead of ROIs.  The <method> argument to -overlap-logic must be one of ALLOW, CLOSEST, or EXCLUDE.  ALLOW is the default, and means that ROIs are treated independently and may overlap.  CLOSEST means that ROIs may not overlap, and that no ROI contains vertices that are closer to a different seed vertex.  EXCLUDE means that ROIs may not overlap, and that any vertex within range of more than one ROI does not belong to any ROI.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "CREATE VOLUME ROI MAPS FROM EXTREMA MAPS.\n\nFor each nonzero value in each map, make a map with an ROI around that location.  If the -gaussian option is specified, then normalized gaussian kernels are output instead of ROIs.  The <method> argument to -overlap-logic must be one of ALLOW, CLOSEST, or EXCLUDE.  ALLOW is the default, and means that ROIs are treated independently and may overlap.  CLOSEST means that ROIs may not overlap, and that no ROI contains vertices that are closer to a different seed vertex.  EXCLUDE means that ROIs may not overlap, and that any vertex within range of more than one ROI does not belong to any ROI.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,171 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-rois-from-extrema"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-gaussian"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "sigma",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "generate a gaussian kernel instead of a flat ROI\n\nthe sigma for the gaussian kernel, in mm",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "roi-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a region of interest to use\n\nthe region to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-overlap-logic"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "method",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "how to handle overlapping ROIs, default ALLOW\n\nthe method of resolving overlaps",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to take the gradient of\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -71,10 +225,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "volume_in",
+                    "name": "volume-in",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_in",
+                      "title": null,
                       "description": "the input volume",
                       "authors": [],
                       "literature": [],
@@ -85,7 +239,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +264,7 @@
                     "name": "limit",
                     "outputs": [],
                     "docs": {
-                      "title": "limit",
+                      "title": null,
                       "description": "distance limit from voxel center, in mm",
                       "authors": [],
                       "literature": [],
@@ -130,211 +286,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-gaussian"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_gaussian_sigma",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_gaussian_sigma",
-                      "description": "generate a gaussian kernel instead of a flat ROI: the sigma for the gaussian kernel, in mm",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_roi_roi_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_roi_roi_volume",
-                      "description": "select a region of interest to use: the region to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-overlap-logic"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_overlap_logic_method",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_overlap_logic_method",
-                      "description": "how to handle overlapping ROIs, default ALLOW: the method of resolving overlaps",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to take the gradient of: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-rois-from-extrema",
-        "description": "Create volume roi maps from extrema maps.\n\nFor each nonzero value in each map, make a map with an ROI around that location.  If the -gaussian option is specified, then normalized gaussian kernels are output instead of ROIs.  The <method> argument to -overlap-logic must be one of ALLOW, CLOSEST, or EXCLUDE.  ALLOW is the default, and means that ROIs are treated independently and may overlap.  CLOSEST means that ROIs may not overlap, and that no ROI contains vertices that are closer to a different seed vertex.  EXCLUDE means that ROIs may not overlap, and that any vertex within range of more than one ROI does not belong to any ROI.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "CREATE VOLUME ROI MAPS FROM EXTREMA MAPS.\n\nFor each nonzero value in each map, make a map with an ROI around that location.  If the -gaussian option is specified, then normalized gaussian kernels are output instead of ROIs.  The <method> argument to -overlap-logic must be one of ALLOW, CLOSEST, or EXCLUDE.  ALLOW is the default, and means that ROIs are treated independently and may overlap.  CLOSEST means that ROIs may not overlap, and that no ROI contains vertices that are closer to a different seed vertex.  EXCLUDE means that ROIs may not overlap, and that any vertex within range of more than one ROI does not belong to any ROI.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

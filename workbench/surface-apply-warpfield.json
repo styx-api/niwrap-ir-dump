@@ -1,13 +1,13 @@
 {
-  "uid": "6a441ba1d393e5ce7c0331880f44291c415f3d62.boutiques",
+  "uid": "81f972736bb6af1bd37bc10b9a2daf65cf08fc89.workbench",
   "command": {
     "base": {
-      "id": 5,
+      "id": 6,
       "name": "surface-apply-warpfield",
       "outputs": [
         {
-          "id": 4,
-          "name": "out_surf",
+          "id": 3,
+          "name": "out-surf",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "out_surf",
+            "title": null,
             "description": "the output transformed surface",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Surface File"
+          ]
         }
       ],
       "docs": {
-        "title": "surface-apply-warpfield",
-        "description": "Apply warpfield to surface file.\n\nNOTE: warping a surface requires the INVERSE of the warpfield used to warp the volume it lines up with.  The header of the forward warp is needed by the -fnirt option in order to correctly interpret the displacements in the fnirt warpfield.\n\nIf the -fnirt option is not present, the warpfield must be a nifti 'world' warpfield, which can be obtained with the -convert-warpfield command.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "APPLY WARPFIELD TO SURFACE FILE.\n\nNOTE: warping a surface requires the INVERSE of the warpfield used to warp the volume it lines up with.  The header of the forward warp is needed by the -fnirt option in order to correctly interpret the displacements in the fnirt warpfield.\n\nIf the -fnirt option is not present, the warpfield must be a nifti 'world' warpfield, which can be obtained with the -convert-warpfield command.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,68 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-surface-apply-warpfield"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "out-surf",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output transformed surface",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-fnirt"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "forward-warp",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "MUST be used if using a fnirt warpfield\n\nthe forward warpfield",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -71,10 +122,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "in_surf",
+                    "name": "in-surf",
                     "outputs": [],
                     "docs": {
-                      "title": "in_surf",
+                      "title": null,
                       "description": "the surface to transform",
                       "authors": [],
                       "literature": [],
@@ -85,7 +136,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +161,7 @@
                     "name": "warpfield",
                     "outputs": [],
                     "docs": {
-                      "title": "warpfield",
+                      "title": null,
                       "description": "the INVERSE warpfield",
                       "authors": [],
                       "literature": [],
@@ -128,89 +181,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "out_surf",
-                    "outputs": [],
-                    "docs": {
-                      "title": "out_surf",
-                      "description": "the output transformed surface",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-fnirt"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_fnirt_forward_warp",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fnirt_forward_warp",
-                      "description": "MUST be used if using a fnirt warpfield: the forward warpfield",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "surface-apply-warpfield",
-        "description": "Apply warpfield to surface file.\n\nNOTE: warping a surface requires the INVERSE of the warpfield used to warp the volume it lines up with.  The header of the forward warp is needed by the -fnirt option in order to correctly interpret the displacements in the fnirt warpfield.\n\nIf the -fnirt option is not present, the warpfield must be a nifti 'world' warpfield, which can be obtained with the -convert-warpfield command.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "APPLY WARPFIELD TO SURFACE FILE.\n\nNOTE: warping a surface requires the INVERSE of the warpfield used to warp the volume it lines up with.  The header of the forward warp is needed by the -fnirt option in order to correctly interpret the displacements in the fnirt warpfield.\n\nIf the -fnirt option is not present, the warpfield must be a nifti 'world' warpfield, which can be obtained with the -convert-warpfield command.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

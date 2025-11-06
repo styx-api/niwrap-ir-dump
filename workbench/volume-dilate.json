@@ -1,13 +1,13 @@
 {
-  "uid": "c7cf27ddf3bd9107f4ebe78ae6eb1975ae7f12ba.boutiques",
+  "uid": "63f0ca3ad59f9e1f8239c3ea5c2e72dfdc878c7e.workbench",
   "command": {
     "base": {
-      "id": 16,
+      "id": 18,
       "name": "volume-dilate",
       "outputs": [
         {
-          "id": 15,
-          "name": "volume_out",
+          "id": 4,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 3,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-dilate",
-        "description": "Dilate a volume file.\n\nFor all voxels that are designated as bad, if they neighbor a non-bad voxel with data or are within the specified distance of such a voxel, replace the value in the bad voxel with a value calculated from nearby non-bad voxels that have data, otherwise set the value to zero.  No matter how small <distance> is, dilation will always use at least the face neighbor voxels.\n\nBy default, voxels that have data with the value 0 are bad, specify -bad-voxel-roi to only count voxels as bad if they are selected by the roi.  If -data-roi is not specified, all voxels are assumed to have data.\n\nTo get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff -exponent 2'.\n\nValid values for <method> are:\n\nNEAREST - use the value from the nearest good voxel\nWEIGHTED - use a weighted average based on distance",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "DILATE A VOLUME FILE.\n\nFor all voxels that are designated as bad, if they neighbor a non-bad voxel with data or are within the specified distance of such a voxel, replace the value in the bad voxel with a value calculated from nearby non-bad voxels that have data, otherwise set the value to zero.  No matter how small <distance> is, dilation will always use at least the face neighbor voxels.\n\nBy default, voxels that have data with the value 0 are bad, specify -bad-voxel-roi to only count voxels as bad if they are selected by the roi.  If -data-roi is not specified, all voxels are assumed to have data.\n\nTo get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff -exponent 2'.\n\nValid values for <method> are:\n\nNEAREST - use the value from the nearest good voxel\nWEIGHTED - use a weighted average based on distance",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,366 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-dilate"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-exponent"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "exponent",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use a different exponent in the weighting function\n\nexponent 'n' to use in (1 / (distance ^ n)) as the weighting function (default 7)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-bad-voxel-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "roi-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify an roi of voxels to overwrite, rather than voxels with value zero\n\nvolume file, positive values denote voxels to have their values replaced",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-data-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "roi-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify an roi of where there is data\n\nvolume file, positive values denote voxels that have data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to dilate\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "legacy-cutoff",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use the v1.3.2 method of excluding voxels further than the dilation distance when calculating the dilated value",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-legacy-cutoff"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "grad-extrapolate",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "additionally use the gradient to extrapolate, intended to be used with WEIGHTED",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "grad-extrapolate",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-grad-extrapolate"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 16,
+                                  "name": "presmooth",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "apply presmoothing before computing gradient vectors, not recommended",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "presmooth",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-presmooth"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 14,
+                                                "name": "kernel",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the size of gaussian smoothing kernel in mm, as sigma by default",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "float",
+                                                "minValue": null,
+                                                "maxValue": null
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 15,
+                                                "name": "fwhm",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "kernel size is FWHM, not sigma",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "bool",
+                                                "valueTrue": [
+                                                  "-fwhm"
+                                                ],
+                                                "valueFalse": []
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": false
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "apply presmoothing before computing gradient vectors, not recommended",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "additionally use the gradient to extrapolate, intended to be used with WEIGHTED",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
               ],
               "join": null
             }
@@ -74,7 +423,7 @@
                     "name": "volume",
                     "outputs": [],
                     "docs": {
-                      "title": "volume",
+                      "title": null,
                       "description": "the volume to dilate",
                       "authors": [],
                       "literature": [],
@@ -85,7 +434,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +459,7 @@
                     "name": "distance",
                     "outputs": [],
                     "docs": {
-                      "title": "distance",
+                      "title": null,
                       "description": "distance in mm to dilate",
                       "authors": [],
                       "literature": [],
@@ -141,7 +492,7 @@
                     "name": "method",
                     "outputs": [],
                     "docs": {
-                      "title": "method",
+                      "title": null,
                       "description": "dilation method to use",
                       "authors": [],
                       "literature": [],
@@ -161,429 +512,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-exponent"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_exponent_exponent",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_exponent_exponent",
-                      "description": "use a different exponent in the weighting function: exponent 'n' to use in (1 / (distance ^ n)) as the weighting function (default 7)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-bad-voxel-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_bad_voxel_roi_roi_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_bad_voxel_roi_roi_volume",
-                      "description": "specify an roi of voxels to overwrite, rather than voxels with value zero: volume file, positive values denote voxels to have their values replaced",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-data-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_data_roi_roi_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_data_roi_roi_volume",
-                      "description": "specify an roi of where there is data: volume file, positive values denote voxels that have data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to dilate: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 8,
-                    "name": "opt_legacy_cutoff",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_legacy_cutoff",
-                      "description": "use the v1.3.2 method of excluding voxels further than the dilation distance when calculating the dilated value",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-legacy-cutoff"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 14,
-                    "name": "grad_extrapolate",
-                    "outputs": [],
-                    "docs": {
-                      "title": "grad_extrapolate",
-                      "description": "additionally use the gradient to extrapolate, intended to be used with WEIGHTED",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "grad_extrapolate",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-grad-extrapolate"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 13,
-                                  "name": "presmooth",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "presmooth",
-                                    "description": "apply presmoothing before computing gradient vectors, not recommended",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "presmooth",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-presmooth"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 11,
-                                                "name": "kernel",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "kernel",
-                                                  "description": "the size of gaussian smoothing kernel in mm, as sigma by default",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "float",
-                                                "minValue": null,
-                                                "maxValue": null
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 12,
-                                                "name": "opt_fwhm",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "opt_fwhm",
-                                                  "description": "kernel size is FWHM, not sigma",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "bool",
-                                                "valueTrue": [
-                                                  "-fwhm"
-                                                ],
-                                                "valueFalse": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": false
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "presmooth",
-                                    "description": "apply presmoothing before computing gradient vectors, not recommended",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "grad_extrapolate",
-                      "description": "additionally use the gradient to extrapolate, intended to be used with WEIGHTED",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-dilate",
-        "description": "Dilate a volume file.\n\nFor all voxels that are designated as bad, if they neighbor a non-bad voxel with data or are within the specified distance of such a voxel, replace the value in the bad voxel with a value calculated from nearby non-bad voxels that have data, otherwise set the value to zero.  No matter how small <distance> is, dilation will always use at least the face neighbor voxels.\n\nBy default, voxels that have data with the value 0 are bad, specify -bad-voxel-roi to only count voxels as bad if they are selected by the roi.  If -data-roi is not specified, all voxels are assumed to have data.\n\nTo get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff -exponent 2'.\n\nValid values for <method> are:\n\nNEAREST - use the value from the nearest good voxel\nWEIGHTED - use a weighted average based on distance",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "DILATE A VOLUME FILE.\n\nFor all voxels that are designated as bad, if they neighbor a non-bad voxel with data or are within the specified distance of such a voxel, replace the value in the bad voxel with a value calculated from nearby non-bad voxels that have data, otherwise set the value to zero.  No matter how small <distance> is, dilation will always use at least the face neighbor voxels.\n\nBy default, voxels that have data with the value 0 are bad, specify -bad-voxel-roi to only count voxels as bad if they are selected by the roi.  If -data-roi is not specified, all voxels are assumed to have data.\n\nTo get the behavior of version 1.3.2 or earlier, use '-legacy-cutoff -exponent 2'.\n\nValid values for <method> are:\n\nNEAREST - use the value from the nearest good voxel\nWEIGHTED - use a weighted average based on distance",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

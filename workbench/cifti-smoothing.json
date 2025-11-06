@@ -1,13 +1,13 @@
 {
-  "uid": "0b87cc9cdd0f0460a8ebb1583ddeff5398d57bd4.boutiques",
+  "uid": "13acc3e6ded7de43dd47b9ee49249c55bebbc762.workbench",
   "command": {
     "base": {
-      "id": 23,
+      "id": 29,
       "name": "cifti-smoothing",
       "outputs": [
         {
-          "id": 22,
-          "name": "cifti_out",
+          "id": 5,
+          "name": "cifti-out",
           "tokens": [
             {
               "refId": 4,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "cifti_out",
+            "title": null,
             "description": "the output cifti",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Cifti File"
+          ]
         }
       ],
       "docs": {
-        "title": "cifti-smoothing",
-        "description": "Smooth a cifti file.\n\nThe input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  By default, data in different structures is smoothed independently (i.e., \"parcel constrained\" smoothing), so volume structures that touch do not smooth across this boundary.  Specify -merged-volume to ignore these boundaries.  Surface smoothing uses the GEO_GAUSS_AREA smoothing method.\n\nThe -*-corrected-areas options are intended for when it is unavoidable to smooth on group average surfaces, it is only an approximate correction for the reduction of structure in a group average surface.  It is better to smooth the data on individuals before averaging, when feasible.\n\nThe -fix-zeros-* options will treat values of zero as lack of data, and not use that value when generating the smoothed values, but will fill zeros with extrapolated values.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH A CIFTI FILE.\n\nThe input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  By default, data in different structures is smoothed independently (i.e., \"parcel constrained\" smoothing), so volume structures that touch do not smooth across this boundary.  Specify -merged-volume to ignore these boundaries.  Surface smoothing uses the GEO_GAUSS_AREA smoothing method.\n\nThe -*-corrected-areas options are intended for when it is unavoidable to smooth on group average surfaces, it is only an approximate correction for the reduction of structure in a group average surface.  It is better to smooth the data on individuals before averaging, when feasible.\n\nThe -fix-zeros-* options will treat values of zero as lack of data, and not use that value when generating the smoothed values, but will fill zeros with extrapolated values.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.\n\nThe <structure> argument of -surface must be one of the following strings:\n\nCORTEX_LEFT\nCORTEX_RIGHT\nCEREBELLUM\nACCUMBENS_LEFT\nACCUMBENS_RIGHT\nALL_GREY_MATTER\nALL_WHITE_MATTER\nAMYGDALA_LEFT\nAMYGDALA_RIGHT\nBRAIN_STEM\nCAUDATE_LEFT\nCAUDATE_RIGHT\nCEREBELLAR_WHITE_MATTER_LEFT\nCEREBELLAR_WHITE_MATTER_RIGHT\nCEREBELLUM_LEFT\nCEREBELLUM_RIGHT\nCEREBRAL_WHITE_MATTER_LEFT\nCEREBRAL_WHITE_MATTER_RIGHT\nCORTEX\nDIENCEPHALON_VENTRAL_LEFT\nDIENCEPHALON_VENTRAL_RIGHT\nHIPPOCAMPUS_LEFT\nHIPPOCAMPUS_RIGHT\nHIPPOCAMPUS_DENTATE_LEFT\nHIPPOCAMPUS_DENTATE_RIGHT\nINVALID\nOTHER\nOTHER_GREY_MATTER\nOTHER_WHITE_MATTER\nPALLIDUM_LEFT\nPALLIDUM_RIGHT\nPUTAMEN_LEFT\nPUTAMEN_RIGHT\nTHALAMUS_LEFT\nTHALAMUS_RIGHT",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,699 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-cifti-smoothing"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "cifti-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output cifti",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "fwhm",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "kernel sizes are FWHM, not sigma",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fwhm"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 10,
+                    "name": "left-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the left cortical surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "left-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-left-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 7,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the left surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-left-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 8,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the left surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the left cortical surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "right-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the right cortical surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "right-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-right-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 11,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the right surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-right-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 12,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the right surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the right cortical surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "cerebellum-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the cerebellum surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "cerebellum-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-cerebellum-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 15,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the cerebellum surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-cerebellum-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 16,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the cerebellum surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the cerebellum surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-cifti-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "roi-cifti",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "smooth only within regions of interest\n\nthe regions to smooth within, as a cifti file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "fix-zeros-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "treat values of zero in the volume as missing data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fix-zeros-volume"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "fix-zeros-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "treat values of zero on the surface as missing data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fix-zeros-surface"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "merged-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "smooth across subcortical structure boundaries",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-merged-volume"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 28,
+                    "name": "surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify a surface by structure name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 24,
+                                  "name": "structure",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the surface structure name",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 25,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 26,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify a surface by structure name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
               ],
               "join": null
             }
@@ -74,7 +756,7 @@
                     "name": "cifti",
                     "outputs": [],
                     "docs": {
-                      "title": "cifti",
+                      "title": null,
                       "description": "the input cifti",
                       "authors": [],
                       "literature": [],
@@ -85,7 +767,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +789,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "surface_kernel",
+                    "name": "surface-kernel",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_kernel",
+                      "title": null,
                       "description": "the size of the gaussian surface smoothing kernel in mm, as sigma by default",
                       "authors": [],
                       "literature": [],
@@ -138,10 +822,10 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "volume_kernel",
+                    "name": "volume-kernel",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_kernel",
+                      "title": null,
                       "description": "the size of the gaussian volume smoothing kernel in mm, as sigma by default",
                       "authors": [],
                       "literature": [],
@@ -174,7 +858,7 @@
                     "name": "direction",
                     "outputs": [],
                     "docs": {
-                      "title": "direction",
+                      "title": null,
                       "description": "which dimension to smooth along, ROW or COLUMN",
                       "authors": [],
                       "literature": [],
@@ -194,628 +878,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "cifti_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cifti_out",
-                      "description": "the output cifti",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_fwhm",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fwhm",
-                      "description": "kernel sizes are FWHM, not sigma",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fwhm"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 9,
-                    "name": "left_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "left_surface",
-                      "description": "specify the left surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "left_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-left-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 7,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the left surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-left-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 8,
-                                  "name": "opt_left_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_left_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the left surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "left_surface",
-                      "description": "specify the left surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 13,
-                    "name": "right_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "right_surface",
-                      "description": "specify the right surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "right_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-right-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 11,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the right surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-right-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 12,
-                                  "name": "opt_right_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_right_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the right surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "right_surface",
-                      "description": "specify the right surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 17,
-                    "name": "cerebellum_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cerebellum_surface",
-                      "description": "specify the cerebellum surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "cerebellum_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-cerebellum-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 15,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the cerebellum surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-cerebellum-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 16,
-                                  "name": "opt_cerebellum_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_cerebellum_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the cerebellum surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "cerebellum_surface",
-                      "description": "specify the cerebellum surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-cifti-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 18,
-                    "name": "opt_cifti_roi_roi_cifti",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_cifti_roi_roi_cifti",
-                      "description": "smooth only within regions of interest: the regions to smooth within, as a cifti file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 19,
-                    "name": "opt_fix_zeros_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fix_zeros_volume",
-                      "description": "treat values of zero in the volume as missing data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fix-zeros-volume"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 20,
-                    "name": "opt_fix_zeros_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fix_zeros_surface",
-                      "description": "treat values of zero on the surface as missing data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fix-zeros-surface"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 21,
-                    "name": "opt_merged_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_merged_volume",
-                      "description": "smooth across subcortical structure boundaries",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-merged-volume"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "cifti-smoothing",
-        "description": "Smooth a cifti file.\n\nThe input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  By default, data in different structures is smoothed independently (i.e., \"parcel constrained\" smoothing), so volume structures that touch do not smooth across this boundary.  Specify -merged-volume to ignore these boundaries.  Surface smoothing uses the GEO_GAUSS_AREA smoothing method.\n\nThe -*-corrected-areas options are intended for when it is unavoidable to smooth on group average surfaces, it is only an approximate correction for the reduction of structure in a group average surface.  It is better to smooth the data on individuals before averaging, when feasible.\n\nThe -fix-zeros-* options will treat values of zero as lack of data, and not use that value when generating the smoothed values, but will fill zeros with extrapolated values.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH A CIFTI FILE.\n\nThe input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  By default, data in different structures is smoothed independently (i.e., \"parcel constrained\" smoothing), so volume structures that touch do not smooth across this boundary.  Specify -merged-volume to ignore these boundaries.  Surface smoothing uses the GEO_GAUSS_AREA smoothing method.\n\nThe -*-corrected-areas options are intended for when it is unavoidable to smooth on group average surfaces, it is only an approximate correction for the reduction of structure in a group average surface.  It is better to smooth the data on individuals before averaging, when feasible.\n\nThe -fix-zeros-* options will treat values of zero as lack of data, and not use that value when generating the smoothed values, but will fill zeros with extrapolated values.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.\n\nThe <structure> argument of -surface must be one of the following strings:\n\nCORTEX_LEFT\nCORTEX_RIGHT\nCEREBELLUM\nACCUMBENS_LEFT\nACCUMBENS_RIGHT\nALL_GREY_MATTER\nALL_WHITE_MATTER\nAMYGDALA_LEFT\nAMYGDALA_RIGHT\nBRAIN_STEM\nCAUDATE_LEFT\nCAUDATE_RIGHT\nCEREBELLAR_WHITE_MATTER_LEFT\nCEREBELLAR_WHITE_MATTER_RIGHT\nCEREBELLUM_LEFT\nCEREBELLUM_RIGHT\nCEREBRAL_WHITE_MATTER_LEFT\nCEREBRAL_WHITE_MATTER_RIGHT\nCORTEX\nDIENCEPHALON_VENTRAL_LEFT\nDIENCEPHALON_VENTRAL_RIGHT\nHIPPOCAMPUS_LEFT\nHIPPOCAMPUS_RIGHT\nHIPPOCAMPUS_DENTATE_LEFT\nHIPPOCAMPUS_DENTATE_RIGHT\nINVALID\nOTHER\nOTHER_GREY_MATTER\nOTHER_WHITE_MATTER\nPALLIDUM_LEFT\nPALLIDUM_RIGHT\nPUTAMEN_LEFT\nPUTAMEN_RIGHT\nTHALAMUS_LEFT\nTHALAMUS_RIGHT",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

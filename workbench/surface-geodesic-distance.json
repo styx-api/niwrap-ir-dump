@@ -1,13 +1,13 @@
 {
-  "uid": "b63b60aad75cad0af2e8476b6cd26a1b9f7a2e63.boutiques",
+  "uid": "837e71cb509241e4094936fe5257e2f011b758dc.workbench",
   "command": {
     "base": {
-      "id": 7,
+      "id": 9,
       "name": "surface-geodesic-distance",
       "outputs": [
         {
-          "id": 6,
-          "name": "metric_out",
+          "id": 3,
+          "name": "metric-out",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "metric_out",
+            "title": null,
             "description": "the output metric",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Metric File"
+          ]
         }
       ],
       "docs": {
-        "title": "surface-geodesic-distance",
-        "description": "Compute geodesic distance from one vertex to the entire surface.\n\nUnless -limit is specified, computes the geodesic distance from the specified vertex to all others.  The result is output as a single column metric file, with a value of -1 for vertices that the distance was not computed for.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "COMPUTE GEODESIC DISTANCE FROM ONE VERTEX TO THE ENTIRE SURFACE.\n\nUnless -limit is specified, computes the geodesic distance from the specified vertex to all others.  The result is output as a single column metric file, with a value of -1 for vertices that the distance was not computed for.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,137 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-surface-geodesic-distance"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "metric-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output metric",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "naive",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use only neighbors, don't crawl triangles (not recommended)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-naive"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-limit"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "limit-mm",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "stop at a certain distance\n\ndistance in mm to stop at",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-corrected-areas"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "area-metric",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Metric File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -74,7 +194,7 @@
                     "name": "surface",
                     "outputs": [],
                     "docs": {
-                      "title": "surface",
+                      "title": null,
                       "description": "the surface to compute on",
                       "authors": [],
                       "literature": [],
@@ -85,7 +205,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +230,7 @@
                     "name": "vertex",
                     "outputs": [],
                     "docs": {
-                      "title": "vertex",
+                      "title": null,
                       "description": "the vertex to compute geodesic distance from",
                       "authors": [],
                       "literature": [],
@@ -130,168 +252,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "metric_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "metric_out",
-                      "description": "the output metric",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_naive",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_naive",
-                      "description": "use only neighbors, don't crawl triangles (not recommended)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-naive"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-limit"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_limit_limit_mm",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_limit_limit_mm",
-                      "description": "stop at a certain distance: distance in mm to stop at",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-corrected-areas"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_corrected_areas_area_metric",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_corrected_areas_area_metric",
-                      "description": "vertex areas to use instead of computing them from the surface: the corrected vertex areas, as a metric",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "surface-geodesic-distance",
-        "description": "Compute geodesic distance from one vertex to the entire surface.\n\nUnless -limit is specified, computes the geodesic distance from the specified vertex to all others.  The result is output as a single column metric file, with a value of -1 for vertices that the distance was not computed for.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "COMPUTE GEODESIC DISTANCE FROM ONE VERTEX TO THE ENTIRE SURFACE.\n\nUnless -limit is specified, computes the geodesic distance from the specified vertex to all others.  The result is output as a single column metric file, with a value of -1 for vertices that the distance was not computed for.\n\nThe -corrected-areas option should be used when the input is a group average surface - group average surfaces have significantly less surface area than individual surfaces do, and therefore distances measured on them would be smaller than measuring them on individual surfaces.  In this case, the input to this option should be a group average of the output of -surface-vertex-areas for each subject.\n\nIf -naive is not specified, the algorithm uses not just immediate neighbors, but also neighbors derived from crawling across pairs of triangles that share an edge.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

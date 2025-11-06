@@ -1,13 +1,13 @@
 {
-  "uid": "16d345c3991b1be3c6200b8b8d0e7e17cdd8c48a.boutiques",
+  "uid": "d799671856dffbf8bcd37b5fc4f2635099c3c22c.workbench",
   "command": {
     "base": {
-      "id": 8,
+      "id": 10,
       "name": "volume-smoothing",
       "outputs": [
         {
-          "id": 7,
-          "name": "volume_out",
+          "id": 3,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-smoothing",
-        "description": "Smooth a volume file.\n\nGaussian smoothing for volumes.  By default, smooths all subvolumes with no ROI, if ROI is given, only positive voxels in the ROI volume have their values used, and all other voxels are set to zero.  Smoothing a non-orthogonal volume will be significantly slower, because the operation cannot be separated into 1-dimensional smoothings without distorting the kernel shape.\n\nThe -fix-zeros option causes the smoothing to not use an input value if it is zero, but still write a smoothed value to the voxel.  This is useful for zeros that indicate lack of information, preventing them from pulling down the intensity of nearby voxels, while giving the zero an extrapolated value.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH A VOLUME FILE.\n\nGaussian smoothing for volumes.  By default, smooths all subvolumes with no ROI, if ROI is given, only positive voxels in the ROI volume have their values used, and all other voxels are set to zero.  Smoothing a non-orthogonal volume will be significantly slower, because the operation cannot be separated into 1-dimensional smoothings without distorting the kernel shape.\n\nThe -fix-zeros option causes the smoothing to not use an input value if it is zero, but still write a smoothed value to the voxel.  This is useful for zeros that indicate lack of information, preventing them from pulling down the intensity of nearby voxels, while giving the zero an extrapolated value.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,165 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-smoothing"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "fwhm",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "kernel size is FWHM, not sigma",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fwhm"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "roivol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "smooth only from data within an ROI\n\nthe volume to use as an ROI",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "fix-zeros",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "treat zero values as not being data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fix-zeros"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to smooth\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -71,10 +219,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "volume_in",
+                    "name": "volume-in",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_in",
+                      "title": null,
                       "description": "the volume to smooth",
                       "authors": [],
                       "literature": [],
@@ -85,7 +233,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +258,7 @@
                     "name": "kernel",
                     "outputs": [],
                     "docs": {
-                      "title": "kernel",
+                      "title": null,
                       "description": "the size of the gaussian smoothing kernel in mm, as sigma by default",
                       "authors": [],
                       "literature": [],
@@ -130,201 +280,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_fwhm",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fwhm",
-                      "description": "kernel size is FWHM, not sigma",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fwhm"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_roi_roivol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_roi_roivol",
-                      "description": "smooth only from data within an ROI: the volume to use as an ROI",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_fix_zeros",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fix_zeros",
-                      "description": "treat zero values as not being data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fix-zeros"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to smooth: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-smoothing",
-        "description": "Smooth a volume file.\n\nGaussian smoothing for volumes.  By default, smooths all subvolumes with no ROI, if ROI is given, only positive voxels in the ROI volume have their values used, and all other voxels are set to zero.  Smoothing a non-orthogonal volume will be significantly slower, because the operation cannot be separated into 1-dimensional smoothings without distorting the kernel shape.\n\nThe -fix-zeros option causes the smoothing to not use an input value if it is zero, but still write a smoothed value to the voxel.  This is useful for zeros that indicate lack of information, preventing them from pulling down the intensity of nearby voxels, while giving the zero an extrapolated value.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH A VOLUME FILE.\n\nGaussian smoothing for volumes.  By default, smooths all subvolumes with no ROI, if ROI is given, only positive voxels in the ROI volume have their values used, and all other voxels are set to zero.  Smoothing a non-orthogonal volume will be significantly slower, because the operation cannot be separated into 1-dimensional smoothings without distorting the kernel shape.\n\nThe -fix-zeros option causes the smoothing to not use an input value if it is zero, but still write a smoothed value to the voxel.  This is useful for zeros that indicate lack of information, preventing them from pulling down the intensity of nearby voxels, while giving the zero an extrapolated value.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

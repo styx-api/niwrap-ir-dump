@@ -1,12 +1,12 @@
 {
-  "uid": "8c819d933d40718709f36a80f07be61f04dd0058.boutiques",
+  "uid": "344a7869e0c667f1b8e4af3135dc6ab6eadc0253.workbench",
   "command": {
     "base": {
-      "id": 5,
+      "id": 6,
       "name": "signed-distance-to-surface",
       "outputs": [
         {
-          "id": 4,
+          "id": 3,
           "name": "metric",
           "tokens": [
             {
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "metric",
+            "title": null,
             "description": "the output metric",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Metric File"
+          ]
         }
       ],
       "docs": {
-        "title": "signed-distance-to-surface",
-        "description": "Compute signed distance from one surface to another.\n\nCompute the signed distance function of the reference surface at every vertex on the comparison surface.  NOTE: this relation is NOT symmetric, the line from a vertex to the closest point on the 'ref' surface (the one that defines the signed distance function) will only align with the normal of the 'ref' surface.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "COMPUTE SIGNED DISTANCE FROM ONE SURFACE TO ANOTHER.\n\nCompute the signed distance function of the reference surface at every vertex on the comparison surface.  NOTE: this relation is NOT symmetric, the line from a vertex to the closest point on the 'ref' surface (the one that defines the signed distance function) will only align with the normal of the 'ref' surface.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,68 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-signed-distance-to-surface"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "metric",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output metric",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-winding"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "method",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "winding method for point inside surface test\n\nname of the method (default EVEN_ODD)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -71,10 +122,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "surface_comp",
+                    "name": "surface-comp",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_comp",
+                      "title": null,
                       "description": "the comparison surface to measure the signed distance on",
                       "authors": [],
                       "literature": [],
@@ -85,7 +136,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +158,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "surface_ref",
+                    "name": "surface-ref",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_ref",
+                      "title": null,
                       "description": "the reference surface that defines the signed distance function",
                       "authors": [],
                       "literature": [],
@@ -119,82 +172,14 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
                   "choices": null,
                   "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "metric",
-                    "outputs": [],
-                    "docs": {
-                      "title": "metric",
-                      "description": "the output metric",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-winding"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_winding_method",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_winding_method",
-                      "description": "winding method for point inside surface test: name of the method (default EVEN_ODD)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
                 }
               ],
               "join": null
@@ -205,15 +190,11 @@
       ],
       "join": null,
       "docs": {
-        "title": "signed-distance-to-surface",
-        "description": "Compute signed distance from one surface to another.\n\nCompute the signed distance function of the reference surface at every vertex on the comparison surface.  NOTE: this relation is NOT symmetric, the line from a vertex to the closest point on the 'ref' surface (the one that defines the signed distance function) will only align with the normal of the 'ref' surface.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "COMPUTE SIGNED DISTANCE FROM ONE SURFACE TO ANOTHER.\n\nCompute the signed distance function of the reference surface at every vertex on the comparison surface.  NOTE: this relation is NOT symmetric, the line from a vertex to the closest point on the 'ref' surface (the one that defines the signed distance function) will only align with the normal of the 'ref' surface.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

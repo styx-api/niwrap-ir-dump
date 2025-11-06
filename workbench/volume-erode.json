@@ -1,13 +1,13 @@
 {
-  "uid": "e745724b943117f1bea44203e23d97dc9e188367.boutiques",
+  "uid": "de54c7f54c6368999f264ce5975a56da07dfce18.workbench",
   "command": {
     "base": {
-      "id": 6,
+      "id": 8,
       "name": "volume-erode",
       "outputs": [
         {
-          "id": 5,
-          "name": "volume_out",
+          "id": 3,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-erode",
-        "description": "Erode a volume file.\n\nAround each voxel with a value of zero, set surrounding voxels to zero.  The surrounding voxels are all face neighbors and all voxels within the specified distance (center to center).",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "ERODE A VOLUME FILE.\n\nAround each voxel with a value of zero, set surrounding voxels to zero.  The surrounding voxels are all face neighbors and all voxels within the specified distance (center to center).",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,105 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-erode"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "roi-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "assume voxels outside this roi are nonzero\n\nvolume file, positive values denote voxels that have data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to dilate\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -74,7 +162,7 @@
                     "name": "volume",
                     "outputs": [],
                     "docs": {
-                      "title": "volume",
+                      "title": null,
                       "description": "the volume to erode",
                       "authors": [],
                       "literature": [],
@@ -85,7 +173,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -108,7 +198,7 @@
                     "name": "distance",
                     "outputs": [],
                     "docs": {
-                      "title": "distance",
+                      "title": null,
                       "description": "distance in mm to erode",
                       "authors": [],
                       "literature": [],
@@ -130,131 +220,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_roi_roi_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_roi_roi_volume",
-                      "description": "assume voxels outside this roi are nonzero: volume file, positive values denote voxels that have data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to dilate: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-erode",
-        "description": "Erode a volume file.\n\nAround each voxel with a value of zero, set surrounding voxels to zero.  The surrounding voxels are all face neighbors and all voxels within the specified distance (center to center).",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "ERODE A VOLUME FILE.\n\nAround each voxel with a value of zero, set surrounding voxels to zero.  The surrounding voxels are all face neighbors and all voxels within the specified distance (center to center).",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

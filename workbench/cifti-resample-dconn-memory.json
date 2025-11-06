@@ -1,13 +1,13 @@
 {
-  "uid": "d729ea969be03fe9e202413b7e489346783a1ac2.boutiques",
+  "uid": "f25f67a6aee8059eca2c82a262cae6039d6a01fe.workbench",
   "command": {
     "base": {
-      "id": 72,
+      "id": 59,
       "name": "cifti-resample-dconn-memory",
       "outputs": [
         {
-          "id": 71,
-          "name": "cifti_out",
+          "id": 6,
+          "name": "cifti-out",
           "tokens": [
             {
               "refId": 5,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "cifti_out",
+            "title": null,
             "description": "the output cifti file",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Cifti File"
+          ]
         }
       ],
       "docs": {
-        "title": "cifti-resample-dconn-memory",
-        "description": "Use lots of memory to resample dconn.\n\nThis command does the same thing as running -cifti-resample twice, but uses memory up to approximately 2x the size that the intermediate file would be.  This is because the intermediate dconn is kept in memory, rather than written to disk, and the components before and after resampling/dilation have to be in memory at the same time during the relevant computation.  The <template-direction> argument should usually be COLUMN, as dtseries, dscalar, and dlabel all have brainordinates on that direction.  If spheres are not specified for a surface structure which exists in the cifti files, its data is copied without resampling or dilation.  Dilation is done with the 'nearest' method, and is done on <new-sphere> for surface data.  Volume components are padded before dilation so that dilation doesn't run into the edge of the component bounding box.\n\nTo get the v1.3.2 and earlier behavior of weighted dilation, specify exponent of 2 for surface and volume, and -legacy-cutoff for both surface and volume.\n\nThe <volume-method> argument must be one of the following:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR\n\nThe <surface-method> argument must be one of the following:\n\nADAP_BARY_AREA\nBARYCENTRIC\n",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "USE LOTS OF MEMORY TO RESAMPLE DCONN.\n\nThis command does the same thing as running -cifti-resample twice, but uses memory up to approximately 2x the size that the intermediate file would be.  This is because the intermediate dconn is kept in memory, rather than written to disk, and the components before and after resampling/dilation have to be in memory at the same time during the relevant computation.  The <template-direction> argument should usually be COLUMN, as dtseries, dscalar, and dlabel all have brainordinates on that direction.  If spheres are not specified for a surface structure which exists in the cifti files, its data is copied without resampling or dilation.  Dilation is done with the 'nearest' method, and is done on <new-sphere> for surface data.  Volume components are padded before dilation so that dilation doesn't run into the edge of the component bounding box.\n\nTo get the v1.3.2 and earlier behavior of weighted dilation, specify exponent of 2 for surface and volume, and -legacy-cutoff for both surface and volume.\n\nThe <volume-method> argument must be one of the following:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR\n\nThe <surface-method> argument must be one of the following:\n\nADAP_BARY_AREA\nBARYCENTRIC\n",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,1850 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-cifti-resample-dconn-memory"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "cifti-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output cifti file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "surface-largest",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use largest weight instead of weighted average when doing surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-surface-largest"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "volume-predilate",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "dilate the volume components before resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "volume-predilate",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-volume-predilate"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 8,
+                                  "name": "dilate-mm",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "distance, in mm, to dilate",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 9,
+                                  "name": "nearest",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use nearest value dilation",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "bool",
+                                  "valueTrue": [
+                                    "-nearest"
+                                  ],
+                                  "valueFalse": []
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": false
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 13,
+                                  "name": "weighted",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use weighted dilation (default)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "weighted",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-weighted"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            "-exponent"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 10,
+                                                "name": "exponent",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "specify exponent in weighting function\n\nexponent 'n' to use in (1 / (distance ^ n)) as the weighting function (default 7)",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "float",
+                                                "minValue": null,
+                                                "maxValue": null
+                                              },
+                                              "list": null,
+                                              "nullable": true,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 12,
+                                                "name": "legacy-cutoff",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "use v1.3.2 logic for the kernel cutoff",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "bool",
+                                                "valueTrue": [
+                                                  "-legacy-cutoff"
+                                                ],
+                                                "valueFalse": []
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": false
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use weighted dilation (default)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "dilate the volume components before resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "surface-postdilate",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "dilate the surface components after resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "surface-postdilate",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-surface-postdilate"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 15,
+                                  "name": "dilate-mm",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "distance, in mm, to dilate",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 16,
+                                  "name": "nearest",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use nearest value dilation",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "bool",
+                                  "valueTrue": [
+                                    "-nearest"
+                                  ],
+                                  "valueFalse": []
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": false
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 17,
+                                  "name": "linear",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use linear dilation",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "bool",
+                                  "valueTrue": [
+                                    "-linear"
+                                  ],
+                                  "valueFalse": []
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": false
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 21,
+                                  "name": "weighted",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use weighted dilation (default)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "weighted",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-weighted"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            "-exponent"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 18,
+                                                "name": "exponent",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "specify exponent in weighting function\n\nexponent 'n' to use in (area / (distance ^ n)) as the weighting function (default 6)",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "float",
+                                                "minValue": null,
+                                                "maxValue": null
+                                              },
+                                              "list": null,
+                                              "nullable": true,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 20,
+                                                "name": "legacy-cutoff",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "use v1.3.2 logic for the kernel cutoff",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "bool",
+                                                "valueTrue": [
+                                                  "-legacy-cutoff"
+                                                ],
+                                                "valueFalse": []
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": false
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use weighted dilation (default)",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "dilate the surface components after resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 27,
+                    "name": "affine",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use an affine transformation on the volume components",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "affine",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-affine"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 23,
+                                  "name": "affine-file",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the affine file to use",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 26,
+                                  "name": "flirt",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if affine is a flirt affine",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "flirt",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-flirt"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 24,
+                                                "name": "source-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the source volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 25,
+                                                "name": "target-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the target volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if affine is a flirt affine",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "use an affine transformation on the volume components",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "warpfield",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use a warpfield on the volume components",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "warpfield",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-warpfield"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 28,
+                                  "name": "warpfield",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the warpfield to use",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-fnirt"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 29,
+                                  "name": "source-volume",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if using a fnirt warpfield\n\nthe source volume used when generating the warpfield",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "use a warpfield on the volume components",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 40,
+                    "name": "left-spheres",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for left surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "left-spheres",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-left-spheres"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 32,
+                                  "name": "current-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the same mesh as the current left surface",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 33,
+                                  "name": "new-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the new left mesh that is in register with the current sphere",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 36,
+                                  "name": "left-area-surfs",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify left surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "left-area-surfs",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-left-area-surfs"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 34,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant left anatomical surface with current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 35,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant left anatomical surface with new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify left surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 39,
+                                  "name": "left-area-metrics",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify left vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "left-area-metrics",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-left-area-metrics"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 37,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 38,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify left vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for left surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 49,
+                    "name": "right-spheres",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for right surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "right-spheres",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-right-spheres"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 41,
+                                  "name": "current-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the same mesh as the current right surface",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 42,
+                                  "name": "new-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the new right mesh that is in register with the current sphere",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 45,
+                                  "name": "right-area-surfs",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify right surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "right-area-surfs",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-right-area-surfs"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 43,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant right anatomical surface with current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 44,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant right anatomical surface with new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify right surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 48,
+                                  "name": "right-area-metrics",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify right vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "right-area-metrics",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-right-area-metrics"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 46,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 47,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify right vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for right surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 58,
+                    "name": "cerebellum-spheres",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for cerebellum surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "cerebellum-spheres",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-cerebellum-spheres"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 50,
+                                  "name": "current-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the same mesh as the current cerebellum surface",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 51,
+                                  "name": "new-sphere",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "a sphere with the new cerebellum mesh that is in register with the current sphere",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 54,
+                                  "name": "cerebellum-area-surfs",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify cerebellum surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "cerebellum-area-surfs",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-cerebellum-area-surfs"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 52,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant cerebellum anatomical surface with current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 53,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a relevant cerebellum anatomical surface with new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Surface File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify cerebellum surfaces to do vertex area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 57,
+                                  "name": "cerebellum-area-metrics",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify cerebellum vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "cerebellum-area-metrics",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-cerebellum-area-metrics"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 55,
+                                                "name": "current-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the current mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 56,
+                                                "name": "new-area",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "a metric file with vertex areas for the new mesh",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "file",
+                                                "resolveParent": false,
+                                                "mutable": false,
+                                                "mediaTypes": [
+                                                  "workbench/Metric File"
+                                                ]
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "specify cerebellum vertex area metrics to do area correction based on",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify spheres for cerebellum surface resampling",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
               ],
               "join": null
             }
@@ -71,10 +1904,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "cifti_in",
+                    "name": "cifti-in",
                     "outputs": [],
                     "docs": {
-                      "title": "cifti_in",
+                      "title": null,
                       "description": "the cifti file to resample",
                       "authors": [],
                       "literature": [],
@@ -85,7 +1918,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +1940,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "cifti_template",
+                    "name": "cifti-template",
                     "outputs": [],
                     "docs": {
-                      "title": "cifti_template",
+                      "title": null,
                       "description": "a cifti file containing the cifti space to resample to",
                       "authors": [],
                       "literature": [],
@@ -119,7 +1954,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -139,10 +1976,10 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "template_direction",
+                    "name": "template-direction",
                     "outputs": [],
                     "docs": {
-                      "title": "template_direction",
+                      "title": null,
                       "description": "the direction of the template to use as the resampling space, ROW or COLUMN",
                       "authors": [],
                       "literature": [],
@@ -170,10 +2007,10 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "surface_method",
+                    "name": "surface-method",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_method",
+                      "title": null,
                       "description": "specify a surface resampling method",
                       "authors": [],
                       "literature": [],
@@ -201,10 +2038,10 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "volume_method",
+                    "name": "volume-method",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_method",
+                      "title": null,
                       "description": "specify a volume interpolation method",
                       "authors": [],
                       "literature": [],
@@ -224,2079 +2061,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "cifti_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cifti_out",
-                      "description": "the output cifti file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_surface_largest",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_surface_largest",
-                      "description": "use largest weight instead of weighted average when doing surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-surface-largest"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 14,
-                    "name": "volume_predilate",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_predilate",
-                      "description": "dilate the volume components before resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "volume_predilate",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-volume-predilate"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 8,
-                                  "name": "dilate_mm",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "dilate_mm",
-                                    "description": "distance, in mm, to dilate",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 9,
-                                  "name": "opt_nearest",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_nearest",
-                                    "description": "use nearest value dilation",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "bool",
-                                  "valueTrue": [
-                                    "-nearest"
-                                  ],
-                                  "valueFalse": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": false
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 13,
-                                  "name": "weighted",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "weighted",
-                                    "description": "use weighted dilation (default)",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "weighted",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-weighted"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-exponent"
-                                          ],
-                                          "join": null
-                                        },
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 11,
-                                                "name": "opt_exponent_exponent",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "opt_exponent_exponent",
-                                                  "description": "specify exponent in weighting function: exponent 'n' to use in (1 / (distance ^ n)) as the weighting function (default 7)",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "float",
-                                                "minValue": null,
-                                                "maxValue": null
-                                              },
-                                              "list": null,
-                                              "nullable": true,
-                                              "choices": null,
-                                              "defaultValue": {
-                                                "_special": "SET_TO_NONE"
-                                              }
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 12,
-                                                "name": "opt_legacy_cutoff",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "opt_legacy_cutoff",
-                                                  "description": "use v1.3.2 logic for the kernel cutoff",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "bool",
-                                                "valueTrue": [
-                                                  "-legacy-cutoff"
-                                                ],
-                                                "valueFalse": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": false
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "weighted",
-                                    "description": "use weighted dilation (default)",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "volume_predilate",
-                      "description": "dilate the volume components before resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 23,
-                    "name": "surface_postdilate",
-                    "outputs": [],
-                    "docs": {
-                      "title": "surface_postdilate",
-                      "description": "dilate the surface components after resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "surface_postdilate",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-surface-postdilate"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 16,
-                                  "name": "dilate_mm",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "dilate_mm",
-                                    "description": "distance, in mm, to dilate",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 17,
-                                  "name": "opt_nearest",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_nearest",
-                                    "description": "use nearest value dilation",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "bool",
-                                  "valueTrue": [
-                                    "-nearest"
-                                  ],
-                                  "valueFalse": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": false
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 18,
-                                  "name": "opt_linear",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_linear",
-                                    "description": "use linear dilation",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "bool",
-                                  "valueTrue": [
-                                    "-linear"
-                                  ],
-                                  "valueFalse": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": false
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 22,
-                                  "name": "weighted",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "weighted",
-                                    "description": "use weighted dilation (default)",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "weighted_1",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-weighted"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-exponent"
-                                          ],
-                                          "join": null
-                                        },
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 20,
-                                                "name": "opt_exponent_exponent",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "opt_exponent_exponent",
-                                                  "description": "specify exponent in weighting function: exponent 'n' to use in (area / (distance ^ n)) as the weighting function (default 6)",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "float",
-                                                "minValue": null,
-                                                "maxValue": null
-                                              },
-                                              "list": null,
-                                              "nullable": true,
-                                              "choices": null,
-                                              "defaultValue": {
-                                                "_special": "SET_TO_NONE"
-                                              }
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 21,
-                                                "name": "opt_legacy_cutoff",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "opt_legacy_cutoff",
-                                                  "description": "use v1.3.2 logic for the kernel cutoff",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "bool",
-                                                "valueTrue": [
-                                                  "-legacy-cutoff"
-                                                ],
-                                                "valueFalse": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": false
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "weighted",
-                                    "description": "use weighted dilation (default)",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "surface_postdilate",
-                      "description": "dilate the surface components after resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 30,
-                    "name": "affine",
-                    "outputs": [],
-                    "docs": {
-                      "title": "affine",
-                      "description": "use an affine transformation on the volume components",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "affine",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-affine"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 25,
-                                  "name": "affine_file",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "affine_file",
-                                    "description": "the affine file to use",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 29,
-                                  "name": "flirt",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if affine is a flirt affine",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "flirt",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-flirt"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 27,
-                                                "name": "source_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "source_volume",
-                                                  "description": "the source volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 28,
-                                                "name": "target_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "target_volume",
-                                                  "description": "the target volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if affine is a flirt affine",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "affine",
-                      "description": "use an affine transformation on the volume components",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 34,
-                    "name": "warpfield",
-                    "outputs": [],
-                    "docs": {
-                      "title": "warpfield",
-                      "description": "use a warpfield on the volume components",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "warpfield",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-warpfield"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 32,
-                                  "name": "warpfield",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "warpfield",
-                                    "description": "the warpfield to use",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-fnirt"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 33,
-                                  "name": "opt_fnirt_source_volume",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_fnirt_source_volume",
-                                    "description": "MUST be used if using a fnirt warpfield: the source volume used when generating the warpfield",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "warpfield",
-                      "description": "use a warpfield on the volume components",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 46,
-                    "name": "left_spheres",
-                    "outputs": [],
-                    "docs": {
-                      "title": "left_spheres",
-                      "description": "specify spheres for left surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "left_spheres",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-left-spheres"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 36,
-                                  "name": "current_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "current_sphere",
-                                    "description": "a sphere with the same mesh as the current left surface",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 37,
-                                  "name": "new_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "new_sphere",
-                                    "description": "a sphere with the new left mesh that is in register with the current sphere",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 41,
-                                  "name": "left_area_surfs",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "left_area_surfs",
-                                    "description": "specify left surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "left_area_surfs",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-left-area-surfs"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 39,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a relevant left anatomical surface with current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 40,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a relevant left anatomical surface with new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "left_area_surfs",
-                                    "description": "specify left surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 45,
-                                  "name": "left_area_metrics",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "left_area_metrics",
-                                    "description": "specify left vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "left_area_metrics",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-left-area-metrics"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 43,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a metric file with vertex areas for the current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 44,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a metric file with vertex areas for the new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "left_area_metrics",
-                                    "description": "specify left vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "left_spheres",
-                      "description": "specify spheres for left surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 58,
-                    "name": "right_spheres",
-                    "outputs": [],
-                    "docs": {
-                      "title": "right_spheres",
-                      "description": "specify spheres for right surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "right_spheres",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-right-spheres"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 48,
-                                  "name": "current_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "current_sphere",
-                                    "description": "a sphere with the same mesh as the current right surface",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 49,
-                                  "name": "new_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "new_sphere",
-                                    "description": "a sphere with the new right mesh that is in register with the current sphere",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 53,
-                                  "name": "right_area_surfs",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "right_area_surfs",
-                                    "description": "specify right surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "right_area_surfs",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-right-area-surfs"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 51,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a relevant right anatomical surface with current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 52,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a relevant right anatomical surface with new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "right_area_surfs",
-                                    "description": "specify right surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 57,
-                                  "name": "right_area_metrics",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "right_area_metrics",
-                                    "description": "specify right vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "right_area_metrics",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-right-area-metrics"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 55,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a metric file with vertex areas for the current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 56,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a metric file with vertex areas for the new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "right_area_metrics",
-                                    "description": "specify right vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "right_spheres",
-                      "description": "specify spheres for right surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 70,
-                    "name": "cerebellum_spheres",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cerebellum_spheres",
-                      "description": "specify spheres for cerebellum surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "cerebellum_spheres",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-cerebellum-spheres"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 60,
-                                  "name": "current_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "current_sphere",
-                                    "description": "a sphere with the same mesh as the current cerebellum surface",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 61,
-                                  "name": "new_sphere",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "new_sphere",
-                                    "description": "a sphere with the new cerebellum mesh that is in register with the current sphere",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 65,
-                                  "name": "cerebellum_area_surfs",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "cerebellum_area_surfs",
-                                    "description": "specify cerebellum surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "cerebellum_area_surfs",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-cerebellum-area-surfs"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 63,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a relevant cerebellum anatomical surface with current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 64,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a relevant cerebellum anatomical surface with new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "cerebellum_area_surfs",
-                                    "description": "specify cerebellum surfaces to do vertex area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 69,
-                                  "name": "cerebellum_area_metrics",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "cerebellum_area_metrics",
-                                    "description": "specify cerebellum vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "cerebellum_area_metrics",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-cerebellum-area-metrics"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 67,
-                                                "name": "current_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "current_area",
-                                                  "description": "a metric file with vertex areas for the current mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 68,
-                                                "name": "new_area",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "new_area",
-                                                  "description": "a metric file with vertex areas for the new mesh",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "file",
-                                                "resolveParent": false,
-                                                "mutable": false,
-                                                "mediaTypes": []
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "cerebellum_area_metrics",
-                                    "description": "specify cerebellum vertex area metrics to do area correction based on",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "cerebellum_spheres",
-                      "description": "specify spheres for cerebellum surface resampling",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "cifti-resample-dconn-memory",
-        "description": "Use lots of memory to resample dconn.\n\nThis command does the same thing as running -cifti-resample twice, but uses memory up to approximately 2x the size that the intermediate file would be.  This is because the intermediate dconn is kept in memory, rather than written to disk, and the components before and after resampling/dilation have to be in memory at the same time during the relevant computation.  The <template-direction> argument should usually be COLUMN, as dtseries, dscalar, and dlabel all have brainordinates on that direction.  If spheres are not specified for a surface structure which exists in the cifti files, its data is copied without resampling or dilation.  Dilation is done with the 'nearest' method, and is done on <new-sphere> for surface data.  Volume components are padded before dilation so that dilation doesn't run into the edge of the component bounding box.\n\nTo get the v1.3.2 and earlier behavior of weighted dilation, specify exponent of 2 for surface and volume, and -legacy-cutoff for both surface and volume.\n\nThe <volume-method> argument must be one of the following:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR\n\nThe <surface-method> argument must be one of the following:\n\nADAP_BARY_AREA\nBARYCENTRIC\n",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "USE LOTS OF MEMORY TO RESAMPLE DCONN.\n\nThis command does the same thing as running -cifti-resample twice, but uses memory up to approximately 2x the size that the intermediate file would be.  This is because the intermediate dconn is kept in memory, rather than written to disk, and the components before and after resampling/dilation have to be in memory at the same time during the relevant computation.  The <template-direction> argument should usually be COLUMN, as dtseries, dscalar, and dlabel all have brainordinates on that direction.  If spheres are not specified for a surface structure which exists in the cifti files, its data is copied without resampling or dilation.  Dilation is done with the 'nearest' method, and is done on <new-sphere> for surface data.  Volume components are padded before dilation so that dilation doesn't run into the edge of the component bounding box.\n\nTo get the v1.3.2 and earlier behavior of weighted dilation, specify exponent of 2 for surface and volume, and -legacy-cutoff for both surface and volume.\n\nThe <volume-method> argument must be one of the following:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR\n\nThe <surface-method> argument must be one of the following:\n\nADAP_BARY_AREA\nBARYCENTRIC\n",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

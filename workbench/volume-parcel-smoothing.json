@@ -1,13 +1,13 @@
 {
-  "uid": "d9e82f37b708bec47857be4b7298c862173c768b.boutiques",
+  "uid": "4531678f8f3118c9ec57f1efd95f5ab4ee4503d2.workbench",
   "command": {
     "base": {
-      "id": 8,
+      "id": 9,
       "name": "volume-parcel-smoothing",
       "outputs": [
         {
-          "id": 7,
-          "name": "volume_out",
+          "id": 4,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 3,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-parcel-smoothing",
-        "description": "Smooth parcels in a volume separately.\n\nThe volume is smoothed within each label in the label volume using data only from within the label.  Equivalent to running volume smoothing with ROIs matching each label separately, then adding the resulting volumes, but faster.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH PARCELS IN A VOLUME SEPARATELY.\n\nThe volume is smoothed within each label in the label volume using data only from within the label.  Equivalent to running volume smoothing with ROIs matching each label separately, then adding the resulting volumes, but faster.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,128 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-parcel-smoothing"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "fwhm",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "smoothing kernel size is FWHM, not sigma",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fwhm"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "fix-zeros",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "treat zero values as not being data",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fix-zeros"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-subvolume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "subvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "select a single subvolume to smooth\n\nthe subvolume number or name",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -71,10 +182,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "data_volume",
+                    "name": "data-volume",
                     "outputs": [],
                     "docs": {
-                      "title": "data_volume",
+                      "title": null,
                       "description": "the volume to smooth",
                       "authors": [],
                       "literature": [],
@@ -85,7 +196,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +218,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "label_volume",
+                    "name": "label-volume",
                     "outputs": [],
                     "docs": {
-                      "title": "label_volume",
+                      "title": null,
                       "description": "a label volume containing the parcels to smooth",
                       "authors": [],
                       "literature": [],
@@ -119,7 +232,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -142,7 +257,7 @@
                     "name": "kernel",
                     "outputs": [],
                     "docs": {
-                      "title": "kernel",
+                      "title": null,
                       "description": "the size of the gaussian smoothing kernel in mm, as sigma by default",
                       "authors": [],
                       "literature": [],
@@ -164,159 +279,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_fwhm",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fwhm",
-                      "description": "smoothing kernel size is FWHM, not sigma",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fwhm"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_fix_zeros",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fix_zeros",
-                      "description": "treat zero values as not being data",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-fix-zeros"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-subvolume"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_subvolume_subvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_subvolume_subvol",
-                      "description": "select a single subvolume to smooth: the subvolume number or name",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-parcel-smoothing",
-        "description": "Smooth parcels in a volume separately.\n\nThe volume is smoothed within each label in the label volume using data only from within the label.  Equivalent to running volume smoothing with ROIs matching each label separately, then adding the resulting volumes, but faster.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "SMOOTH PARCELS IN A VOLUME SEPARATELY.\n\nThe volume is smoothed within each label in the label volume using data only from within the label.  Equivalent to running volume smoothing with ROIs matching each label separately, then adding the resulting volumes, but faster.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

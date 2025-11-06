@@ -1,13 +1,13 @@
 {
-  "uid": "7182598b31901aea230333f6711cb7e4f51b6bd1.boutiques",
+  "uid": "bc1ecda25e27333d33b361ed48fef4f0c37935a7.workbench",
   "command": {
     "base": {
-      "id": 23,
+      "id": 21,
       "name": "volume-resample",
       "outputs": [
         {
-          "id": 22,
-          "name": "volume_out",
+          "id": 4,
+          "name": "volume-out",
           "tokens": [
             {
               "refId": 3,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "volume_out",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-resample",
-        "description": "Transform and resample a volume file.\n\nResample a volume file with an arbitrary list of transformations.  You may specify -affine, -warp, and -affine-series multiple times each, and they will be used in the order specified.  For instance, for rigid motion correction followed by nonlinear atlas registration, specify -affine-series first, then -warp.  The recommended methods are CUBIC (cubic spline) for most data, and ENCLOSING_VOXEL for label data.  The parameter <method> must be one of:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "TRANSFORM AND RESAMPLE A VOLUME FILE.\n\nResample a volume file with an arbitrary list of transformations.  You may specify -affine, -warp, and -affine-series multiple times each, and they will be used in the order specified.  For instance, for rigid motion correction followed by nonlinear atlas registration, specify -affine-series first, then -warp.  The recommended methods are CUBIC (cubic spline) for most data, and ENCLOSING_VOXEL for label data.  The parameter <method> must be one of:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,551 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-resample"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 3,
+                    "name": "volume-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-background"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 5,
+                    "name": "value",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "use a specified value for locations outside the FoV of the input image or warpfield(s)\n\nthe value to use (default 0)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "affine",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "add an affine transform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "affine",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-affine"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 7,
+                                  "name": "affine",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the affine file to use",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 10,
+                                  "name": "flirt",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if affine is a flirt affine",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "flirt",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-flirt"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 8,
+                                                "name": "source-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the source volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 9,
+                                                "name": "target-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the target volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if affine is a flirt affine",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "add an affine transform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "affine-series",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "add an independent affine per-frame",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "affine-series",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-affine-series"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 12,
+                                  "name": "affine-series",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "text file containing 12 or 16 numbers per line, each being a row-major flattened affine",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 15,
+                                  "name": "flirt",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if the affines are flirt affines",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "flirt",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-flirt"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 13,
+                                                "name": "source-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the source volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 14,
+                                                "name": "target-volume",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "the target volume used when generating the affine",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if the affines are flirt affines",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "add an independent affine per-frame",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "warp",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "add a nonlinear warpfield transform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "warp",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-warp"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 17,
+                                  "name": "warpfield",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the warpfield file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-fnirt"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 18,
+                                  "name": "source-volume",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "MUST be used if using a fnirt warpfield\n\nthe source volume used when generating the warpfield",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "add a nonlinear warpfield transform",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
+                  },
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
               ],
               "join": null
             }
@@ -71,10 +605,10 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "volume_in",
+                    "name": "volume-in",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_in",
+                      "title": null,
                       "description": "volume to resample",
                       "authors": [],
                       "literature": [],
@@ -85,7 +619,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +641,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "volume_space",
+                    "name": "volume-space",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_space",
+                      "title": null,
                       "description": "a volume file in the volume space you want for the output",
                       "authors": [],
                       "literature": [],
@@ -139,7 +675,7 @@
                     "name": "method",
                     "outputs": [],
                     "docs": {
-                      "title": "method",
+                      "title": null,
                       "description": "the resampling method",
                       "authors": [],
                       "literature": [],
@@ -159,598 +695,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "volume_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume_out",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 10,
-                    "name": "affine",
-                    "outputs": [],
-                    "docs": {
-                      "title": "affine",
-                      "description": "add an affine transform",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "affine",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-affine"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 5,
-                                  "name": "affine",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "affine",
-                                    "description": "the affine file to use",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 9,
-                                  "name": "flirt",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if affine is a flirt affine",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "flirt",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-flirt"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 7,
-                                                "name": "source_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "source_volume",
-                                                  "description": "the source volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 8,
-                                                "name": "target_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "target_volume",
-                                                  "description": "the target volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if affine is a flirt affine",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "affine",
-                      "description": "add an affine transform",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 17,
-                    "name": "affine_series",
-                    "outputs": [],
-                    "docs": {
-                      "title": "affine_series",
-                      "description": "add an independent affine per-frame",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "affine_series",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-affine-series"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 12,
-                                  "name": "affine_series",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "affine_series",
-                                    "description": "text file containing 12 or 16 numbers per line, each being a row-major flattened affine",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 16,
-                                  "name": "flirt",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if the affines are flirt affines",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "struct",
-                                  "name": "flirt_1",
-                                  "publicName": null,
-                                  "groups": [
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            "-flirt"
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 14,
-                                                "name": "source_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "source_volume",
-                                                  "description": "the source volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
-                                        {
-                                          "tokens": [
-                                            {
-                                              "base": {
-                                                "id": 15,
-                                                "name": "target_volume",
-                                                "outputs": [],
-                                                "docs": {
-                                                  "title": "target_volume",
-                                                  "description": "the target volume used when generating the affine",
-                                                  "authors": [],
-                                                  "literature": [],
-                                                  "urls": []
-                                                }
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              },
-                                              "list": null,
-                                              "nullable": false,
-                                              "choices": null,
-                                              "defaultValue": null
-                                            }
-                                          ],
-                                          "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    }
-                                  ],
-                                  "join": null,
-                                  "docs": {
-                                    "title": "flirt",
-                                    "description": "MUST be used if the affines are flirt affines",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "affine_series",
-                      "description": "add an independent affine per-frame",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 21,
-                    "name": "warp",
-                    "outputs": [],
-                    "docs": {
-                      "title": "warp",
-                      "description": "add a nonlinear warpfield transform",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "warp",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-warp"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 19,
-                                  "name": "warpfield",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "warpfield",
-                                    "description": "the warpfield file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-fnirt"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 20,
-                                  "name": "opt_fnirt_source_volume",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_fnirt_source_volume",
-                                    "description": "MUST be used if using a fnirt warpfield: the source volume used when generating the warpfield",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "warp",
-                      "description": "add a nonlinear warpfield transform",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": {
-                    "countMin": null,
-                    "countMax": null,
-                    "join": null
-                  },
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "volume-resample",
-        "description": "Transform and resample a volume file.\n\nResample a volume file with an arbitrary list of transformations.  You may specify -affine, -warp, and -affine-series multiple times each, and they will be used in the order specified.  For instance, for rigid motion correction followed by nonlinear atlas registration, specify -affine-series first, then -warp.  The recommended methods are CUBIC (cubic spline) for most data, and ENCLOSING_VOXEL for label data.  The parameter <method> must be one of:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "TRANSFORM AND RESAMPLE A VOLUME FILE.\n\nResample a volume file with an arbitrary list of transformations.  You may specify -affine, -warp, and -affine-series multiple times each, and they will be used in the order specified.  For instance, for rigid motion correction followed by nonlinear atlas registration, specify -affine-series first, then -warp.  The recommended methods are CUBIC (cubic spline) for most data, and ENCLOSING_VOXEL for label data.  The parameter <method> must be one of:\n\nCUBIC\nENCLOSING_VOXEL\nTRILINEAR",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

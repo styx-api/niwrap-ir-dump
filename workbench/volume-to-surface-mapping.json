@@ -1,13 +1,13 @@
 {
-  "uid": "677cb03d3aef10ca7afb17c714f6c3c6f70b3a93.boutiques",
+  "uid": "8506ce44812c4aebe401b46dcdf27231e04f47d0.workbench",
   "command": {
     "base": {
-      "id": 33,
+      "id": 39,
       "name": "volume-to-surface-mapping",
       "outputs": [
         {
-          "id": 32,
-          "name": "metric_out",
+          "id": 3,
+          "name": "metric-out",
           "tokens": [
             {
               "refId": 2,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "metric_out",
+            "title": null,
             "description": "the output metric file",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Metric File"
+          ]
         }
       ],
       "docs": {
-        "title": "volume-to-surface-mapping",
-        "description": "Map volume to surface.\n\nYou must specify exactly one mapping method.  Enclosing voxel uses the value from the voxel the vertex lies inside, while trilinear does a 3D linear interpolation based on the voxels immediately on each side of the vertex's position.\n\nThe ribbon mapping method constructs a polyhedron from the vertex's neighbors on each surface, and estimates the amount of this polyhedron's volume that falls inside any nearby voxels, to use as the weights for sampling.  If -thin-columns is specified, the polyhedron uses the edge midpoints and triangle centroids, so that neighboring vertices do not have overlapping polyhedra.  This may require increasing -voxel-subdiv to get enough samples in each voxel to reliably land inside these smaller polyhedra.  The volume ROI is useful to exclude partial volume effects of voxels the surfaces pass through, and will cause the mapping to ignore voxels that don't have a positive value in the mask.  The subdivision number specifies how it approximates the amount of the volume the polyhedron intersects, by splitting each voxel into NxNxN pieces, and checking whether the center of each piece is inside the polyhedron.  If you have very large voxels, consider increasing this if you get zeros in your output.  The -gaussian option makes it act more like the myelin method, where the distance of a voxel from <surface> is used to downweight the voxel.  The -interpolate suboption, instead of doing a weighted average of voxels, interpolates from the volume at the subdivided points inside the ribbon.  If using both -interpolate and the -weighted suboption to -volume-roi, the roi volume weights are linearly interpolated, unless the -interpolate method is ENCLOSING_VOXEL, in which case ENCLOSING_VOXEL is also used for sampling the roi volume weights.\n\nThe myelin style method uses part of the caret5 myelin mapping command to do the mapping: for each surface vertex, take all voxels that are in a cylinder with radius and height equal to cortical thickness, centered on the vertex and aligned with the surface normal, and that are also within the ribbon ROI, and apply a gaussian kernel with the specified sigma to them to get the weights to use.  The -legacy-bug flag reverts to the unintended behavior present from the initial implementation up to and including v1.2.3, which had only the tangential cutoff and a bounding box intended to be larger than where the cylinder cutoff should have been.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "MAP VOLUME TO SURFACE.\n\nYou must specify exactly one mapping method.  Enclosing voxel uses the value from the voxel the vertex lies inside, while trilinear does a 3D linear interpolation based on the voxels immediately on each side of the vertex's position.\n\nThe ribbon mapping method constructs a polyhedron from the vertex's neighbors on each surface, and estimates the amount of this polyhedron's volume that falls inside any nearby voxels, to use as the weights for sampling.  If -thin-columns is specified, the polyhedron uses the edge midpoints and triangle centroids, so that neighboring vertices do not have overlapping polyhedra.  This may require increasing -voxel-subdiv to get enough samples in each voxel to reliably land inside these smaller polyhedra.  The volume ROI is useful to exclude partial volume effects of voxels the surfaces pass through, and will cause the mapping to ignore voxels that don't have a positive value in the mask.  The subdivision number specifies how it approximates the amount of the volume the polyhedron intersects, by splitting each voxel into NxNxN pieces, and checking whether the center of each piece is inside the polyhedron.  If you have very large voxels, consider increasing this if you get zeros in your output.  The -gaussian option makes it act more like the myelin method, where the distance of a voxel from <surface> is used to downweight the voxel.  The -interpolate suboption, instead of doing a weighted average of voxels, interpolates from the volume at the subdivided points inside the ribbon.  If using both -interpolate and the -weighted suboption to -volume-roi, the roi volume weights are linearly interpolated, unless the -interpolate method is ENCLOSING_VOXEL, in which case ENCLOSING_VOXEL is also used for sampling the roi volume weights.\n\nThe myelin style method uses part of the caret5 myelin mapping command to do the mapping: for each surface vertex, take all voxels that are in a cylinder with radius and height equal to cortical thickness, centered on the vertex and aligned with the surface normal, and that are also within the ribbon ROI, and apply a gaussian kernel with the specified sigma to them to get the weights to use.  The -legacy-bug flag reverts to the unintended behavior present from the initial implementation up to and including v1.2.3, which had only the tangential cutoff and a bounding box intended to be larger than where the cylinder cutoff should have been.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,100 +47,22 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-volume-to-surface-mapping"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 0,
-                    "name": "volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "volume",
-                      "description": "the volume to map data from",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "surface",
-                      "description": "the surface to map the data onto",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
                     "id": 2,
-                    "name": "metric_out",
+                    "name": "metric-out",
                     "outputs": [],
                     "docs": {
-                      "title": "metric_out",
+                      "title": null,
                       "description": "the output metric file",
                       "authors": [],
                       "literature": [],
@@ -159,21 +79,16 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 3,
-                    "name": "opt_trilinear",
+                    "id": 4,
+                    "name": "trilinear",
                     "outputs": [],
                     "docs": {
-                      "title": "opt_trilinear",
+                      "title": null,
                       "description": "use trilinear volume interpolation",
                       "authors": [],
                       "literature": [],
@@ -194,21 +109,16 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 4,
-                    "name": "opt_enclosing",
+                    "id": 5,
+                    "name": "enclosing",
                     "outputs": [],
                     "docs": {
-                      "title": "opt_enclosing",
+                      "title": null,
                       "description": "use value of the enclosing voxel",
                       "authors": [],
                       "literature": [],
@@ -229,21 +139,16 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 5,
-                    "name": "opt_cubic",
+                    "id": 6,
+                    "name": "cubic",
                     "outputs": [],
                     "docs": {
-                      "title": "opt_cubic",
+                      "title": null,
                       "description": "use cubic splines",
                       "authors": [],
                       "literature": [],
@@ -264,21 +169,16 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 24,
-                    "name": "ribbon_constrained",
+                    "id": 31,
+                    "name": "ribbon-constrained",
                     "outputs": [],
                     "docs": {
-                      "title": "ribbon_constrained",
+                      "title": null,
                       "description": "use ribbon constrained mapping algorithm",
                       "authors": [],
                       "literature": [],
@@ -287,7 +187,7 @@
                   },
                   "body": {
                     "type": "struct",
-                    "name": "ribbon_constrained",
+                    "name": "ribbon-constrained",
                     "publicName": null,
                     "groups": [
                       {
@@ -297,21 +197,16 @@
                               "-ribbon-constrained"
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
                                   "id": 7,
-                                  "name": "inner_surf",
+                                  "name": "inner-surf",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "inner_surf",
+                                    "title": null,
                                     "description": "the inner surface of the ribbon",
                                     "authors": [],
                                     "literature": [],
@@ -322,7 +217,9 @@
                                   "type": "file",
                                   "resolveParent": false,
                                   "mutable": false,
-                                  "mediaTypes": []
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
                                 },
                                 "list": null,
                                 "nullable": false,
@@ -331,21 +228,16 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
                                   "id": 8,
-                                  "name": "outer_surf",
+                                  "name": "outer-surf",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "outer_surf",
+                                    "title": null,
                                     "description": "the outer surface of the ribbon",
                                     "authors": [],
                                     "literature": [],
@@ -356,7 +248,9 @@
                                   "type": "file",
                                   "resolveParent": false,
                                   "mutable": false,
-                                  "mediaTypes": []
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
                                 },
                                 "list": null,
                                 "nullable": false,
@@ -365,21 +259,16 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 12,
-                                  "name": "volume_roi",
+                                  "id": 11,
+                                  "name": "volume-roi",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "volume_roi",
+                                    "title": null,
                                     "description": "use a volume roi",
                                     "authors": [],
                                     "literature": [],
@@ -388,7 +277,7 @@
                                 },
                                 "body": {
                                   "type": "struct",
-                                  "name": "volume_roi",
+                                  "name": "volume-roi",
                                   "publicName": null,
                                   "groups": [
                                     {
@@ -398,21 +287,16 @@
                                             "-volume-roi"
                                           ],
                                           "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
+                                        },
                                         {
                                           "tokens": [
                                             {
                                               "base": {
-                                                "id": 10,
-                                                "name": "roi_volume",
+                                                "id": 9,
+                                                "name": "roi-volume",
                                                 "outputs": [],
                                                 "docs": {
-                                                  "title": "roi_volume",
+                                                  "title": null,
                                                   "description": "the roi volume file",
                                                   "authors": [],
                                                   "literature": [],
@@ -423,7 +307,9 @@
                                                 "type": "file",
                                                 "resolveParent": false,
                                                 "mutable": false,
-                                                "mediaTypes": []
+                                                "mediaTypes": [
+                                                  "workbench/Volume File"
+                                                ]
                                               },
                                               "list": null,
                                               "nullable": false,
@@ -432,21 +318,16 @@
                                             }
                                           ],
                                           "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
+                                        },
                                         {
                                           "tokens": [
                                             {
                                               "base": {
-                                                "id": 11,
-                                                "name": "opt_weighted",
+                                                "id": 10,
+                                                "name": "weighted",
                                                 "outputs": [],
                                                 "docs": {
-                                                  "title": "opt_weighted",
+                                                  "title": null,
                                                   "description": "treat the roi values as weightings rather than binary",
                                                   "authors": [],
                                                   "literature": [],
@@ -474,7 +355,7 @@
                                   ],
                                   "join": null,
                                   "docs": {
-                                    "title": "volume_roi",
+                                    "title": null,
                                     "description": "use a volume roi",
                                     "authors": [],
                                     "literature": [],
@@ -490,12 +371,116 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 14,
+                                  "name": "dilate-missing",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use dilation for small vertices that 'missed' the geometry tests",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "struct",
+                                  "name": "dilate-missing",
+                                  "publicName": null,
+                                  "groups": [
+                                    {
+                                      "cargs": [
+                                        {
+                                          "tokens": [
+                                            "-dilate-missing"
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 12,
+                                                "name": "dist",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "distance in mm for dilation (can be small, like 1mm)",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "float",
+                                                "minValue": null,
+                                                "maxValue": null
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": null
+                                            }
+                                          ],
+                                          "join": null
+                                        },
+                                        {
+                                          "tokens": [
+                                            {
+                                              "base": {
+                                                "id": 13,
+                                                "name": "nearest",
+                                                "outputs": [],
+                                                "docs": {
+                                                  "title": null,
+                                                  "description": "use nearest neighbor dilation (mainly useful for integer data)",
+                                                  "authors": [],
+                                                  "literature": [],
+                                                  "urls": []
+                                                }
+                                              },
+                                              "body": {
+                                                "type": "bool",
+                                                "valueTrue": [
+                                                  "-nearest"
+                                                ],
+                                                "valueFalse": []
+                                              },
+                                              "list": null,
+                                              "nullable": false,
+                                              "choices": null,
+                                              "defaultValue": false
+                                            }
+                                          ],
+                                          "join": null
+                                        }
+                                      ],
+                                      "join": null
+                                    }
+                                  ],
+                                  "join": null,
+                                  "docs": {
+                                    "title": null,
+                                    "description": "use dilation for small vertices that 'missed' the geometry tests",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          },
                           {
                             "tokens": [
                               "-voxel-subdiv"
@@ -506,12 +491,12 @@
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 13,
-                                  "name": "opt_voxel_subdiv_subdiv_num",
+                                  "id": 15,
+                                  "name": "subdiv-num",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_voxel_subdiv_subdiv_num",
-                                    "description": "voxel divisions while estimating voxel weights: number of subdivisions, default 3",
+                                    "title": null,
+                                    "description": "voxel divisions while estimating voxel weights\n\nnumber of subdivisions, default 3",
                                     "authors": [],
                                     "literature": [],
                                     "urls": []
@@ -525,27 +510,20 @@
                                 "list": null,
                                 "nullable": true,
                                 "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
+                                "defaultValue": null
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 14,
-                                  "name": "opt_thin_columns",
+                                  "id": 17,
+                                  "name": "thin-columns",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_thin_columns",
+                                    "title": null,
                                     "description": "use non-overlapping polyhedra",
                                     "authors": [],
                                     "literature": [],
@@ -566,12 +544,7 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               "-gaussian"
@@ -582,12 +555,12 @@
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 15,
-                                  "name": "opt_gaussian_scale",
+                                  "id": 18,
+                                  "name": "scale",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_gaussian_scale",
-                                    "description": "reduce weight to voxels that aren't near <surface>: value to multiply the local thickness by, to get the gaussian sigma",
+                                    "title": null,
+                                    "description": "reduce weight to voxels that aren't near <surface>\n\nvalue to multiply the local thickness by, to get the gaussian sigma",
                                     "authors": [],
                                     "literature": [],
                                     "urls": []
@@ -601,18 +574,11 @@
                                 "list": null,
                                 "nullable": true,
                                 "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
+                                "defaultValue": null
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               "-interpolate"
@@ -623,12 +589,12 @@
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 16,
-                                  "name": "opt_interpolate_method",
+                                  "id": 20,
+                                  "name": "method",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_interpolate_method",
-                                    "description": "instead of a weighted average of voxels, interpolate at subpoints inside the ribbon: interpolation method, must be CUBIC, ENCLOSING_VOXEL, or TRILINEAR",
+                                    "title": null,
+                                    "description": "instead of a weighted average of voxels, interpolate at subpoints inside the ribbon\n\ninterpolation method, must be CUBIC, ENCLOSING_VOXEL, or TRILINEAR",
                                     "authors": [],
                                     "literature": [],
                                     "urls": []
@@ -640,18 +606,11 @@
                                 "list": null,
                                 "nullable": true,
                                 "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
+                                "defaultValue": null
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               "-bad-vertices-out"
@@ -662,12 +621,12 @@
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 17,
-                                  "name": "opt_bad_vertices_out_roi_out",
+                                  "id": 22,
+                                  "name": "roi-out",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_bad_vertices_out_roi_out",
-                                    "description": "output an ROI of which vertices didn't intersect any valid voxels: the output metric file of vertices that have no data",
+                                    "title": null,
+                                    "description": "output an ROI of which vertices didn't intersect any valid voxels\n\nthe output metric file of vertices that have no data",
                                     "authors": [],
                                     "literature": [],
                                     "urls": []
@@ -679,47 +638,42 @@
                                 "list": null,
                                 "nullable": true,
                                 "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
+                                "defaultValue": null
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 22,
-                                  "name": "output_weights",
+                                  "id": 28,
+                                  "name": "output-weights",
                                   "outputs": [
                                     {
-                                      "id": 21,
-                                      "name": "weights_out",
+                                      "id": 27,
+                                      "name": "weights-out",
                                       "tokens": [
                                         {
-                                          "refId": 20,
+                                          "refId": 26,
                                           "fileRemoveSuffixes": [],
                                           "fallback": null
                                         }
                                       ],
                                       "docs": {
-                                        "title": "weights_out",
+                                        "title": null,
                                         "description": "volume to write the weights to",
                                         "authors": [],
                                         "literature": [],
                                         "urls": []
                                       },
-                                      "mediaTypes": []
+                                      "mediaTypes": [
+                                        "workbench/Volume File"
+                                      ]
                                     }
                                   ],
                                   "docs": {
-                                    "title": "output_weights",
+                                    "title": null,
                                     "description": "write the voxel weights for a vertex to a volume file",
                                     "authors": [],
                                     "literature": [],
@@ -728,7 +682,7 @@
                                 },
                                 "body": {
                                   "type": "struct",
-                                  "name": "output_weights",
+                                  "name": "output-weights",
                                   "publicName": null,
                                   "groups": [
                                     {
@@ -738,21 +692,16 @@
                                             "-output-weights"
                                           ],
                                           "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
+                                        },
                                         {
                                           "tokens": [
                                             {
                                               "base": {
-                                                "id": 19,
+                                                "id": 25,
                                                 "name": "vertex",
                                                 "outputs": [],
                                                 "docs": {
-                                                  "title": "vertex",
+                                                  "title": null,
                                                   "description": "the vertex number to get the voxel weights for, 0-based",
                                                   "authors": [],
                                                   "literature": [],
@@ -771,21 +720,16 @@
                                             }
                                           ],
                                           "join": null
-                                        }
-                                      ],
-                                      "join": null
-                                    },
-                                    {
-                                      "cargs": [
+                                        },
                                         {
                                           "tokens": [
                                             {
                                               "base": {
-                                                "id": 20,
-                                                "name": "weights_out",
+                                                "id": 26,
+                                                "name": "weights-out",
                                                 "outputs": [],
                                                 "docs": {
-                                                  "title": "weights_out",
+                                                  "title": null,
                                                   "description": "volume to write the weights to",
                                                   "authors": [],
                                                   "literature": [],
@@ -809,7 +753,7 @@
                                   ],
                                   "join": null,
                                   "docs": {
-                                    "title": "output_weights",
+                                    "title": null,
                                     "description": "write the voxel weights for a vertex to a volume file",
                                     "authors": [],
                                     "literature": [],
@@ -825,12 +769,7 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               "-output-weights-text"
@@ -841,12 +780,12 @@
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 23,
-                                  "name": "opt_output_weights_text_text_out",
+                                  "id": 29,
+                                  "name": "text-out",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_output_weights_text_text_out",
-                                    "description": "write the voxel weights for all vertices to a text file: output - the output text filename",
+                                    "title": null,
+                                    "description": "write the voxel weights for all vertices to a text file\n\noutput - the output text filename",
                                     "authors": [],
                                     "literature": [],
                                     "urls": []
@@ -858,9 +797,7 @@
                                 "list": null,
                                 "nullable": true,
                                 "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
+                                "defaultValue": null
                               }
                             ],
                             "join": null
@@ -871,7 +808,7 @@
                     ],
                     "join": null,
                     "docs": {
-                      "title": "ribbon_constrained",
+                      "title": null,
                       "description": "use ribbon constrained mapping algorithm",
                       "authors": [],
                       "literature": [],
@@ -887,21 +824,16 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 30,
-                    "name": "myelin_style",
+                    "id": 36,
+                    "name": "myelin-style",
                     "outputs": [],
                     "docs": {
-                      "title": "myelin_style",
+                      "title": null,
                       "description": "use the method from myelin mapping",
                       "authors": [],
                       "literature": [],
@@ -910,7 +842,7 @@
                   },
                   "body": {
                     "type": "struct",
-                    "name": "myelin_style",
+                    "name": "myelin-style",
                     "publicName": null,
                     "groups": [
                       {
@@ -920,21 +852,16 @@
                               "-myelin-style"
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 26,
-                                  "name": "ribbon_roi",
+                                  "id": 32,
+                                  "name": "ribbon-roi",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "ribbon_roi",
+                                    "title": null,
                                     "description": "an roi volume of the cortical ribbon for this hemisphere",
                                     "authors": [],
                                     "literature": [],
@@ -945,7 +872,9 @@
                                   "type": "file",
                                   "resolveParent": false,
                                   "mutable": false,
-                                  "mediaTypes": []
+                                  "mediaTypes": [
+                                    "workbench/Volume File"
+                                  ]
                                 },
                                 "list": null,
                                 "nullable": false,
@@ -954,21 +883,16 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 27,
+                                  "id": 33,
                                   "name": "thickness",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "thickness",
+                                    "title": null,
                                     "description": "a metric file of cortical thickness",
                                     "authors": [],
                                     "literature": [],
@@ -979,7 +903,9 @@
                                   "type": "file",
                                   "resolveParent": false,
                                   "mutable": false,
-                                  "mediaTypes": []
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
                                 },
                                 "list": null,
                                 "nullable": false,
@@ -988,21 +914,16 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 28,
+                                  "id": 34,
                                   "name": "sigma",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "sigma",
+                                    "title": null,
                                     "description": "gaussian kernel in mm for weighting voxels within range",
                                     "authors": [],
                                     "literature": [],
@@ -1021,21 +942,16 @@
                               }
                             ],
                             "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
+                          },
                           {
                             "tokens": [
                               {
                                 "base": {
-                                  "id": 29,
-                                  "name": "opt_legacy_bug",
+                                  "id": 35,
+                                  "name": "legacy-bug",
                                   "outputs": [],
                                   "docs": {
-                                    "title": "opt_legacy_bug",
+                                    "title": null,
                                     "description": "emulate old v1.2.3 and earlier code that didn't follow a cylinder cutoff",
                                     "authors": [],
                                     "literature": [],
@@ -1063,7 +979,7 @@
                     ],
                     "join": null,
                     "docs": {
-                      "title": "myelin_style",
+                      "title": null,
                       "description": "use the method from myelin mapping",
                       "authors": [],
                       "literature": [],
@@ -1079,12 +995,7 @@
                 }
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-subvol-select"
@@ -1095,12 +1006,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 31,
-                    "name": "opt_subvol_select_subvol",
+                    "id": 37,
+                    "name": "subvol",
                     "outputs": [],
                     "docs": {
-                      "title": "opt_subvol_select_subvol",
-                      "description": "select a single subvolume to map: the subvolume number or name",
+                      "title": null,
+                      "description": "select a single subvolume to map\n\nthe subvolume number or name",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1112,9 +1023,79 @@
                   "list": null,
                   "nullable": true,
                   "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 0,
+                    "name": "volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the volume to map data from",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Volume File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 1,
+                    "name": "surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the surface to map the data onto",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -1125,15 +1106,11 @@
       ],
       "join": null,
       "docs": {
-        "title": "volume-to-surface-mapping",
-        "description": "Map volume to surface.\n\nYou must specify exactly one mapping method.  Enclosing voxel uses the value from the voxel the vertex lies inside, while trilinear does a 3D linear interpolation based on the voxels immediately on each side of the vertex's position.\n\nThe ribbon mapping method constructs a polyhedron from the vertex's neighbors on each surface, and estimates the amount of this polyhedron's volume that falls inside any nearby voxels, to use as the weights for sampling.  If -thin-columns is specified, the polyhedron uses the edge midpoints and triangle centroids, so that neighboring vertices do not have overlapping polyhedra.  This may require increasing -voxel-subdiv to get enough samples in each voxel to reliably land inside these smaller polyhedra.  The volume ROI is useful to exclude partial volume effects of voxels the surfaces pass through, and will cause the mapping to ignore voxels that don't have a positive value in the mask.  The subdivision number specifies how it approximates the amount of the volume the polyhedron intersects, by splitting each voxel into NxNxN pieces, and checking whether the center of each piece is inside the polyhedron.  If you have very large voxels, consider increasing this if you get zeros in your output.  The -gaussian option makes it act more like the myelin method, where the distance of a voxel from <surface> is used to downweight the voxel.  The -interpolate suboption, instead of doing a weighted average of voxels, interpolates from the volume at the subdivided points inside the ribbon.  If using both -interpolate and the -weighted suboption to -volume-roi, the roi volume weights are linearly interpolated, unless the -interpolate method is ENCLOSING_VOXEL, in which case ENCLOSING_VOXEL is also used for sampling the roi volume weights.\n\nThe myelin style method uses part of the caret5 myelin mapping command to do the mapping: for each surface vertex, take all voxels that are in a cylinder with radius and height equal to cortical thickness, centered on the vertex and aligned with the surface normal, and that are also within the ribbon ROI, and apply a gaussian kernel with the specified sigma to them to get the weights to use.  The -legacy-bug flag reverts to the unintended behavior present from the initial implementation up to and including v1.2.3, which had only the tangential cutoff and a bounding box intended to be larger than where the cylinder cutoff should have been.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "MAP VOLUME TO SURFACE.\n\nYou must specify exactly one mapping method.  Enclosing voxel uses the value from the voxel the vertex lies inside, while trilinear does a 3D linear interpolation based on the voxels immediately on each side of the vertex's position.\n\nThe ribbon mapping method constructs a polyhedron from the vertex's neighbors on each surface, and estimates the amount of this polyhedron's volume that falls inside any nearby voxels, to use as the weights for sampling.  If -thin-columns is specified, the polyhedron uses the edge midpoints and triangle centroids, so that neighboring vertices do not have overlapping polyhedra.  This may require increasing -voxel-subdiv to get enough samples in each voxel to reliably land inside these smaller polyhedra.  The volume ROI is useful to exclude partial volume effects of voxels the surfaces pass through, and will cause the mapping to ignore voxels that don't have a positive value in the mask.  The subdivision number specifies how it approximates the amount of the volume the polyhedron intersects, by splitting each voxel into NxNxN pieces, and checking whether the center of each piece is inside the polyhedron.  If you have very large voxels, consider increasing this if you get zeros in your output.  The -gaussian option makes it act more like the myelin method, where the distance of a voxel from <surface> is used to downweight the voxel.  The -interpolate suboption, instead of doing a weighted average of voxels, interpolates from the volume at the subdivided points inside the ribbon.  If using both -interpolate and the -weighted suboption to -volume-roi, the roi volume weights are linearly interpolated, unless the -interpolate method is ENCLOSING_VOXEL, in which case ENCLOSING_VOXEL is also used for sampling the roi volume weights.\n\nThe myelin style method uses part of the caret5 myelin mapping command to do the mapping: for each surface vertex, take all voxels that are in a cylinder with radius and height equal to cortical thickness, centered on the vertex and aligned with the surface normal, and that are also within the ribbon ROI, and apply a gaussian kernel with the specified sigma to them to get the weights to use.  The -legacy-bug flag reverts to the unintended behavior present from the initial implementation up to and including v1.2.3, which had only the tangential cutoff and a bounding box intended to be larger than where the cylinder cutoff should have been.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

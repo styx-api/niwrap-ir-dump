@@ -1,12 +1,12 @@
 {
-  "uid": "a3c155c43199f00044e684ccce6c00d843dcec5a.boutiques",
+  "uid": "4d61fcbc40072b03f96c88c490ff99bbafba1379.workbench",
   "command": {
     "base": {
-      "id": 11,
+      "id": 17,
       "name": "create-signed-distance-volume",
       "outputs": [
         {
-          "id": 9,
+          "id": 3,
           "name": "outvol",
           "tokens": [
             {
@@ -16,44 +16,23 @@
             }
           ],
           "docs": {
-            "title": "outvol",
+            "title": null,
             "description": "the output volume",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
-        },
-        {
-          "id": 10,
-          "name": "opt_roi_out_roi_vol",
-          "tokens": [
-            {
-              "refId": 3,
-              "fileRemoveSuffixes": [],
-              "fallback": null
-            }
-          ],
-          "docs": {
-            "title": "opt_roi_out_roi_vol",
-            "description": "output an roi volume of where the output has a computed value: the output roi volume",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Volume File"
+          ]
         }
       ],
       "docs": {
-        "title": "create-signed-distance-volume",
-        "description": "Create signed distance volume from surface.\n\nComputes the signed distance function of the surface.  Exact distance is calculated by finding the closest point on any surface triangle to the center of the voxel.  Approximate distance is calculated starting with these distances, using dijkstra's method with a neighborhood of voxels.  Specifying too small of an exact distance may produce unexpected results.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "CREATE SIGNED DISTANCE VOLUME FROM SURFACE.\n\nComputes the signed distance function of the surface.  Exact distance is calculated by finding the closest point on any surface triangle to the center of the voxel.  Approximate distance is calculated starting with these distances, using dijkstra's method with a neighborhood of voxels.  Specifying too small of an exact distance may produce unexpected results.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -68,15 +47,236 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-create-signed-distance-volume"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 2,
+                    "name": "outvol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-roi-out"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 4,
+                    "name": "roi-vol",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "output an roi volume of where the output has a computed value\n\nthe output roi volume",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-fill-value"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 7,
+                    "name": "value",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify a value to put in all voxels that don't get assigned a distance\n\nvalue to fill with (default 0)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-exact-limit"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 9,
+                    "name": "dist",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify distance for exact output\n\ndistance in mm (default 5)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-approx-limit"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 11,
+                    "name": "dist",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify distance for approximate output\n\ndistance in mm (default 20)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-approx-neighborhood"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "num",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "voxel neighborhood for approximate calculation\n\nsize of neighborhood cube measured from center to face, in voxels (default 2 = 5x5x5)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-winding"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 15,
+                    "name": "method",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "winding method for point inside surface test\n\nname of the method (default EVEN_ODD)",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -93,7 +293,7 @@
                     "name": "surface",
                     "outputs": [],
                     "docs": {
-                      "title": "surface",
+                      "title": null,
                       "description": "the input surface",
                       "authors": [],
                       "literature": [],
@@ -104,7 +304,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Surface File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -127,7 +329,7 @@
                     "name": "refspace",
                     "outputs": [],
                     "docs": {
-                      "title": "refspace",
+                      "title": null,
                       "description": "a volume in the desired output space (dims, spacing, origin)",
                       "authors": [],
                       "literature": [],
@@ -147,292 +349,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "outvol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "outvol",
-                      "description": "the output volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-roi-out"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "opt_roi_out_roi_vol",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_roi_out_roi_vol",
-                      "description": "output an roi volume of where the output has a computed value: the output roi volume",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-fill-value"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "opt_fill_value_value",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_fill_value_value",
-                      "description": "specify a value to put in all voxels that don't get assigned a distance: value to fill with (default 0)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-exact-limit"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "opt_exact_limit_dist",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_exact_limit_dist",
-                      "description": "specify distance for exact output: distance in mm (default 5)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-approx-limit"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "opt_approx_limit_dist",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_approx_limit_dist",
-                      "description": "specify distance for approximate output: distance in mm (default 20)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "float",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-approx-neighborhood"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "opt_approx_neighborhood_num",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_approx_neighborhood_num",
-                      "description": "voxel neighborhood for approximate calculation: size of neighborhood cube measured from center to face, in voxels (default 2 = 5x5x5)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-winding"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 8,
-                    "name": "opt_winding_method",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_winding_method",
-                      "description": "winding method for point inside surface test: name of the method (default EVEN_ODD)",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "create-signed-distance-volume",
-        "description": "Create signed distance volume from surface.\n\nComputes the signed distance function of the surface.  Exact distance is calculated by finding the closest point on any surface triangle to the center of the voxel.  Approximate distance is calculated starting with these distances, using dijkstra's method with a neighborhood of voxels.  Specifying too small of an exact distance may produce unexpected results.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "CREATE SIGNED DISTANCE VOLUME FROM SURFACE.\n\nComputes the signed distance function of the surface.  Exact distance is calculated by finding the closest point on any surface triangle to the center of the voxel.  Approximate distance is calculated starting with these distances, using dijkstra's method with a neighborhood of voxels.  Specifying too small of an exact distance may produce unexpected results.  Valid specifiers for winding methods are as follows:\n\nEVEN_ODD (default)\nNEGATIVE\nNONZERO\nNORMALS\n\nThe NORMALS method uses the normals of triangles and edges, or the closest triangle hit by a ray from the point.  This method may be slightly faster, but is only reliable for a closed surface that does not cross through itself.  All other methods count entry (positive) and exit (negative) crossings of a vertical ray from the point, then counts as inside if the total is odd, negative, or nonzero, respectively.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,

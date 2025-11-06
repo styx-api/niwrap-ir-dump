@@ -1,13 +1,13 @@
 {
-  "uid": "200fd9774a7a04dcd84899fd90bc8dacd0c76bf0.boutiques",
+  "uid": "72f5480b9af6a98bf8c924c75b2fd0dcccbf6c11.workbench",
   "command": {
     "base": {
       "id": 32,
       "name": "cifti-find-clusters",
       "outputs": [
         {
-          "id": 31,
-          "name": "cifti_out",
+          "id": 7,
+          "name": "cifti-out",
           "tokens": [
             {
               "refId": 6,
@@ -16,25 +16,23 @@
             }
           ],
           "docs": {
-            "title": "cifti_out",
+            "title": null,
             "description": "the output cifti",
             "authors": [],
             "literature": [],
             "urls": []
           },
-          "mediaTypes": []
+          "mediaTypes": [
+            "workbench/Cifti File"
+          ]
         }
       ],
       "docs": {
-        "title": "cifti-find-clusters",
-        "description": "Filter clusters by area/volume.\n\nOutputs a cifti file with nonzero integers for all brainordinates within a large enough cluster, and zeros elsewhere.  The integers denote cluster membership (by default, first cluster found will use value 1, second cluster 2, etc).  Cluster values are not reused across maps of the output, but instead keep counting up.  The input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "FILTER CLUSTERS BY AREA/VOLUME.\n\nOutputs a cifti file with nonzero integers for all brainordinates within a large enough cluster, and zeros elsewhere.  The integers denote cluster membership (by default, first cluster found will use value 1, second cluster 2, etc).  Cluster values are not reused across maps of the output, but instead keep counting up.  The input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -49,15 +47,738 @@
                 "wb_command"
               ],
               "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
+            },
             {
               "tokens": [
                 "-cifti-find-clusters"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 6,
+                    "name": "cifti-out",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "the output cifti",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 8,
+                    "name": "less-than",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "find values less than <value-threshold>, rather than greater",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-less-than"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 12,
+                    "name": "left-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the left surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "left-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-left-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 9,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the left surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 10,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the left surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "right-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the right surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "right-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-right-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 13,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the right surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 14,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the right surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "cerebellum-surface",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "specify the cerebellum surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "cerebellum-surface",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-cerebellum-surface"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 17,
+                                  "name": "surface",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "the cerebellum surface file",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Surface File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              "-corrected-areas"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 18,
+                                  "name": "area-metric",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "vertex areas to use instead of computing them from the surface\n\nthe corrected vertex areas, as a metric",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": [
+                                    "workbench/Metric File"
+                                  ]
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "specify the cerebellum surface to use",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-cifti-roi"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "roi-cifti",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "search only within regions of interest\n\nthe regions to search within, as a cifti file",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 23,
+                    "name": "merged-volume",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "treat volume components as if they were a single component",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-merged-volume"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "size-ratio",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "ignore clusters smaller than a given fraction of the largest cluster in the structure",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "size-ratio",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-size-ratio"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 24,
+                                  "name": "surface-ratio",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "fraction of the structure's largest cluster area",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 25,
+                                  "name": "volume-ratio",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "fraction of the structure's largest cluster volume",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "ignore clusters smaller than a given fraction of the largest cluster in the structure",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 29,
+                    "name": "distance",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "ignore clusters further than a given distance from the largest cluster in the structure",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "distance",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-distance"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 27,
+                                  "name": "surface-distance",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "how far from the largest cluster a cluster can be, edge to edge, in mm",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 28,
+                                  "name": "volume-distance",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": null,
+                                    "description": "how far from the largest cluster a cluster can be, edge to edge, in mm",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": "ignore clusters further than a given distance from the largest cluster in the structure",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                "-start"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 30,
+                    "name": "startval",
+                    "outputs": [],
+                    "docs": {
+                      "title": null,
+                      "description": "start labeling clusters from a value other than 1\n\nthe value to give the first cluster found",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": null
+                }
               ],
               "join": null
             }
@@ -74,7 +795,7 @@
                     "name": "cifti",
                     "outputs": [],
                     "docs": {
-                      "title": "cifti",
+                      "title": null,
                       "description": "the input cifti",
                       "authors": [],
                       "literature": [],
@@ -85,7 +806,9 @@
                     "type": "file",
                     "resolveParent": false,
                     "mutable": false,
-                    "mediaTypes": []
+                    "mediaTypes": [
+                      "workbench/Cifti File"
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -105,10 +828,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "surface_value_threshold",
+                    "name": "surface-value-threshold",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_value_threshold",
+                      "title": null,
                       "description": "threshold for surface data values",
                       "authors": [],
                       "literature": [],
@@ -138,10 +861,10 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "surface_minimum_area",
+                    "name": "surface-minimum-area",
                     "outputs": [],
                     "docs": {
-                      "title": "surface_minimum_area",
+                      "title": null,
                       "description": "threshold for surface cluster area, in mm^2",
                       "authors": [],
                       "literature": [],
@@ -171,10 +894,10 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "volume_value_threshold",
+                    "name": "volume-value-threshold",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_value_threshold",
+                      "title": null,
                       "description": "threshold for volume data values",
                       "authors": [],
                       "literature": [],
@@ -204,10 +927,10 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "volume_minimum_size",
+                    "name": "volume-minimum-size",
                     "outputs": [],
                     "docs": {
-                      "title": "volume_minimum_size",
+                      "title": null,
                       "description": "threshold for volume cluster size, in mm^3",
                       "authors": [],
                       "literature": [],
@@ -240,7 +963,7 @@
                     "name": "direction",
                     "outputs": [],
                     "docs": {
-                      "title": "direction",
+                      "title": null,
                       "description": "which dimension to use for spatial information, ROW or COLUMN",
                       "authors": [],
                       "literature": [],
@@ -260,843 +983,15 @@
             }
           ],
           "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "cifti_out",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cifti_out",
-                      "description": "the output cifti",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": null
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "opt_less_than",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_less_than",
-                      "description": "find values less than <value-threshold>, rather than greater",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-less-than"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 11,
-                    "name": "left_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "left_surface",
-                      "description": "specify the left surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "left_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-left-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 9,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the left surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 10,
-                                  "name": "opt_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "left_surface",
-                      "description": "specify the left surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 15,
-                    "name": "right_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "right_surface",
-                      "description": "specify the right surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "right_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-right-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 13,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the right surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 14,
-                                  "name": "opt_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "right_surface",
-                      "description": "specify the right surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 19,
-                    "name": "cerebellum_surface",
-                    "outputs": [],
-                    "docs": {
-                      "title": "cerebellum_surface",
-                      "description": "specify the cerebellum surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "cerebellum_surface",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-cerebellum-surface"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 17,
-                                  "name": "surface",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface",
-                                    "description": "the cerebellum surface file",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-corrected-areas"
-                            ],
-                            "join": null
-                          },
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 18,
-                                  "name": "opt_corrected_areas_area_metric",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "opt_corrected_areas_area_metric",
-                                    "description": "vertex areas to use instead of computing them from the surface: the corrected vertex areas, as a metric",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "file",
-                                  "resolveParent": false,
-                                  "mutable": false,
-                                  "mediaTypes": []
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": null,
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "cerebellum_surface",
-                      "description": "specify the cerebellum surface to use",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-cifti-roi"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 20,
-                    "name": "opt_cifti_roi_roi_cifti",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_cifti_roi_roi_cifti",
-                      "description": "search only within regions of interest: the regions to search within, as a cifti file",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 21,
-                    "name": "opt_merged_volume",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_merged_volume",
-                      "description": "treat volume components as if they were a single component",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-merged-volume"
-                    ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 25,
-                    "name": "size_ratio",
-                    "outputs": [],
-                    "docs": {
-                      "title": "size_ratio",
-                      "description": "ignore clusters smaller than a given fraction of the largest cluster in the structure",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "size_ratio",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-size-ratio"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 23,
-                                  "name": "surface_ratio",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface_ratio",
-                                    "description": "fraction of the structure's largest cluster area",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 24,
-                                  "name": "volume_ratio",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "volume_ratio",
-                                    "description": "fraction of the structure's largest cluster volume",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "size_ratio",
-                      "description": "ignore clusters smaller than a given fraction of the largest cluster in the structure",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 29,
-                    "name": "distance",
-                    "outputs": [],
-                    "docs": {
-                      "title": "distance",
-                      "description": "ignore clusters further than a given distance from the largest cluster in the structure",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct",
-                    "name": "distance",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              "-distance"
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 27,
-                                  "name": "surface_distance",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "surface_distance",
-                                    "description": "how far from the largest cluster a cluster can be, edge to edge, in mm",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      },
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 28,
-                                  "name": "volume_distance",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "volume_distance",
-                                    "description": "how far from the largest cluster a cluster can be, edge to edge, in mm",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": "distance",
-                      "description": "ignore clusters further than a given distance from the largest cluster in the structure",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-start"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 30,
-                    "name": "opt_start_startval",
-                    "outputs": [],
-                    "docs": {
-                      "title": "opt_start_startval",
-                      "description": "start labeling clusters from a value other than 1: the value to give the first cluster found",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
         }
       ],
       "join": null,
       "docs": {
-        "title": "cifti-find-clusters",
-        "description": "Filter clusters by area/volume.\n\nOutputs a cifti file with nonzero integers for all brainordinates within a large enough cluster, and zeros elsewhere.  The integers denote cluster membership (by default, first cluster found will use value 1, second cluster 2, etc).  Cluster values are not reused across maps of the output, but instead keep counting up.  The input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
-        "authors": [
-          "Connectome Workbench Developers"
-        ],
+        "title": null,
+        "description": "FILTER CLUSTERS BY AREA/VOLUME.\n\nOutputs a cifti file with nonzero integers for all brainordinates within a large enough cluster, and zeros elsewhere.  The integers denote cluster membership (by default, first cluster found will use value 1, second cluster 2, etc).  Cluster values are not reused across maps of the output, but instead keep counting up.  The input cifti file must have a brain models mapping on the chosen dimension, columns for .dtseries, and either for .dconn.  The ROI should have a brain models mapping along columns, exactly matching the mapping of the chosen direction in the input file.  Data outside the ROI is ignored.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://github.com/Washington-University/workbench"
-        ]
+        "urls": []
       }
     },
     "list": null,
