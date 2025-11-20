@@ -1,8 +1,8 @@
 {
-  "uid": "1c9417f2b9955b0d99b45712b650286b61783b3e.boutiques",
+  "uid": "72830e1ccd1043926fd7dcd995dc980ded440138.boutiques",
   "command": {
     "base": {
-      "id": 18,
+      "id": 24,
       "name": "antsBrainExtraction.sh",
       "outputs": [
         {
@@ -12,7 +12,7 @@
             {
               "refId": 14,
               "fileRemoveSuffixes": [],
-              "fallback": ""
+              "fallback": null
             },
             "BrainExtractionBrain.nii.gz"
           ],
@@ -32,13 +32,13 @@
             {
               "refId": 14,
               "fileRemoveSuffixes": [],
-              "fallback": ""
+              "fallback": null
             },
             "BrainExtractionMask.nii.gz"
           ],
           "docs": {
             "title": "Brain Mask",
-            "description": "Brain mask",
+            "description": "Brain extraction mask",
             "authors": [],
             "literature": [],
             "urls": []
@@ -47,18 +47,138 @@
         },
         {
           "id": 17,
-          "name": "brain_probability_mask",
+          "name": "brain_segmentation",
           "tokens": [
             {
               "refId": 14,
               "fileRemoveSuffixes": [],
-              "fallback": ""
+              "fallback": null
+            },
+            "BrainExtractionSegmentation.nii.gz"
+          ],
+          "docs": {
+            "title": "Brain Segmentation",
+            "description": "Brain segmentation (tissue classification)",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 18,
+          "name": "csf_segmentation",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "BrainExtractionCSF.nii.gz"
+          ],
+          "docs": {
+            "title": "CSF Segmentation",
+            "description": "Cerebrospinal fluid segmentation",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 19,
+          "name": "gm_segmentation",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "BrainExtractionGM.nii.gz"
+          ],
+          "docs": {
+            "title": "GM Segmentation",
+            "description": "Gray matter segmentation",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 20,
+          "name": "wm_segmentation",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "BrainExtractionWM.nii.gz"
+          ],
+          "docs": {
+            "title": "WM Segmentation",
+            "description": "White matter segmentation",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 21,
+          "name": "generic_affine",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
             },
             "BrainExtractionPrior0GenericAffine.mat"
           ],
           "docs": {
-            "title": "Brain Probability Mask",
-            "description": "Brain probability mask",
+            "title": "Generic Affine Transform",
+            "description": "Generic affine transform from registration",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 22,
+          "name": "warp_field",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "BrainExtractionPrior1Warp.nii.gz"
+          ],
+          "docs": {
+            "title": "Warp Field",
+            "description": "Warp field from registration",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 23,
+          "name": "inverse_warp_field",
+          "tokens": [
+            {
+              "refId": 14,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "BrainExtractionPrior1InverseWarp.nii.gz"
+          ],
+          "docs": {
+            "title": "Inverse Warp Field",
+            "description": "Inverse warp field from registration",
             "authors": [],
             "literature": [],
             "urls": []
@@ -68,7 +188,7 @@
       ],
       "docs": {
         "title": "antsBrainExtraction.sh",
-        "description": "antsBrainExtraction.sh performs template-based brain extraction.",
+        "description": "antsBrainExtraction.sh performs template-based brain extraction using N4 bias correction, registration, and Atropos segmentation.",
         "authors": [
           "ANTs Developers"
         ],
@@ -111,7 +231,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Image Dimension",
-                      "description": "Image dimension (2 or 3)",
+                      "description": "Image dimension (2 or 3 for 2- or 3-dimensional image)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -124,8 +244,11 @@
                   },
                   "list": null,
                   "nullable": false,
-                  "choices": null,
-                  "defaultValue": 3
+                  "choices": [
+                    2,
+                    3
+                  ],
+                  "defaultValue": null
                 }
               ],
               "join": null
@@ -150,7 +273,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Anatomical Image",
-                      "description": "Anatomical image (Structural image, typically T1)",
+                      "description": "Anatomical image (Structural image, typically T1). If more than one anatomical image is specified, subsequently specified images are used during the segmentation process. However, only the first image is used in the registration of priors.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -230,7 +353,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Brain Extraction Probability Mask",
-                      "description": "Brain extraction probability mask",
+                      "description": "Brain extraction probability mask (with intensity range 1=definitely brain to 0=definitely background)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -270,7 +393,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Tissue Classification",
-                      "description": "Tissue classification",
+                      "description": "Tissue classification - A k-means segmentation to find tissue classes. Format: KxcsfLabelxgmLabelxwmLabel. Examples: '3x1x2x3' for T1 (K=3, CSF=1, GM=2, WM=3), '3x3x2x1' for T2, '3x1x3x2' for FLAIR, '4x4x2x3' for K=4",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -309,7 +432,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Brain Extraction Registration Mask",
-                      "description": "Brain extraction registration mask",
+                      "description": "Brain extraction registration mask (Mask used for registration to limit the metric computation to a specific region)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -338,6 +461,12 @@
           "cargs": [
             {
               "tokens": [
+                "-k"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 6,
@@ -345,7 +474,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Keep Temporary Files",
-                      "description": "Keep temporary files",
+                      "description": "Keep temporary files (keep brain extraction/segmentation warps, etc). 0=delete, 1=keep",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -354,14 +483,18 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-k"
+                      "1"
                     ],
-                    "valueFalse": []
+                    "valueFalse": [
+                      "0"
+                    ]
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -373,6 +506,12 @@
           "cargs": [
             {
               "tokens": [
+                "-q"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 7,
@@ -380,7 +519,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Single Floating Point Precision",
-                      "description": "Use single floating point precision",
+                      "description": "Use antsRegistration with single (1) or double (0) floating point precision",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -389,14 +528,18 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-q"
+                      "1"
                     ],
-                    "valueFalse": []
+                    "valueFalse": [
+                      "0"
+                    ]
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -421,7 +564,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Initial Moving Transform",
-                      "description": "Initial moving transform",
+                      "description": "Initial moving transform (An ITK affine transform, e.g., from antsAI or ITK-SNAP). Without this option, the script calls antsAI to search for a good initial moving transform.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -463,7 +606,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Rotation Search Parameters",
-                      "description": "Rotation search parameters",
+                      "description": "Rotation search parameters for antsAI in format 'step,arcFraction'. Step is in degrees, arcFraction goes from 0 (no search) to 1 (search -180 to 180 degrees)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -502,7 +645,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Image File Suffix",
-                      "description": "Image file suffix",
+                      "description": "Image file suffix (any standard ITK IO format, e.g., nrrd, nii.gz, mhd)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -541,7 +684,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Translation Search Parameters",
-                      "description": "Translation search parameters",
+                      "description": "Translation search parameters for antsAI in format 'step,range'. Step is in mm, -range to range will be tested in each dimension",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -567,6 +710,12 @@
           "cargs": [
             {
               "tokens": [
+                "-u"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 12,
@@ -574,7 +723,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Use Random Seeding",
-                      "description": "Use random seeding",
+                      "description": "Use random seeding: 1=use random seed from system clock, 0=use fixed seed (ANTS_RANDOM_SEED=19650218 or value from environment). For reproducibility, set to 0 and also set ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -583,14 +732,18 @@
                   "body": {
                     "type": "bool",
                     "valueTrue": [
-                      "-u"
+                      "1"
                     ],
-                    "valueFalse": []
+                    "valueFalse": [
+                      "0"
+                    ]
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -602,6 +755,12 @@
           "cargs": [
             {
               "tokens": [
+                "-z"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 13,
@@ -609,23 +768,23 @@
                     "outputs": [],
                     "docs": {
                       "title": "Debug Mode",
-                      "description": "Test / debug mode",
+                      "description": "Test/debug mode: If > 0, runs a faster version of the script. Only for debugging, results will not be good.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-z"
-                    ],
-                    "valueFalse": []
+                    "type": "int",
+                    "minValue": 0,
+                    "maxValue": null
                   },
                   "list": null,
-                  "nullable": false,
+                  "nullable": true,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
                 }
               ],
               "join": null
@@ -650,7 +809,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Output Prefix",
-                      "description": "Output prefix",
+                      "description": "Output prefix (directory + file prefix)",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -676,7 +835,7 @@
       "join": null,
       "docs": {
         "title": "antsBrainExtraction.sh",
-        "description": "antsBrainExtraction.sh performs template-based brain extraction.",
+        "description": "antsBrainExtraction.sh performs template-based brain extraction using N4 bias correction, registration, and Atropos segmentation.",
         "authors": [
           "ANTs Developers"
         ],
