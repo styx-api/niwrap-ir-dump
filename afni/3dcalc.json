@@ -1,23 +1,63 @@
 {
-  "uid": "4ecc4bd9710b038a889275d36ce45265ee4b3f81.boutiques",
+  "uid": "61bba3b4853d5aefabaf672965d70abeb5ac91de.boutiques",
   "command": {
     "base": {
-      "id": 11,
+      "id": 38,
       "name": "3dcalc",
       "outputs": [
         {
-          "id": 10,
-          "name": "out_file",
+          "id": 35,
+          "name": "output_head",
           "tokens": [
             {
-              "refId": 9,
+              "refId": 15,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "+orig.HEAD"
+          ],
+          "docs": {
+            "title": null,
+            "description": "Output dataset header file (if AFNI format is used).",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 36,
+          "name": "output_brik",
+          "tokens": [
+            {
+              "refId": 15,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "+orig.BRIK"
+          ],
+          "docs": {
+            "title": null,
+            "description": "Output dataset binary file (if AFNI format is used).",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 37,
+          "name": "output_file",
+          "tokens": [
+            {
+              "refId": 15,
               "fileRemoveSuffixes": [],
               "fallback": null
             }
           ],
           "docs": {
-            "title": "Out file",
-            "description": "Output image file name.",
+            "title": null,
+            "description": "Output dataset file (if NIfTI or other format is used).",
             "authors": [],
             "literature": [],
             "urls": []
@@ -27,14 +67,10 @@
       ],
       "docs": {
         "title": "3dcalc",
-        "description": "AFNI's calculator program.",
-        "authors": [
-          "AFNI Developers"
-        ],
+        "description": "AFNI's calculator program. Performs voxel-by-voxel arithmetic on 3D datasets, with strict handling of complex/synthetic inputs and state-dependent flags.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://afni.nimh.nih.gov/"
-        ]
+        "urls": []
       }
     },
     "body": {
@@ -57,30 +93,287 @@
           "cargs": [
             {
               "tokens": [
-                "-a"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "in_file_a",
+                    "name": "dataset_a",
                     "outputs": [],
                     "docs": {
-                      "title": "In file a",
-                      "description": "Input file to 3dcalc.",
+                      "title": "Dataset A (Template)",
+                      "description": "Input dataset 'a' (required). This can be a standard file or a synthetic '1D:'/'jRandomDataset:' string. This dataset serves as the template for the output.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "struct_union",
+                    "alts": [
+                      {
+                        "base": {
+                          "id": 4,
+                          "name": "dataset_a_file",
+                          "outputs": [],
+                          "docs": {
+                            "title": "Dataset A (File)",
+                            "description": "Standard file input for dataset A.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "dataset_a_file",
+                          "publicName": null,
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-cx2r"
+                                  ],
+                                  "join": null
+                                },
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 1,
+                                        "name": "cx2r",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Complex-to-Real Method",
+                                          "description": "Method to convert complex numbers to real before loading this dataset.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": true,
+                                      "choices": [
+                                        "REAL",
+                                        "IMAG",
+                                        "ABS",
+                                        "PHASE"
+                                      ],
+                                      "defaultValue": {
+                                        "_special": "SET_TO_NONE"
+                                      }
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            },
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-a"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            },
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 2,
+                                        "name": "file",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Input File",
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "file",
+                                        "resolveParent": false,
+                                        "mutable": false,
+                                        "mediaTypes": []
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    },
+                                    {
+                                      "base": {
+                                        "id": 3,
+                                        "name": "selectors",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Sub-brick Selectors",
+                                          "description": "AFNI sub-brick selectors, e.g., '[2..$]' or '<100..200>'.",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": true,
+                                      "choices": null,
+                                      "defaultValue": {
+                                        "_special": "SET_TO_NONE"
+                                      }
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": "Dataset A (File)",
+                            "description": "Standard file input for dataset A.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      },
+                      {
+                        "base": {
+                          "id": 7,
+                          "name": "dataset_a_synthetic",
+                          "outputs": [],
+                          "docs": {
+                            "title": "Dataset A (Synthetic)",
+                            "description": "Synthetic input string (e.g. '1D:...' or 'jRandomDataset:...').",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "dataset_a_synthetic",
+                          "publicName": null,
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-cx2r"
+                                  ],
+                                  "join": null
+                                },
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 5,
+                                        "name": "cx2r",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Complex-to-Real Method",
+                                          "description": null,
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": true,
+                                      "choices": [
+                                        "REAL",
+                                        "IMAG",
+                                        "ABS",
+                                        "PHASE"
+                                      ],
+                                      "defaultValue": {
+                                        "_special": "SET_TO_NONE"
+                                      }
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            },
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-a"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            },
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    {
+                                      "base": {
+                                        "id": 6,
+                                        "name": "synth_string",
+                                        "outputs": [],
+                                        "docs": {
+                                          "title": "Synthetic Definition",
+                                          "description": "String definition for 1D or random dataset (e.g., '1D:5@0,5@1').",
+                                          "authors": [],
+                                          "literature": [],
+                                          "urls": []
+                                        }
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "list": null,
+                                      "nullable": false,
+                                      "choices": null,
+                                      "defaultValue": null
+                                    }
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": "Dataset A (Synthetic)",
+                            "description": "Synthetic input string (e.g. '1D:...' or 'jRandomDataset:...').",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      }
+                    ]
                   },
                   "list": null,
                   "nullable": false,
@@ -97,250 +390,172 @@
           "cargs": [
             {
               "tokens": [
-                "-b"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
-                    "id": 1,
-                    "name": "in_file_b",
+                    "id": 13,
+                    "name": "other_datasets",
                     "outputs": [],
                     "docs": {
-                      "title": "In file b",
-                      "description": "Operand file to 3dcalc.",
+                      "title": "Other Dataset Configuration",
+                      "description": "Additional input datasets (b, c, etc.). Includes 'cx2r' support to ensure the flag precedes the specific dataset.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-c"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "in_file_c",
-                    "outputs": [],
-                    "docs": {
-                      "title": "In file c",
-                      "description": "Operand file to 3dcalc.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "other",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Other",
-                      "description": "Other options.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 4,
-                    "name": "overwrite",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Overwrite",
-                      "description": "Overwrite output.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-overwrite"
+                    "type": "struct",
+                    "name": "other_dataset_config",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-cx2r"
+                            ],
+                            "join": null
+                          },
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 9,
+                                  "name": "cx2r",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Complex-to-Real Method",
+                                    "description": "Method to convert complex numbers to real for *this specific dataset*.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": [
+                                  "REAL",
+                                  "IMAG",
+                                  "ABS",
+                                  "PHASE"
+                                ],
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-",
+                              {
+                                "base": {
+                                  "id": 10,
+                                  "name": "variable_letter",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Variable Letter",
+                                    "description": "The variable letter used in the expression (e.g., 'b', 'c').",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 11,
+                                  "name": "file",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Input File",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "file",
+                                  "resolveParent": false,
+                                  "mutable": false,
+                                  "mediaTypes": []
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              },
+                              {
+                                "base": {
+                                  "id": 12,
+                                  "name": "selectors",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Sub-brick Selectors",
+                                    "description": "AFNI sub-brick selectors, e.g., '[2]' or '[2..$]'.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
                     ],
-                    "valueFalse": []
-                  },
-                  "list": null,
-                  "nullable": false,
-                  "choices": null,
-                  "defaultValue": false
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 5,
-                    "name": "single_idx",
-                    "outputs": [],
+                    "join": null,
                     "docs": {
-                      "title": "Single idx",
-                      "description": "Volume index for in_file_a.",
+                      "title": "Other Dataset Configuration",
+                      "description": null,
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
+                  "list": {
+                    "countMin": null,
+                    "countMax": null,
+                    "join": null
                   },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "start_idx",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Start idx",
-                      "description": "Start index for in_file_a.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 7,
-                    "name": "stop_idx",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Stop idx",
-                      "description": "Stop index for in_file_a.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
                   "nullable": true,
                   "choices": null,
                   "defaultValue": {
@@ -360,17 +575,28 @@
                 "-expr"
               ],
               "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-expr"
+              ],
+              "join": null
             },
             {
               "tokens": [
                 {
                   "base": {
-                    "id": 8,
-                    "name": "expr",
+                    "id": 14,
+                    "name": "expression",
                     "outputs": [],
                     "docs": {
-                      "title": "Expr",
-                      "description": "Expr.",
+                      "title": "Arithmetic Expression",
+                      "description": "Arithmetic expression to apply to the input datasets (within quotes).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -402,12 +628,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 9,
+                    "id": 15,
                     "name": "prefix",
                     "outputs": [],
                     "docs": {
-                      "title": "Prefix",
-                      "description": "Output image file name.",
+                      "title": "Output Prefix",
+                      "description": "Use 'pname' for the output dataset prefix name.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -428,19 +654,653 @@
             }
           ],
           "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 16,
+                    "name": "verbose",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Verbose Flag",
+                      "description": "Makes the program print out various information as it progresses.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-verbose"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-datum"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 17,
+                    "name": "datum",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output Data Type",
+                      "description": "Coerce the output data to be stored as the given type.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "byte",
+                    "short",
+                    "float"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "fscale",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Force Scaling",
+                      "description": "Force scaling of the output to the maximum integer range (for byte or short output).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-fscale"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 19,
+                    "name": "gscale",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Global Scaling",
+                      "description": "Same as -fscale, but also forces each output sub-brick to get the same scaling factor. Incompatible with -usetemp.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-gscale"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 20,
+                    "name": "nscale",
+                    "outputs": [],
+                    "docs": {
+                      "title": "No Scaling",
+                      "description": "Don't do any scaling on output to byte or short datasets.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-nscale"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 21,
+                    "name": "usetemp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Use Temporary File",
+                      "description": "Create a temporary file to hold intermediate results. Incompatible with -gscale.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-usetemp"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-dt"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
+                    "name": "dt",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Time Step",
+                      "description": "Use 'tstep' as the TR for 'manufactured' 3D+time datasets (in seconds).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "float",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 26,
+                    "name": "taxis",
+                    "outputs": [],
+                    "docs": {
+                      "title": "T-Axis Config",
+                      "description": "Force the creation of a time axis. Replaces string input with strict micro-syntax structure 'N:tstep'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "taxis_config",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-taxis"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 24,
+                                  "name": "num_points",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Number of Time Points",
+                                    "description": "Length of the time axis.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "int",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              },
+                              ":",
+                              {
+                                "base": {
+                                  "id": 25,
+                                  "name": "time_step",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Time Step",
+                                    "description": "Time step in seconds.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": null,
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": "T-Axis Config",
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 31,
+                    "name": "rgbfac",
+                    "outputs": [],
+                    "docs": {
+                      "title": "RGB Factors Config",
+                      "description": "Factors A, B, C for collapsing RGB input datasets (value = A*r + B*g + C*b).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct",
+                    "name": "rgbfac_config",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              "-rgbfac"
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 28,
+                                  "name": "a",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Factor A",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 29,
+                                  "name": "b",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Factor B",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      },
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 30,
+                                  "name": "c",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "Factor C",
+                                    "description": null,
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": "RGB Factors Config",
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 32,
+                    "name": "sort_mode",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Sorting Mode",
+                      "description": "Sort each output brick separately. 'sort' = increasing, 'SORT' = decreasing.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "sort",
+                    "SORT"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 33,
+                    "name": "isola",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Remove Isolated Voxels",
+                      "description": "After computation, remove isolated non-zero voxels.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-isola"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 34,
+                    "name": "coordinate_system",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Coordinate System Order",
+                      "description": "Set the coordinate display order (DICOM/RAI or SPM/LPI).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": [
+                    "dicom",
+                    "RAI",
+                    "SPM",
+                    "LPI"
+                  ],
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
         }
       ],
       "join": null,
       "docs": {
         "title": "3dcalc",
-        "description": "AFNI's calculator program.",
-        "authors": [
-          "AFNI Developers"
-        ],
+        "description": "AFNI's calculator program. Performs voxel-by-voxel arithmetic on 3D datasets, with strict handling of complex/synthetic inputs and state-dependent flags.",
+        "authors": [],
         "literature": [],
-        "urls": [
-          "https://afni.nimh.nih.gov/"
-        ]
+        "urls": []
       }
     },
     "list": null,
