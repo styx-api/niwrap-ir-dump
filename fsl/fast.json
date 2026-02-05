@@ -1,44 +1,24 @@
 {
-  "uid": "71882fb7c4050cfbb372686192607f9f7bd8489d.boutiques",
+  "uid": "b308c56439a15f5d65f3450bf5ce835008e43fec.boutiques",
   "command": {
     "base": {
-      "id": 27,
+      "id": 28,
       "name": "fast",
       "outputs": [
         {
-          "id": 22,
-          "name": "mixeltype",
-          "tokens": [
-            {
-              "refId": 12,
-              "fileRemoveSuffixes": [],
-              "fallback": null
-            },
-            "_mixeltype.nii.gz"
-          ],
-          "docs": {
-            "title": "Mixeltype",
-            "description": "Path/name of mixeltype volume file _mixeltype.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
           "id": 23,
-          "name": "bias_field",
+          "name": "tissue_class_map",
           "tokens": [
             {
               "refId": 12,
               "fileRemoveSuffixes": [],
               "fallback": null
             },
-            "_bias.nii.gz"
+            "_seg.nii.gz"
           ],
           "docs": {
-            "title": "Bias field",
-            "description": "No description provided.",
+            "title": "Tissue class map",
+            "description": "Path/name of binary segmented volume file one val for each class _seg.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -67,6 +47,46 @@
         },
         {
           "id": 25,
+          "name": "mixeltype",
+          "tokens": [
+            {
+              "refId": 12,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "_mixeltype.nii.gz"
+          ],
+          "docs": {
+            "title": "Mixeltype",
+            "description": "Path/name of mixeltype volume file _mixeltype.",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 26,
+          "name": "bias_field",
+          "tokens": [
+            {
+              "refId": 12,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            },
+            "_bias.nii.gz"
+          ],
+          "docs": {
+            "title": "Bias field",
+            "description": "Estimated bias field (if -b flag is set).",
+            "authors": [],
+            "literature": [],
+            "urls": []
+          },
+          "mediaTypes": []
+        },
+        {
+          "id": 27,
           "name": "restored_image",
           "tokens": [
             {
@@ -78,27 +98,7 @@
           ],
           "docs": {
             "title": "Restored image",
-            "description": "No description provided.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 26,
-          "name": "tissue_class_map",
-          "tokens": [
-            {
-              "refId": 12,
-              "fileRemoveSuffixes": [],
-              "fallback": null
-            },
-            "_seg.nii.gz"
-          ],
-          "docs": {
-            "title": "Tissue class map",
-            "description": "Path/name of binary segmented volume file one val for each class  _seg.",
+            "description": "Bias-corrected image (if -B flag is set).",
             "authors": [],
             "literature": [],
             "urls": []
@@ -437,7 +437,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Other priors",
-                      "description": "Alternative prior images.",
+                      "description": "Alternative prior images (requires 3 files: prior1 prior2 prior3).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -450,8 +450,8 @@
                     "mediaTypes": []
                   },
                   "list": {
-                    "countMin": null,
-                    "countMax": null,
+                    "countMin": 3,
+                    "countMax": 3,
                     "join": null
                   },
                   "nullable": true,
@@ -596,7 +596,7 @@
                   },
                   "body": {
                     "type": "int",
-                    "minValue": null,
+                    "minValue": 1,
                     "maxValue": null
                   },
                   "list": null,
@@ -662,7 +662,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Use priors",
-                      "description": "Use priors throughout.",
+                      "description": "Use priors throughout (requires -a option).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -820,7 +820,7 @@
                     "outputs": [],
                     "docs": {
                       "title": "Hyper",
-                      "description": "0.0 <= a floating point number <= 1.0. segmentation spatial smoothness; default=0.1",
+                      "description": "segmentation spatial smoothness (0.0 to 1.0); default=0.1",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -969,6 +969,41 @@
                 {
                   "base": {
                     "id": 21,
+                    "name": "output_probabilities",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Output probabilities",
+                      "description": "outputs individual probability maps",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "-p"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 22,
                     "name": "in_files",
                     "outputs": [],
                     "docs": {
