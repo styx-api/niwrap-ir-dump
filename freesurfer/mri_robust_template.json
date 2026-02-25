@@ -1,13 +1,13 @@
 {
-  "uid": "879b2b379c54ce744a435c993b95da04800bb0ba.boutiques",
+  "uid": "f043b3273e9985d357cf80355b397d8ee42c3a35.boutiques",
   "command": {
     "base": {
-      "id": 41,
+      "id": 43,
       "name": "mri_robust_template",
       "outputs": [
         {
-          "id": 37,
-          "name": "output_template",
+          "id": 41,
+          "name": "template_output",
           "tokens": [
             {
               "refId": 1,
@@ -16,7 +16,7 @@
             }
           ],
           "docs": {
-            "title": "Output template",
+            "title": "Template Output",
             "description": "Output template volume (final mean/median image).",
             "authors": [],
             "literature": [],
@@ -25,44 +25,18 @@
           "mediaTypes": []
         },
         {
-          "id": 38,
-          "name": "output_lta_transform",
+          "id": 42,
+          "name": "conform_output",
           "tokens": [
-            "[TMP_NAME].lta"
+            {
+              "refId": 36,
+              "fileRemoveSuffixes": [],
+              "fallback": null
+            }
           ],
           "docs": {
-            "title": "Output transform",
-            "description": "Output transform file.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 39,
-          "name": "output_mapped_image",
-          "tokens": [
-            "[TMP_NAME]_to_template.mgz"
-          ],
-          "docs": {
-            "title": "Mapped image",
-            "description": "Output mapped and resampled image.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 40,
-          "name": "output_weights_map",
-          "tokens": [
-            "[TMP_NAME]_weights.mgz"
-          ],
-          "docs": {
-            "title": "Weights map",
-            "description": "Output weights map (outliers).",
+            "title": "Conform Template Output",
+            "description": "Output conformed template volume.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -102,7 +76,7 @@
           "cargs": [
             {
               "tokens": [
-                "-mov"
+                "--mov"
               ],
               "join": null
             },
@@ -111,11 +85,11 @@
                 {
                   "base": {
                     "id": 0,
-                    "name": "mov_files",
+                    "name": "mov",
                     "outputs": [],
                     "docs": {
-                      "title": "Movable volumes",
-                      "description": "Input movable volumes to be aligned to common mean/median template.",
+                      "title": "Movable Volumes",
+                      "description": "Input movable volumes to be aligned to common mean/median template (at least 2 required).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -146,7 +120,7 @@
           "cargs": [
             {
               "tokens": [
-                "-template"
+                "--template"
               ],
               "join": null
             },
@@ -155,10 +129,10 @@
                 {
                   "base": {
                     "id": 1,
-                    "name": "template_file",
+                    "name": "template",
                     "outputs": [],
                     "docs": {
-                      "title": "Template file",
+                      "title": "Template Output",
                       "description": "Output template volume (final mean/median image).",
                       "authors": [],
                       "literature": [],
@@ -192,10 +166,10 @@
                 {
                   "base": {
                     "id": 2,
-                    "name": "sat_value",
+                    "name": "sat",
                     "outputs": [],
                     "docs": {
-                      "title": "Outlier sensitivity",
+                      "title": "Outlier Sensitivity",
                       "description": "Set outlier sensitivity manually. Higher values mean less sensitivity.",
                       "authors": [],
                       "literature": [],
@@ -227,10 +201,10 @@
                 {
                   "base": {
                     "id": 3,
-                    "name": "satit_flag",
+                    "name": "satit",
                     "outputs": [],
                     "docs": {
-                      "title": "Auto-detect sensitivity",
+                      "title": "Auto-detect Sensitivity",
                       "description": "Auto-detect good sensitivity (recommended for head or full brain scans).",
                       "authors": [],
                       "literature": [],
@@ -268,11 +242,11 @@
                 {
                   "base": {
                     "id": 4,
-                    "name": "lta_files",
+                    "name": "lta",
                     "outputs": [],
                     "docs": {
-                      "title": "Output transforms",
-                      "description": "Output transforms to template (for each input).",
+                      "title": "Output Transforms",
+                      "description": "Output LTA transforms to template (one per input volume).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -311,11 +285,11 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "mapmov_files",
+                    "name": "mapmov",
                     "outputs": [],
                     "docs": {
-                      "title": "Resampled images",
-                      "description": "Output images: map and resample each input to template.",
+                      "title": "Mapped Movables",
+                      "description": "Output mapped and resampled images in template space (one per input volume).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -354,11 +328,11 @@
                 {
                   "base": {
                     "id": 6,
-                    "name": "mapmovhdr_files",
+                    "name": "mapmovhdr",
                     "outputs": [],
                     "docs": {
-                      "title": "Header-adjusted images",
-                      "description": "Output images: header-adjusted movables (no resampling).",
+                      "title": "Header-adjusted Movables",
+                      "description": "Output header-adjusted movable images (no resampling, only vox2ras adjusted).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -397,11 +371,11 @@
                 {
                   "base": {
                     "id": 7,
-                    "name": "weights_files",
+                    "name": "weights",
                     "outputs": [],
                     "docs": {
-                      "title": "Outlier weights",
-                      "description": "Output weights (outliers) in target space.",
+                      "title": "Outlier Weights",
+                      "description": "Output weight volumes in template space (0=regular, 1=outlier).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -434,11 +408,11 @@
                 {
                   "base": {
                     "id": 8,
-                    "name": "oneminusw_flag",
+                    "name": "oneminusw",
                     "outputs": [],
                     "docs": {
-                      "title": "Invert outlier weights",
-                      "description": "Weights (outlier) map will be inverted (0=outlier), as in earlier versions.",
+                      "title": "Invert Weights",
+                      "description": "Invert outlier weight map (0=outlier), as in earlier versions.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -475,11 +449,11 @@
                 {
                   "base": {
                     "id": 9,
-                    "name": "average_type",
+                    "name": "average",
                     "outputs": [],
                     "docs": {
-                      "title": "Template average type",
-                      "description": "Construct template from: 0 Mean, 1 Median (default).",
+                      "title": "Average Type",
+                      "description": "Construct template from: 0=mean, 1=median (default 1).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -519,8 +493,8 @@
                     "name": "inittp",
                     "outputs": [],
                     "docs": {
-                      "title": "Initial TP",
-                      "description": "Use TP# for spatial init (default random), 0: no init.",
+                      "title": "Initial Timepoint",
+                      "description": "Use timepoint number for spatial initialization (default: random). 0 constructs template from original volumes without initialization.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -551,11 +525,11 @@
                 {
                   "base": {
                     "id": 11,
-                    "name": "fixtp_flag",
+                    "name": "fixtp",
                     "outputs": [],
                     "docs": {
-                      "title": "Fix initial TP",
-                      "description": "Map everything to init TP# (init TP is not resampled).",
+                      "title": "Fix Timepoint",
+                      "description": "Map everything to initial timepoint (init TP is not resampled).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -586,11 +560,11 @@
                 {
                   "base": {
                     "id": 12,
-                    "name": "iscale_flag",
+                    "name": "iscale",
                     "outputs": [],
                     "docs": {
-                      "title": "Intensity scaling",
-                      "description": "Allow also intensity scaling (default off).",
+                      "title": "Intensity Scaling",
+                      "description": "Enable intensity scaling (default off).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -621,11 +595,11 @@
                 {
                   "base": {
                     "id": 13,
-                    "name": "iscaleonly_flag",
+                    "name": "iscaleonly",
                     "outputs": [],
                     "docs": {
-                      "title": "Intensity scaling only",
-                      "description": "Only perform iscale (no transformation, default off).",
+                      "title": "Intensity Scaling Only",
+                      "description": "Only perform intensity scaling (no spatial transformation).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -662,18 +636,21 @@
                 {
                   "base": {
                     "id": 14,
-                    "name": "iscalein_files",
+                    "name": "iscalein",
                     "outputs": [],
                     "docs": {
-                      "title": "Initial intensity scales",
-                      "description": "Use initial intensity scales.",
+                      "title": "Initial Intensity Scales",
+                      "description": "Input initial intensity scale files.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": {
                     "countMin": null,
@@ -705,11 +682,11 @@
                 {
                   "base": {
                     "id": 15,
-                    "name": "iscaleout_files",
+                    "name": "iscaleout",
                     "outputs": [],
                     "docs": {
-                      "title": "Final intensity scales",
-                      "description": "Output final intensity scales (will activate --iscale).",
+                      "title": "Output Intensity Scales",
+                      "description": "Output final intensity scale files (will activate --iscale).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -742,10 +719,10 @@
                 {
                   "base": {
                     "id": 16,
-                    "name": "transonly_flag",
+                    "name": "transonly",
                     "outputs": [],
                     "docs": {
-                      "title": "Translation only",
+                      "title": "Translation Only",
                       "description": "Find 3 parameter translation only.",
                       "authors": [],
                       "literature": [],
@@ -777,10 +754,10 @@
                 {
                   "base": {
                     "id": 17,
-                    "name": "affine_flag",
+                    "name": "affine",
                     "outputs": [],
                     "docs": {
-                      "title": "Affine transform",
+                      "title": "Affine Transform",
                       "description": "Find 12 parameter affine transform.",
                       "authors": [],
                       "literature": [],
@@ -818,18 +795,21 @@
                 {
                   "base": {
                     "id": 18,
-                    "name": "ixforms_files",
+                    "name": "ixforms",
                     "outputs": [],
                     "docs": {
-                      "title": "Initial transforms",
-                      "description": "Use initial transforms (lta) on source ('id'=identity).",
+                      "title": "Initial Transforms",
+                      "description": "Use initial LTA transforms on source ('id' for identity).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": {
                     "countMin": null,
@@ -861,18 +841,21 @@
                 {
                   "base": {
                     "id": 19,
-                    "name": "masks_files",
+                    "name": "masks",
                     "outputs": [],
                     "docs": {
-                      "title": "Input masks",
-                      "description": "Input masks applied to movables.",
+                      "title": "Input Masks",
+                      "description": "Input mask volumes applied to movable images.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": {
                     "countMin": null,
@@ -898,11 +881,11 @@
                 {
                   "base": {
                     "id": 20,
-                    "name": "vox2vox_flag",
+                    "name": "vox2vox",
                     "outputs": [],
                     "docs": {
-                      "title": "VOX2VOX output",
-                      "description": "Output VOX2VOX lta file (default is RAS2RAS).",
+                      "title": "Vox2Vox Output",
+                      "description": "Output VOX2VOX LTA file (default is RAS2RAS).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -933,10 +916,10 @@
                 {
                   "base": {
                     "id": 21,
-                    "name": "leastsquares_flag",
+                    "name": "leastsquares",
                     "outputs": [],
                     "docs": {
-                      "title": "Least squares",
+                      "title": "Least Squares",
                       "description": "Use least squares instead of robust M-estimator (for testing only).",
                       "authors": [],
                       "literature": [],
@@ -968,10 +951,10 @@
                 {
                   "base": {
                     "id": 22,
-                    "name": "noit_flag",
+                    "name": "noit",
                     "outputs": [],
                     "docs": {
-                      "title": "No iteration",
+                      "title": "No Iteration",
                       "description": "Do not iterate, just create first template.",
                       "authors": [],
                       "literature": [],
@@ -1012,8 +995,8 @@
                     "name": "maxit",
                     "outputs": [],
                     "docs": {
-                      "title": "Max iterations",
-                      "description": "Iterate max # times (if #tp>2 default 6, else 5 for 2tp reg.).",
+                      "title": "Max Iterations",
+                      "description": "Maximum number of template iterations (default: 6 if >2 timepoints, 5 otherwise).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1053,8 +1036,8 @@
                     "name": "highit",
                     "outputs": [],
                     "docs": {
-                      "title": "High resolution max iterations",
-                      "description": "Iterate max # times on highest resolution (default 5).",
+                      "title": "High Resolution Iterations",
+                      "description": "Maximum number of iterations on highest resolution (default: -1, use maxit).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1094,8 +1077,8 @@
                     "name": "epsit",
                     "outputs": [],
                     "docs": {
-                      "title": "Iteration stop threshold",
-                      "description": "Stop iterations when all transform updates fall below the specified value.",
+                      "title": "Iteration Convergence Threshold",
+                      "description": "Stop template iterations when all transform updates fall below this value (default: -1.0, disabled).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1135,8 +1118,8 @@
                     "name": "pairmaxit",
                     "outputs": [],
                     "docs": {
-                      "title": "Pairwise max iterations",
-                      "description": "Iterate max # times (default 5) for individual pairwise registrations.",
+                      "title": "Pairwise Max Iterations",
+                      "description": "Maximum number of iterations for pairwise registrations (default: 5).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1176,8 +1159,8 @@
                     "name": "pairepsit",
                     "outputs": [],
                     "docs": {
-                      "title": "Pairwise iteration stop threshold",
-                      "description": "Stop individual pairwise registration iterations when transform updates fall below the specified value.",
+                      "title": "Pairwise Convergence Threshold",
+                      "description": "Stop pairwise registration iterations when transform updates fall below this value (default: 0.01).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1217,8 +1200,8 @@
                     "name": "subsample",
                     "outputs": [],
                     "docs": {
-                      "title": "Subsample threshold",
-                      "description": "Subsample if dimension > specified value on all axes (default no subsampling).",
+                      "title": "Subsample Threshold",
+                      "description": "Subsample if voxel dimension exceeds this value on all axes (default: -1, disabled).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1249,11 +1232,11 @@
                 {
                   "base": {
                     "id": 29,
-                    "name": "nomulti_flag",
+                    "name": "nomulti",
                     "outputs": [],
                     "docs": {
-                      "title": "Disable multi-resolution",
-                      "description": "Do not use multi-resolution (only highest resolution).",
+                      "title": "Disable Multi-resolution",
+                      "description": "Do not use multi-resolution (process highest resolution only).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1284,10 +1267,10 @@
                 {
                   "base": {
                     "id": 30,
-                    "name": "floattype_flag",
+                    "name": "floattype",
                     "outputs": [],
                     "docs": {
-                      "title": "Convert to float",
+                      "title": "Convert to Float",
                       "description": "Convert images to float internally (default: keep input type).",
                       "authors": [],
                       "literature": [],
@@ -1319,11 +1302,11 @@
                 {
                   "base": {
                     "id": 31,
-                    "name": "finalnearest_flag",
+                    "name": "finalnearest",
                     "outputs": [],
                     "docs": {
-                      "title": "Nearest neighbor interpolation",
-                      "description": "Use nearest neighbor in final interpolation when creating average.",
+                      "title": "Nearest Neighbor Interpolation",
+                      "description": "Use nearest neighbor interpolation when creating the final average.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1354,10 +1337,10 @@
                 {
                   "base": {
                     "id": 32,
-                    "name": "doubleprec_flag",
+                    "name": "doubleprec",
                     "outputs": [],
                     "docs": {
-                      "title": "Double precision",
+                      "title": "Double Precision",
                       "description": "Use double precision instead of float internally (large memory usage).",
                       "authors": [],
                       "literature": [],
@@ -1389,11 +1372,11 @@
                 {
                   "base": {
                     "id": 33,
-                    "name": "cras_flag",
+                    "name": "cras",
                     "outputs": [],
                     "docs": {
                       "title": "Center at CRAS",
-                      "description": "Center template at average CRAS, instead of average barycenter.",
+                      "description": "Center template at average CRAS instead of average barycenter.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1433,8 +1416,8 @@
                     "name": "res_thresh",
                     "outputs": [],
                     "docs": {
-                      "title": "Resolution threshold",
-                      "description": "Volume resolution threshold (default is 0.01 mm).",
+                      "title": "Resolution Threshold",
+                      "description": "Volume resolution threshold in mm (default: 0.01).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1474,8 +1457,8 @@
                     "name": "frobnorm_thresh",
                     "outputs": [],
                     "docs": {
-                      "title": "Frobenius norm threshold",
-                      "description": "Matrix frobenius norm threshold (default is 0.0001).",
+                      "title": "Frobenius Norm Threshold",
+                      "description": "Matrix Frobenius norm threshold (default: 0.0001).",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -1503,14 +1486,170 @@
           "cargs": [
             {
               "tokens": [
+                "--conform"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
                     "id": 36,
-                    "name": "debug_flag",
+                    "name": "conform",
                     "outputs": [],
                     "docs": {
-                      "title": "Debug mode",
-                      "description": "Show debug output (default no debug output).",
+                      "title": "Conform Template",
+                      "description": "Output conformed template (256^3, 1mm isotropic voxels).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--seed"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 37,
+                    "name": "seed",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Random Seed",
+                      "description": "Set random seed for target selection (default: 0).",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 38,
+                    "name": "allow_diff_vox_size",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Allow Different Voxel Sizes",
+                      "description": "Allow input volumes with different voxel sizes.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "bool",
+                    "valueTrue": [
+                      "--allow-diff-vox-size"
+                    ],
+                    "valueFalse": []
+                  },
+                  "list": null,
+                  "nullable": false,
+                  "choices": null,
+                  "defaultValue": false
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "--threads"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 39,
+                    "name": "threads",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Threads",
+                      "description": "Set number of OpenMP threads.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 40,
+                    "name": "debug",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Debug Mode",
+                      "description": "Show debug output.",
                       "authors": [],
                       "literature": [],
                       "urls": []
