@@ -1,38 +1,23 @@
 {
-  "uid": "eb1127cdc88eed5f16539462f60c9212dd13437b.boutiques",
+  "uid": "532465668136863eecd81d4cd122486105f8a4e6.boutiques",
   "command": {
     "base": {
-      "id": 30,
+      "id": 26,
       "name": "3dTshift",
       "outputs": [
         {
-          "id": 28,
+          "id": 25,
           "name": "out_file",
           "tokens": [
             {
-              "refId": 0,
+              "refId": 12,
               "fileRemoveSuffixes": [],
               "fallback": null
             }
           ],
           "docs": {
             "title": "Output Image",
-            "description": "Output image file name.",
-            "authors": [],
-            "literature": [],
-            "urls": []
-          },
-          "mediaTypes": []
-        },
-        {
-          "id": 29,
-          "name": "timing_file",
-          "tokens": [
-            "timing_file"
-          ],
-          "docs": {
-            "title": "Timing File",
-            "description": "Afni formatted timing file, if ``slice_timing`` is a list.",
+            "description": "Time-shifted output dataset.",
             "authors": [],
             "literature": [],
             "urls": []
@@ -72,109 +57,30 @@
           "cargs": [
             {
               "tokens": [
-                "-prefix"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
                     "id": 0,
-                    "name": "prefix",
+                    "name": "verbose",
                     "outputs": [],
                     "docs": {
-                      "title": "Prefix",
-                      "description": "Prefix for output image file name. The default is 'tshift'.",
+                      "title": "Verbose",
+                      "description": "Print lots of messages while program runs.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                "-ignore"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 1,
-                    "name": "ignore",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Ignore Initial Points",
-                      "description": "Ignore the first 'ii' points. The first ii values will be unchanged in the output (regardless of the -rlt option). They also will not be used in the detrending or time shifting. Default is ii=0.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 2,
-                    "name": "in_file",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Input dataset",
-                      "description": "Input dataset to 3dTshift. The input dataset can have a sub-brick selector attached.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "file",
-                    "resolveParent": false,
-                    "mutable": false,
-                    "mediaTypes": []
+                    "type": "bool",
+                    "valueTrue": [
+                      "-verbose"
+                    ],
+                    "valueFalse": []
                   },
                   "list": null,
                   "nullable": false,
                   "choices": null,
-                  "defaultValue": null
+                  "defaultValue": false
                 }
               ],
               "join": null
@@ -186,70 +92,99 @@
           "cargs": [
             {
               "tokens": [
-                "-"
+                "-TR"
               ],
               "join": null
             },
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 3,
-                    "name": "interp",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Interpolation Method",
-                      "description": "Different interpolation methods. Fourier (default) is most accurate but slowest. Linear is least accurate. Polynomials: cubic, quintic, heptic. Weighted sinc: wsinc5, wsinc9.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": [
-                    "Fourier",
-                    "linear",
-                    "cubic",
-                    "quintic",
-                    "heptic",
-                    "wsinc5",
-                    "wsinc9"
-                  ],
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
             {
               "tokens": [
                 {
                   "base": {
                     "id": 4,
-                    "name": "num_threads",
+                    "name": "tr",
                     "outputs": [],
                     "docs": {
-                      "title": "Number of Threads",
-                      "description": "Set number of threads.",
+                      "title": null,
+                      "description": "Manually set the TR instead of using the value in the dataset header. You can attach a suffix for units.",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "int",
-                    "minValue": null,
-                    "maxValue": null
+                    "type": "struct",
+                    "name": "tr_microsyntax",
+                    "publicName": null,
+                    "groups": [
+                      {
+                        "cargs": [
+                          {
+                            "tokens": [
+                              {
+                                "base": {
+                                  "id": 2,
+                                  "name": "value",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "TR Value",
+                                    "description": "The TR value. Must be greater than 0.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "float",
+                                  "minValue": null,
+                                  "maxValue": null
+                                },
+                                "list": null,
+                                "nullable": false,
+                                "choices": null,
+                                "defaultValue": null
+                              },
+                              {
+                                "base": {
+                                  "id": 3,
+                                  "name": "unit",
+                                  "outputs": [],
+                                  "docs": {
+                                    "title": "TR Unit",
+                                    "description": "Unit for the TR.",
+                                    "authors": [],
+                                    "literature": [],
+                                    "urls": []
+                                  }
+                                },
+                                "body": {
+                                  "type": "string"
+                                },
+                                "list": null,
+                                "nullable": true,
+                                "choices": [
+                                  "s",
+                                  "ms",
+                                  "Hz"
+                                ],
+                                "defaultValue": {
+                                  "_special": "SET_TO_NONE"
+                                }
+                              }
+                            ],
+                            "join": null
+                          }
+                        ],
+                        "join": null
+                      }
+                    ],
+                    "join": null,
+                    "docs": {
+                      "title": null,
+                      "description": null,
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
                   },
                   "list": null,
                   "nullable": true,
@@ -271,48 +206,11 @@
                 {
                   "base": {
                     "id": 5,
-                    "name": "outputtype",
+                    "name": "shift_strategy",
                     "outputs": [],
                     "docs": {
-                      "title": "Output Type",
-                      "description": "Afni output filetype.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": [
-                    "NIFTI",
-                    "AFNI",
-                    "NIFTI_GZ"
-                  ],
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 6,
-                    "name": "detrend_strategy",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Detrending Method",
-                      "description": "Specify how to handle the mean and linear trend during shifting. If unspecified, the default is to remove the trend and add it back.",
+                      "title": "Shifting Strategy",
+                      "description": "How to determine the temporal alignment target. Default is the average of the tpattern values.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -324,173 +222,6 @@
                       {
                         "base": {
                           "id": 7,
-                          "name": "rlt",
-                          "outputs": [],
-                          "docs": {
-                            "title": "Remove Mean & Trend",
-                            "description": "Before shifting, remove the mean and linear trend. Do not put them back.",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "body": {
-                          "type": "struct",
-                          "name": "rlt",
-                          "publicName": null,
-                          "groups": [
-                            {
-                              "cargs": [
-                                {
-                                  "tokens": [
-                                    "-rlt"
-                                  ],
-                                  "join": null
-                                }
-                              ],
-                              "join": null
-                            }
-                          ],
-                          "join": null,
-                          "docs": {
-                            "title": "Remove Mean & Trend",
-                            "description": "Before shifting, remove the mean and linear trend. Do not put them back.",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "list": null,
-                        "nullable": false,
-                        "choices": null,
-                        "defaultValue": null
-                      },
-                      {
-                        "base": {
-                          "id": 8,
-                          "name": "rlt_plus",
-                          "outputs": [],
-                          "docs": {
-                            "title": "Remove Trend, Add Mean",
-                            "description": "Before shifting, remove the mean and linear trend. After shifting, put back the mean.",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "body": {
-                          "type": "struct",
-                          "name": "rlt_plus",
-                          "publicName": null,
-                          "groups": [
-                            {
-                              "cargs": [
-                                {
-                                  "tokens": [
-                                    "-rlt+"
-                                  ],
-                                  "join": null
-                                }
-                              ],
-                              "join": null
-                            }
-                          ],
-                          "join": null,
-                          "docs": {
-                            "title": "Remove Trend, Add Mean",
-                            "description": "Before shifting, remove the mean and linear trend. After shifting, put back the mean.",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "list": null,
-                        "nullable": false,
-                        "choices": null,
-                        "defaultValue": null
-                      },
-                      {
-                        "base": {
-                          "id": 9,
-                          "name": "no_detrend",
-                          "outputs": [],
-                          "docs": {
-                            "title": "No Detrending",
-                            "description": "Do not remove or restore linear trend. (Default interpolation becomes 'heptic').",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "body": {
-                          "type": "struct",
-                          "name": "no_detrend",
-                          "publicName": null,
-                          "groups": [
-                            {
-                              "cargs": [
-                                {
-                                  "tokens": [
-                                    "-no_detrend"
-                                  ],
-                                  "join": null
-                                }
-                              ],
-                              "join": null
-                            }
-                          ],
-                          "join": null,
-                          "docs": {
-                            "title": "No Detrending",
-                            "description": "Do not remove or restore linear trend. (Default interpolation becomes 'heptic').",
-                            "authors": [],
-                            "literature": [],
-                            "urls": []
-                          }
-                        },
-                        "list": null,
-                        "nullable": false,
-                        "choices": null,
-                        "defaultValue": null
-                      }
-                    ]
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 10,
-                    "name": "shift_strategy",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Shifting Strategy",
-                      "description": "Select how the temporal alignment should be calculated.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "struct_union",
-                    "alts": [
-                      {
-                        "base": {
-                          "id": 12,
                           "name": "align_to_tzero",
                           "outputs": [],
                           "docs": {
@@ -523,12 +254,12 @@
                                   "tokens": [
                                     {
                                       "base": {
-                                        "id": 11,
+                                        "id": 6,
                                         "name": "tzero",
                                         "outputs": [],
                                         "docs": {
                                           "title": "Time Zero",
-                                          "description": "The time offset to align to (e.g., 0).",
+                                          "description": "The time offset to align to. Must be between the minimum and maximum slice temporal offsets.",
                                           "authors": [],
                                           "literature": [],
                                           "urls": []
@@ -567,7 +298,7 @@
                       },
                       {
                         "base": {
-                          "id": 14,
+                          "id": 9,
                           "name": "align_to_slice",
                           "outputs": [],
                           "docs": {
@@ -600,12 +331,12 @@
                                   "tokens": [
                                     {
                                       "base": {
-                                        "id": 13,
+                                        "id": 8,
                                         "name": "slice_index",
                                         "outputs": [],
                                         "docs": {
                                           "title": "Slice Index",
-                                          "description": "The index of the slice to use as the reference.",
+                                          "description": "The index of the reference slice. Must be less than the total number of slices.",
                                           "authors": [],
                                           "literature": [],
                                           "urls": []
@@ -644,12 +375,12 @@
                       },
                       {
                         "base": {
-                          "id": 16,
+                          "id": 11,
                           "name": "align_voxel_wise",
                           "outputs": [],
                           "docs": {
                             "title": "Voxel-wise Shifting",
-                            "description": "Shift each voxel by a different amount specified in a dataset.",
+                            "description": "Shift each voxel by a different amount specified in a dataset. Values are fractions of a TR (positive means shift backwards).",
                             "authors": [],
                             "literature": [],
                             "urls": []
@@ -677,12 +408,12 @@
                                   "tokens": [
                                     {
                                       "base": {
-                                        "id": 15,
+                                        "id": 10,
                                         "name": "voxshift_file",
                                         "outputs": [],
                                         "docs": {
                                           "title": "Shift Dataset",
-                                          "description": "Dataset containing fractional TR shift values.",
+                                          "description": "Dataset containing fractional TR shift values. Must have the same spatial dimensions as the input.",
                                           "authors": [],
                                           "literature": [],
                                           "urls": []
@@ -709,7 +440,7 @@
                           "join": null,
                           "docs": {
                             "title": "Voxel-wise Shifting",
-                            "description": "Shift each voxel by a different amount specified in a dataset.",
+                            "description": "Shift each voxel by a different amount specified in a dataset. Values are fractions of a TR (positive means shift backwards).",
                             "authors": [],
                             "literature": [],
                             "urls": []
@@ -739,14 +470,267 @@
           "cargs": [
             {
               "tokens": [
+                "-prefix"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
                 {
                   "base": {
-                    "id": 17,
-                    "name": "slice_encoding_direction",
+                    "id": 12,
+                    "name": "prefix",
                     "outputs": [],
                     "docs": {
-                      "title": "Slice Encoding Direction",
-                      "description": "'k' or 'k-'. Direction in which slice_timing is specified (default: k). Only in effect when slice_timing is passed as list.",
+                      "title": "Prefix",
+                      "description": "Prefix for output file name. Default is 'tshift'.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-ignore"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 13,
+                    "name": "ignore",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Ignore Initial Points",
+                      "description": "Ignore the first 'ii' points. These values will be unchanged in the output and will not be used in detrending or time shifting. Default is 0.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "int",
+                    "minValue": null,
+                    "maxValue": null
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 14,
+                    "name": "detrend_strategy",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Detrending Strategy",
+                      "description": "How to handle the mean and linear trend during shifting. Default is to remove both before shifting and add both back after.",
+                      "authors": [],
+                      "literature": [],
+                      "urls": []
+                    }
+                  },
+                  "body": {
+                    "type": "struct_union",
+                    "alts": [
+                      {
+                        "base": {
+                          "id": 15,
+                          "name": "rlt",
+                          "outputs": [],
+                          "docs": {
+                            "title": "Remove Mean & Trend",
+                            "description": "Remove the mean and linear trend before shifting. Do not put them back.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "rlt",
+                          "publicName": null,
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-rlt"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": "Remove Mean & Trend",
+                            "description": "Remove the mean and linear trend before shifting. Do not put them back.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      },
+                      {
+                        "base": {
+                          "id": 16,
+                          "name": "rlt_plus",
+                          "outputs": [],
+                          "docs": {
+                            "title": "Remove Trend, Add Mean",
+                            "description": "Remove the mean and linear trend before shifting. After shifting, put back only the mean.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "rlt_plus",
+                          "publicName": null,
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-rlt+"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": "Remove Trend, Add Mean",
+                            "description": "Remove the mean and linear trend before shifting. After shifting, put back only the mean.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      },
+                      {
+                        "base": {
+                          "id": 17,
+                          "name": "no_detrend",
+                          "outputs": [],
+                          "docs": {
+                            "title": "No Detrending",
+                            "description": "Do not remove or restore linear trend. Default interpolation becomes heptic if Fourier was set.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "body": {
+                          "type": "struct",
+                          "name": "no_detrend",
+                          "publicName": null,
+                          "groups": [
+                            {
+                              "cargs": [
+                                {
+                                  "tokens": [
+                                    "-no_detrend"
+                                  ],
+                                  "join": null
+                                }
+                              ],
+                              "join": null
+                            }
+                          ],
+                          "join": null,
+                          "docs": {
+                            "title": "No Detrending",
+                            "description": "Do not remove or restore linear trend. Default interpolation becomes heptic if Fourier was set.",
+                            "authors": [],
+                            "literature": [],
+                            "urls": []
+                          }
+                        },
+                        "list": null,
+                        "nullable": false,
+                        "choices": null,
+                        "defaultValue": null
+                      }
+                    ]
+                  },
+                  "list": null,
+                  "nullable": true,
+                  "choices": null,
+                  "defaultValue": {
+                    "_special": "SET_TO_NONE"
+                  }
+                }
+              ],
+              "join": null
+            }
+          ],
+          "join": null
+        },
+        {
+          "cargs": [
+            {
+              "tokens": [
+                "-"
+              ],
+              "join": null
+            },
+            {
+              "tokens": [
+                {
+                  "base": {
+                    "id": 18,
+                    "name": "interp",
+                    "outputs": [],
+                    "docs": {
+                      "title": "Interpolation Method",
+                      "description": "Interpolation method. Fourier (default) is most accurate but slowest. Linear is least accurate. Polynomials: cubic, quintic, heptic. Weighted sinc: wsinc5, wsinc9.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -758,8 +742,13 @@
                   "list": null,
                   "nullable": true,
                   "choices": [
-                    "k",
-                    "k-"
+                    "Fourier",
+                    "linear",
+                    "cubic",
+                    "quintic",
+                    "heptic",
+                    "wsinc5",
+                    "wsinc9"
                   ],
                   "defaultValue": {
                     "_special": "SET_TO_NONE"
@@ -783,12 +772,12 @@
               "tokens": [
                 {
                   "base": {
-                    "id": 18,
+                    "id": 19,
                     "name": "tpattern",
                     "outputs": [],
                     "docs": {
                       "title": "Slice Timing Pattern",
-                      "description": "Use specified slice time pattern rather than one in header. Values can be a standard pattern string (e.g. 'alt+z') or a filename prefixed with '@'.",
+                      "description": "Use specified slice time pattern rather than the one in the dataset header.",
                       "authors": [],
                       "literature": [],
                       "urls": []
@@ -799,7 +788,7 @@
                     "alts": [
                       {
                         "base": {
-                          "id": 20,
+                          "id": 21,
                           "name": "tpattern_mode_string",
                           "outputs": [],
                           "docs": {
@@ -821,7 +810,7 @@
                                   "tokens": [
                                     {
                                       "base": {
-                                        "id": 19,
+                                        "id": 20,
                                         "name": "tpattern_string",
                                         "outputs": [],
                                         "docs": {
@@ -874,7 +863,7 @@
                       },
                       {
                         "base": {
-                          "id": 22,
+                          "id": 23,
                           "name": "tpattern_mode_file",
                           "outputs": [],
                           "docs": {
@@ -897,12 +886,12 @@
                                     "@",
                                     {
                                       "base": {
-                                        "id": 21,
+                                        "id": 22,
                                         "name": "tpattern_file",
                                         "outputs": [],
                                         "docs": {
                                           "title": "Pattern File",
-                                          "description": "File containing temporal offsets.",
+                                          "description": "File containing temporal offsets (one per slice).",
                                           "authors": [],
                                           "literature": [],
                                           "urls": []
@@ -959,140 +948,29 @@
           "cargs": [
             {
               "tokens": [
-                "-TR"
-              ],
-              "join": null
-            },
-            {
-              "tokens": [
                 {
                   "base": {
-                    "id": 26,
-                    "name": "tr",
+                    "id": 24,
+                    "name": "in_file",
                     "outputs": [],
                     "docs": {
-                      "title": null,
-                      "description": "Manually set the TR. You can attach suffix 's' for seconds or 'ms' for milliseconds.",
+                      "title": "Input dataset",
+                      "description": "Input dataset to 3dTshift. Can include a sub-brick selector (e.g., prefix+orig[4..$]).",
                       "authors": [],
                       "literature": [],
                       "urls": []
                     }
                   },
                   "body": {
-                    "type": "struct",
-                    "name": "tr_microsyntax",
-                    "publicName": null,
-                    "groups": [
-                      {
-                        "cargs": [
-                          {
-                            "tokens": [
-                              {
-                                "base": {
-                                  "id": 24,
-                                  "name": "value",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "TR Value",
-                                    "description": "The temporal resolution value.",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "float",
-                                  "minValue": null,
-                                  "maxValue": null
-                                },
-                                "list": null,
-                                "nullable": false,
-                                "choices": null,
-                                "defaultValue": null
-                              },
-                              {
-                                "base": {
-                                  "id": 25,
-                                  "name": "unit",
-                                  "outputs": [],
-                                  "docs": {
-                                    "title": "TR Unit",
-                                    "description": "Unit for the TR (seconds or milliseconds).",
-                                    "authors": [],
-                                    "literature": [],
-                                    "urls": []
-                                  }
-                                },
-                                "body": {
-                                  "type": "string"
-                                },
-                                "list": null,
-                                "nullable": true,
-                                "choices": [
-                                  "s",
-                                  "ms"
-                                ],
-                                "defaultValue": {
-                                  "_special": "SET_TO_NONE"
-                                }
-                              }
-                            ],
-                            "join": null
-                          }
-                        ],
-                        "join": null
-                      }
-                    ],
-                    "join": null,
-                    "docs": {
-                      "title": null,
-                      "description": null,
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "list": null,
-                  "nullable": true,
-                  "choices": null,
-                  "defaultValue": {
-                    "_special": "SET_TO_NONE"
-                  }
-                }
-              ],
-              "join": null
-            }
-          ],
-          "join": null
-        },
-        {
-          "cargs": [
-            {
-              "tokens": [
-                {
-                  "base": {
-                    "id": 27,
-                    "name": "verbose",
-                    "outputs": [],
-                    "docs": {
-                      "title": "Verbose",
-                      "description": "Print lots of messages while program runs.",
-                      "authors": [],
-                      "literature": [],
-                      "urls": []
-                    }
-                  },
-                  "body": {
-                    "type": "bool",
-                    "valueTrue": [
-                      "-verbose"
-                    ],
-                    "valueFalse": []
+                    "type": "file",
+                    "resolveParent": false,
+                    "mutable": false,
+                    "mediaTypes": []
                   },
                   "list": null,
                   "nullable": false,
                   "choices": null,
-                  "defaultValue": false
+                  "defaultValue": null
                 }
               ],
               "join": null
